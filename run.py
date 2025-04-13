@@ -93,9 +93,9 @@ while running:
             break
         if event.type == pygame.KEYUP:
             if mainmenu.is_enabled():
-                if event.key in pygame.key.key_code('x'):
+                if event.key == pygame.key.key_code('x'):
                     mainmenu._index += 1
-                elif event.key in pygame.key.key_code('y'):
+                elif event.key == pygame.key.key_code('y'):
                     mainmenu._index -= 1
                 if mainmenu._index > len(mainmenu.get_widgets()) - 1:
                         mainmenu._index = 0
