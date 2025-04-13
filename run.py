@@ -44,7 +44,7 @@ screen = pygame.Surface((display_hat.WIDTH, display_hat.HEIGHT))
 signal.signal(signal.SIGINT, _exit)
 
 # Plumbing to convert Display HAT Mini button presses into pygame events
-def button_callback(event_type, pin):
+def button_callback(pin):
     print(f"Button pressed: {pin}") 
     key = {
         display_hat.BUTTON_A: 'a',
@@ -52,11 +52,11 @@ def button_callback(event_type, pin):
         display_hat.BUTTON_X: 'x',
         display_hat.BUTTON_Y: 'y'
     }[pin]
-    pygame.event.post(pygame.event.Event(event_type, unicode=key, key=pygame.key.key_code(key)))
+    event = pygame.KEYDOWN if display_hat.read_button(pin) else pygame.KEYUP
+    pygame.event.post(pygame.event.Event(event, unicode=key, key=pygame.key.key_code(key)))
     print(f"Simulated KeyDown: key='{key}', key_code={pygame.key.key_code(key)}")
 
-display_hat.on_button_pressed(lambda pin: button_callback(pygame.KEYDOWN, pin))
-display_hat.on_button_released(lambda pin: button_callback(pygame.KEYUP, pin))
+display_hat.on_button_pressed(button_callback)
 
 def start_the_game():
     pass
