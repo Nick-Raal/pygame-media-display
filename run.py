@@ -38,6 +38,21 @@ screen = pygame.Surface((display_hat.WIDTH, display_hat.HEIGHT))
 
 signal.signal(signal.SIGINT, _exit)
 
+# Plumbing to convert Display HAT Mini button presses into pygame events
+def button_callback(pin):
+    key = {
+        display_hat.BUTTON_A: 'a',
+        display_hat.BUTTON_B: 'b',
+        display_hat.BUTTON_X: 'x',
+        display_hat.BUTTON_Y: 'y'
+    }[pin]
+    event = pygame.KEYDOWN if display_hat.read_button(pin) else pygame.KEYUP
+    pygame.event.post(pygame.event.Event(event, unicode=key, key=pygame.key.key_code(key)))
+
+
+display_hat.on_button_pressed(button_callback)
+
+
 clock = pygame.time.Clock()
 cap = cv2.VideoCapture('video.mp4')
 running, img = cap.read()
