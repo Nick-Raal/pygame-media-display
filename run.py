@@ -34,19 +34,19 @@ def update_display():
 
 display_hat = DisplayHATMini(None)
 
-# # Plumbing to convert Display HAT Mini button presses into pygame events
-# def button_callback(pin):
-#     key = {
-#         display_hat.BUTTON_A: 'a',
-#         display_hat.BUTTON_B: 'b',
-#         display_hat.BUTTON_X: 'x',
-#         display_hat.BUTTON_Y: 'y'
-#     }[pin]
-#     event = pygame.KEYDOWN if display_hat.read_button(pin) else pygame.KEYUP
-#     pygame.event.post(pygame.event.Event(event, unicode=key, key=pygame.key.key_code(key)))
+# Plumbing to convert Display HAT Mini button presses into pygame events
+def button_callback(pin):
+    key = {
+        display_hat.BUTTON_A: 'a',
+        display_hat.BUTTON_B: 'b',
+        display_hat.BUTTON_X: 'x',
+        display_hat.BUTTON_Y: 'y'
+    }[pin]
+    event = pygame.KEYDOWN if display_hat.read_button(pin) else pygame.KEYUP
+    pygame.event.post(pygame.event.Event(event, unicode=key, key=pygame.key.key_code(key)))
 
 
-# display_hat.on_button_pressed(button_callback)
+display_hat.on_button_pressed(button_callback)
 
 
 os.putenv("SDL_FBDEV", "/dev/fb1")
