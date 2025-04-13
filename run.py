@@ -59,7 +59,7 @@ def button_callback(pin):
 display_hat.on_button_pressed(button_callback)
 
 def start_the_game():
-    mainmenu._open()
+    mainmenu._open(folder)
  
 def level_menu():
     pass
