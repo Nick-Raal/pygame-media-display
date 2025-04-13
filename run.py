@@ -38,6 +38,7 @@ pygame.init()
 
 os.putenv('SDL_VIDEODRIVER', 'dummy')
 pygame.display.init()  # Need to init for .convert() to work
+pygame.display.set_mode((display_hat.WIDTH, display_hat.HEIGHT))
 screen = pygame.Surface((display_hat.WIDTH, display_hat.HEIGHT))
 
 signal.signal(signal.SIGINT, _exit)
