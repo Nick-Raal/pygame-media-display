@@ -47,9 +47,9 @@ signal.signal(signal.SIGINT, _exit)
 def button_callback(pin):
     print(f"Button pressed: {pin}") 
     key = {
-        display_hat.BUTTON_A: 'a',
-        display_hat.BUTTON_B: 'b',
-        display_hat.BUTTON_X: 'x',
+        display_hat.BUTTON_A: 'UP',
+        display_hat.BUTTON_B: 'DOWN',
+        display_hat.BUTTON_X: 'ENTER',
         display_hat.BUTTON_Y: 'y'
     }[pin]
     event = pygame.KEYDOWN if display_hat.read_button(pin) else pygame.KEYUP
@@ -92,7 +92,7 @@ while running:
             running = False
             break
         if event.type == pygame.KEYUP:
-             if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
+             if event.key in (pygame.key.key_code('y'), pygame.K_ESCAPE):
                 running = False
                 break
 
