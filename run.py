@@ -47,9 +47,9 @@ signal.signal(signal.SIGINT, _exit)
 def button_callback(pin):
     print(f"Button pressed: {pin}") 
     key = {
-        display_hat.BUTTON_A: 'UP',
-        display_hat.BUTTON_B: 'DOWN',
-        display_hat.BUTTON_X: 'ENTER',
+        display_hat.BUTTON_A: 'a',
+        display_hat.BUTTON_B: 'b',
+        display_hat.BUTTON_X: 'x',
         display_hat.BUTTON_Y: 'y'
     }[pin]
     event = pygame.KEYDOWN if display_hat.read_button(pin) else pygame.KEYUP
@@ -65,7 +65,7 @@ def level_menu():
     pass
 
 mainmenu = pygame_menu.Menu('Welcome', 320, 240, 
-                                 theme=themes.THEME_SOLARIZED, keyboard_enabled=True)
+                                 theme=themes.THEME_SOLARIZED)
 mainmenu.add.text_input('Name: ', default='username', maxchar=20)
 mainmenu.add.button('Play', start_the_game)
 mainmenu.add.button('Levels', level_menu)
@@ -92,9 +92,19 @@ while running:
             running = False
             break
         if event.type == pygame.KEYUP:
-             if event.key in (pygame.key.key_code('y'), pygame.K_ESCAPE):
+            if mainmenu.is_enabled():
+                if event.key in pygame.key.key_code('x'):
+                    mainmenu._index += 1
+                elif event.key in pygame.key.key_code('y'):
+                    mainmenu._index -= 1
+                if mainmenu._index > len(mainmenu.get_widgets()) - 1:
+                        mainmenu._index = 0
+                elif mainmenu._index < 0:
+                    mainmenu._index = len(mainmenu.get_widgets()) - 1
+            if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
                 running = False
                 break
+                 
 
 screen.fill((0, 0, 0))
 update_display()
