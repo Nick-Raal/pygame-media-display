@@ -2,6 +2,7 @@ import os
 import sys
 import signal
 import pygame
+import pygame_menu
 import cv2
 
 from displayhatmini import DisplayHATMini
@@ -53,6 +54,18 @@ def button_callback(pin):
 
 display_hat.on_button_pressed(button_callback)
 
+def start_the_game():
+    pass
+ 
+def level_menu():
+    pass
+
+mainmenu = pygame_menu.Menu('Welcome', 600, 400, 
+                                 theme=themes.THEME_SOLARIZED)
+mainmenu.add.text_input('Name: ', default='username', maxchar=20)
+mainmenu.add.button('Play', start_the_game)
+mainmenu.add.button('Levels', level_menu)
+mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 
 clock = pygame.time.Clock()
 cap = cv2.VideoCapture('video.mp4')
@@ -60,6 +73,11 @@ running, img = cap.read()
 shape = img.shape[1::-1]
 
 while running:
+    
+    if mainmenu.is_enabled():
+        mainmenu.update(pygame.event.get())
+        mainmenu.draw(screen)
+        
     screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
     clock.tick(60)
@@ -69,8 +87,7 @@ while running:
             running = False
             break
         if event.type == pygame.KEYUP:
-             if event.key in (pygame.key.key_code('a'), pygame.K_ESCAPE):
-                print(event.key in (pygame.key.key_code('a'), pygame.K_ESCAPE))
+             if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
                 running = False
                 break
 
