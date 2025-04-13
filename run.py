@@ -55,10 +55,11 @@ while running:
 
 
  
-    clock.tick(60)
-    running, img = cap.read()
+
     screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
+    clock.tick(60)
+    running, img = cap.read()
     
 
 
