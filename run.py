@@ -3,6 +3,7 @@ import sys
 import signal
 import pygame
 import pygame_menu
+from pygame_menu import themes
 import cv2
 
 from displayhatmini import DisplayHATMini
