@@ -40,6 +40,7 @@ signal.signal(signal.SIGINT, _exit)
 
 # Plumbing to convert Display HAT Mini button presses into pygame events
 def button_callback(pin):
+    print(f"Button pressed: {pin}")  # <--- add this
     key = {
         display_hat.BUTTON_A: 'a',
         display_hat.BUTTON_B: 'b',
