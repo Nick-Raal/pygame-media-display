@@ -76,6 +76,7 @@ mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 # running, img = cap.read()
 # shape = img.shape[1::-1]
 
+running = True
 while running:
     
     if mainmenu.is_enabled():
