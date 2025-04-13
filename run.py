@@ -72,7 +72,6 @@ mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 arrow = pygame_menu.widgets.LeftArrowSelection(arrow_size = (10, 15))
 
 def open(f):
-    print("bruh")
     pygame_menu.events.EXIT
     if f.endswith('.mp4'):
         clock = pygame.time.Clock()
@@ -109,6 +108,7 @@ while running:
         if (mainmenu.get_current().get_selected_widget()):
             arrow.draw(screen, mainmenu.get_current().get_selected_widget())
     elif folder.is_enabled():
+        print(folder)
         menu = folder
         folder.update(pygame.event.get())
         folder.draw(screen)
