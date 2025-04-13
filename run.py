@@ -52,16 +52,13 @@ while running:
                 running = False
                 break
 
-    # Clear the screen
-    screen.fill((0, 0, 0))
-
     scrn = pygame.display.set_mode((display_hat.WIDTH, display_hat.HEIGHT))
  
     # create a surface object, image is drawn on it.
     imp = pygame.image.load("gfg.png").convert()
  
     # Using blit to copy content from one surface to other
-    scrn.blit(imp, (0, 0))
+    scrn.blit(imp, screen)
  
     update_display()
 
