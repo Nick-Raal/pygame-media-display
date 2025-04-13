@@ -59,19 +59,37 @@ def button_callback(pin):
 display_hat.on_button_pressed(button_callback)
 
 def start_the_game():
-    pass
+    mainmenu._open()
  
 def level_menu():
     pass
 
-mainmenu = pygame_menu.Menu('Welcome', 320, 240, 
+mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                  theme=themes.THEME_SOLARIZED)
-mainmenu.add.text_input('Name: ', default='username', maxchar=20)
-mainmenu.add.button('Play', start_the_game)
-mainmenu.add.button('Levels', level_menu)
+mainmenu.add.button('Open', start_the_game)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 
 arrow = pygame_menu.widgets.LeftArrowSelection(arrow_size = (10, 15))
+
+def open(f):
+    pygame_menu.events.EXIT
+    if f.endswith('.mp4'):
+        clock = pygame.time.Clock()
+        cap = cv2.VideoCapture(f.title)
+        playing, img = cap.read()
+        shape = img.shape[1::-1]
+        while playing:
+            screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+            update_display()
+            clock.tick(60)
+            playing, img = cap.read()
+
+folder = pygame_menu.Menu('Memories', 320, 240)
+file_type = '.mp4'  # change to your file type
+files = [f for f in os.listdir('.') if f.endswith(file_type)]
+for file in files:
+    folder.add.button(file.title, open(file))
+
 
 # clock = pygame.time.Clock()
 # cap = cv2.VideoCapture('video.mp4')
@@ -98,9 +116,9 @@ while running:
         if event.type == pygame.KEYUP:
             if mainmenu.is_enabled():
                 if event.key == pygame.key.key_code('x'):
-                    mainmenu._index += 1
-                elif event.key == pygame.key.key_code('y'):
                     mainmenu._index -= 1
+                elif event.key == pygame.key.key_code('y'):
+                    mainmenu._index += 1
                 if mainmenu._index > len(mainmenu.get_widgets()) - 1:
                         mainmenu._index = 0
                 elif mainmenu._index < 0:
