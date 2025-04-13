@@ -64,18 +64,13 @@ while running:
             running = False
             break
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
+             if event.key in (pygame.K_a, pygame.K_ESCAPE):
                 running = False
                 break
-
-
- 
-
     screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
     clock.tick(60)
     running, img = cap.read()
-    
 
 
 
