@@ -64,7 +64,7 @@ def start_the_game():
 def level_menu():
     pass
 
-mainmenu = pygame_menu.Menu('Welcome', 600, 400, 
+mainmenu = pygame_menu.Menu('Welcome', 320, 240, 
                                  theme=themes.THEME_SOLARIZED)
 mainmenu.add.text_input('Name: ', default='username', maxchar=20)
 mainmenu.add.button('Play', start_the_game)
