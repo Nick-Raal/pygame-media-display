@@ -2,8 +2,7 @@ import os
 import sys
 import signal
 import pygame
-import time
-import math
+import cv2
 
 from displayhatmini import DisplayHATMini
 
@@ -12,8 +11,7 @@ print("""Display HAT Mini: Basic Pygame Demo""")
 if pygame.vernum < (2, 0, 0):
     print("Need PyGame >= 2.0.0:\n    python3 -m pip install pygame --upgrade")
     sys.exit(1)
-
-
+    
 def _exit(sig, frame):
     global running
     running = False
@@ -40,7 +38,10 @@ screen = pygame.Surface((display_hat.WIDTH, display_hat.HEIGHT))
 
 signal.signal(signal.SIGINT, _exit)
 
-running = True
+clock = pygame.time.Clock()
+cap = cv2.VideoCapture('video.mp4')
+running, img = cap.read()
+shape = img.shape[1::-1]
 
 while running:
     for event in pygame.event.get():
@@ -52,16 +53,14 @@ while running:
                 running = False
                 break
 
-    scrn = pygame.display.set_mode((display_hat.WIDTH, display_hat.HEIGHT))
+
  
-    # create a surface object, image is drawn on it.
-    imp = pygame.image.load("gfg.png").convert()
- 
-    # Using blit to copy content from one surface to other
-    scrn.blit(imp, (0,0))
-    screen.blit(scrn, (0, 0))
- 
+    clock.tick(60)
+    running, img = cap.read()
+    screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
+    
+
 
 
 pygame.quit()
