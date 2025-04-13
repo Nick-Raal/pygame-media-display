@@ -34,6 +34,8 @@ def update_display():
 
 display_hat = DisplayHATMini(None)
 
+pygame.init()
+
 os.putenv('SDL_VIDEODRIVER', 'dummy')
 pygame.display.init()  # Need to init for .convert() to work
 screen = pygame.Surface((display_hat.WIDTH, display_hat.HEIGHT))
