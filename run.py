@@ -83,12 +83,13 @@ def open(f):
             update_display()
             clock.tick(60)
             playing, img = cap.read()
+        cap.release()
 
 folder = pygame_menu.Menu('Memories', 320, 240)
 file_type = '.mp4'  # change to your file type
 files = [f for f in os.listdir('.') if f.endswith(file_type)]
 for file in files:
-    folder.add.button(file.title, open(file))
+    folder.add.button(file.title(), lambda f=file: open(f))
 
 
 # clock = pygame.time.Clock()
@@ -123,6 +124,9 @@ while running:
                         mainmenu._index = 0
                 elif mainmenu._index < 0:
                     mainmenu._index = len(mainmenu.get_widgets()) - 1
+                    
+                if event.key == pygame.key.key_code('a'):
+                    mainmenu.get_selected_widget().apply()
             if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
                 running = False
                 break
