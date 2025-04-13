@@ -75,7 +75,7 @@ def open(f):
     pygame_menu.events.EXIT
     if f.endswith('.mp4'):
         clock = pygame.time.Clock()
-        cap = cv2.VideoCapture(f.path)
+        cap = cv2.VideoCapture(f)
         playing, img = cap.read()
         shape = img.shape[1::-1]
         while playing:
