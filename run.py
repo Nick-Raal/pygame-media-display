@@ -49,7 +49,7 @@ def button_callback(pin):
     }[pin]
     event = pygame.KEYDOWN if display_hat.read_button(pin) else pygame.KEYUP
     pygame.event.post(pygame.event.Event(event, unicode=key, key=pygame.key.key_code(key)))
-    print(f"Simulated {pygame.event.event_name(event)}: key='{key}'")
+    print(f"Simulated KeyDown: key='{key}', key_code={pygame.key.key_code(key)}")
 
 display_hat.on_button_pressed(button_callback)
 
