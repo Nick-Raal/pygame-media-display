@@ -85,7 +85,7 @@ def open(f):
             playing, img = cap.read()
         cap.release()
 
-folder = pygame_menu.Menu('Memories', 320, 240)
+folder = pygame_menu.Menu('Memories', 320, 240, enabled=False)
 file_type = '.mp4'  # change to your file type
 files = [f for f in os.listdir('.') if f.endswith(file_type)]
 for file in files:
