@@ -65,7 +65,7 @@ while running:
             running = False
             break
         if event.type == pygame.KEYUP:
-             print(event.key == pygame.key.key_code('a'))
+             print(event.key in (pygame.key.key_code('a'), pygame.K_ESCAPE))
              if event.key in (pygame.key.key_code('a'), pygame.K_ESCAPE):
                 running = False
                 break
