@@ -58,7 +58,7 @@ while running:
     box_w = display_hat.WIDTH // 3
     box_h = display_hat.HEIGHT // 2
 
-    imp = pygame.image.load(".\gfg.png").convert()
+    imp = pygame.image.load("gfg.png").convert()
  
     # Using blit to copy content from one surface to other
     screen.blit(imp, (0, 0))
