@@ -49,9 +49,9 @@ def button_callback(pin):
 display_hat.on_button_pressed(button_callback)
 
 
-os.putenv("SDL_FBDEV", "/dev/fb1")
-os.putenv("SDL_VIDEODRIVER", "fbcon")
+os.putenv('SDL_VIDEODRIVER', 'dummy')
 pygame.display.init()  # Need to init for .convert() to work
+screen = pygame.Surface((display_hat.WIDTH, display_hat.HEIGHT))
 screen = pygame.display.set_mode((display_hat.WIDTH, display_hat.HEIGHT))
 
 signal.signal(signal.SIGINT, _exit)
