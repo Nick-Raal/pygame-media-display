@@ -71,10 +71,10 @@ mainmenu.add.button('Play', start_the_game)
 mainmenu.add.button('Levels', level_menu)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 
-clock = pygame.time.Clock()
-cap = cv2.VideoCapture('video.mp4')
-running, img = cap.read()
-shape = img.shape[1::-1]
+# clock = pygame.time.Clock()
+# cap = cv2.VideoCapture('video.mp4')
+# running, img = cap.read()
+# shape = img.shape[1::-1]
 
 while running:
     
@@ -82,10 +82,10 @@ while running:
         mainmenu.update(pygame.event.get())
         mainmenu.draw(screen)
         
-    screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+    # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
-    clock.tick(60)
-    running, img = cap.read()
+    # clock.tick(60)
+    # running, img = cap.read()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
