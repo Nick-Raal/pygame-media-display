@@ -52,14 +52,10 @@ display_hat.on_button_pressed(button_callback)
 os.putenv('SDL_VIDEODRIVER', 'dummy')
 pygame.display.init()  # Need to init for .convert() to work
 screen = pygame.Surface((display_hat.WIDTH, display_hat.HEIGHT))
-screen = pygame.display.set_mode((display_hat.WIDTH, display_hat.HEIGHT))
-
 
 signal.signal(signal.SIGINT, _exit)
 
 running = True
-
-n = 0
 
 while running:
     for event in pygame.event.get():
@@ -70,15 +66,9 @@ while running:
             if event.key in (pygame.K_a, pygame.K_ESCAPE):
                 running = False
                 break
-            if event.key in pygame.K_x:
-                n += 1
-                if n >= 2:
-                    n = 0
-
-        
  
     # create a surface object, image is drawn on it.
-    imp = pygame.image.load("gfg" & n & ".png")
+    imp = pygame.image.load("gfg.png")
  
     # Using blit to copy content from one surface to other
     screen.blit(imp, (0,0))
