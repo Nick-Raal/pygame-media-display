@@ -49,7 +49,6 @@ def button_callback(pin):
     event = pygame.KEYDOWN if display_hat.read_button(pin) else pygame.KEYUP
     pygame.event.post(pygame.event.Event(event, unicode=key, key=pygame.key.key_code(key)))
 
-
 display_hat.on_button_pressed(button_callback)
 
 
@@ -72,7 +71,7 @@ while running:
     clock.tick(60)
     running, img = cap.read()
 
-
-
+screen.fill((0, 0, 0))
+update_display()
 pygame.quit()
 sys.exit(0)
