@@ -60,6 +60,10 @@ running, img = cap.read()
 shape = img.shape[1::-1]
 
 while running:
+    screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+    update_display()
+    clock.tick(60)
+    running, img = cap.read()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -69,10 +73,6 @@ while running:
                 print(event.key in (pygame.key.key_code('a'), pygame.K_ESCAPE))
                 running = False
                 break
-    screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
-    update_display()
-    clock.tick(60)
-    running, img = cap.read()
 
 screen.fill((0, 0, 0))
 update_display()
