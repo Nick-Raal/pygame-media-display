@@ -58,7 +58,8 @@ while running:
     imp = pygame.image.load("gfg.png").convert()
  
     # Using blit to copy content from one surface to other
-    scrn.blit(imp, screen)
+    scrn.blit(imp)
+    screen.blit(scrn)
  
     update_display()
 
