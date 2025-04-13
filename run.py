@@ -71,6 +71,8 @@ mainmenu.add.button('Play', start_the_game)
 mainmenu.add.button('Levels', level_menu)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 
+arrow = pygame_menu.widgets.LeftArrowSelection(arrow_size = (10, 15))
+
 # clock = pygame.time.Clock()
 # cap = cv2.VideoCapture('video.mp4')
 # running, img = cap.read()
@@ -82,6 +84,8 @@ while running:
     if mainmenu.is_enabled():
         mainmenu.update(pygame.event.get())
         mainmenu.draw(screen)
+        if (mainmenu.get_current().get_selected_widget()):
+            arrow.draw(screen, mainmenu.get_current().get_selected_widget())
         
     # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
