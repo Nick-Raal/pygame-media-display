@@ -98,14 +98,21 @@ for file in files:
 # shape = img.shape[1::-1]
 
 running = True
+menu = None
 while running:
     
     if mainmenu.is_enabled():
+        menu = mainmenu
         mainmenu.update(pygame.event.get())
         mainmenu.draw(screen)
         if (mainmenu.get_current().get_selected_widget()):
             arrow.draw(screen, mainmenu.get_current().get_selected_widget())
-        
+    elif folder.is_enabled():
+        menu = folder
+        folder.update(pygame.event.get())
+        folder.draw(screen)
+        if (folder.get_current().get_selected_widget()):
+            arrow.draw(screen, mainmenu.get_current().get_selected_widget()) 
     # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
     # clock.tick(60)
@@ -115,21 +122,20 @@ while running:
             running = False
             break
         if event.type == pygame.KEYUP:
-            if mainmenu.is_enabled():
-                if event.key == pygame.key.key_code('x'):
-                    mainmenu._index -= 1
-                elif event.key == pygame.key.key_code('y'):
-                    mainmenu._index += 1
-                if mainmenu._index > len(mainmenu.get_widgets()) - 1:
-                        mainmenu._index = 0
-                elif mainmenu._index < 0:
-                    mainmenu._index = len(mainmenu.get_widgets()) - 1
+            if event.key == pygame.key.key_code('x'):
+                menu._index -= 1
+            elif event.key == pygame.key.key_code('y'):
+                menu._index += 1
+            if menu._index > len(menu.get_widgets()) - 1:
+                    menu._index = 0
+            elif menu._index < 0:
+                menu._index = len(menu.get_widgets()) - 1
                     
-                if event.key == pygame.key.key_code('a'):
-                    mainmenu.get_selected_widget().apply()
-            if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
-                running = False
-                break
+            if event.key == pygame.key.key_code('a'):
+                menu.get_selected_widget().apply()
+        if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
+            running = False
+            break
                  
 
 screen.fill((0, 0, 0))
