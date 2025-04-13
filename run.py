@@ -72,6 +72,7 @@ mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 arrow = pygame_menu.widgets.LeftArrowSelection(arrow_size = (10, 15))
 
 def open(f):
+    print("bruh")
     pygame_menu.events.EXIT
     if f.endswith('.mp4'):
         clock = pygame.time.Clock()
@@ -123,14 +124,9 @@ while running:
             break
         if event.type == pygame.KEYUP:
             if event.key == pygame.key.key_code('x'):
-                menu._index -= 1
+                menu._select_previous_widget()
             elif event.key == pygame.key.key_code('y'):
-                menu._index += 1
-            if menu._index > len(menu.get_widgets()) - 1:
-                    menu._index = 0
-            elif menu._index < 0:
-                menu._index = len(menu.get_widgets()) - 1
-                    
+                menu._select_next_widget()                    
             if event.key == pygame.key.key_code('a'):
                 menu.get_selected_widget().apply()
         if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
