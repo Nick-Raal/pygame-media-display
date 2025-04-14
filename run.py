@@ -114,7 +114,6 @@ menu = None
 while running:
     
     if folder.is_enabled():
-        print(folder)
         menu = folder
         folder.update(pygame.event.get())
         folder.draw(screen)
