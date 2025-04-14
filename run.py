@@ -136,16 +136,16 @@ while running:
         if event.type == pygame.KEYUP:
             if event.key == pygame.key.key_code('x'):
                 menu._index -= 1
-                menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets[menu._index])
+                menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets()[menu._index])
             elif event.key == pygame.key.key_code('y'):
                 menu._index += 1
-                menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets[menu._index])
+                menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets()[menu._index])
             if menu._index > len(menu.get_widgets()) - 1:
                     menu._index = 0
-                    menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets[menu._index])
+                    menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets()[menu._index])
             elif menu._index < 0:
-                menu._index = len(menu.get_widgets()) - 1
-                menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets[menu._index])
+                menu._index = len(menu.get_widgets())
+                menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets()[menu._index])
                     
             if event.key == pygame.key.key_code('a'):
                 menu.get_selected_widget().apply()
