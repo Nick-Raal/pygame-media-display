@@ -103,7 +103,7 @@ file_types = ('.mp4', '.png')
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 
 for file in files:
-    folder.add.button(file, lambda f=file: print(f"Open {f}"))
+    folder.add.button(file, lambda f=file: open(f))
 # clock = pygame.time.Clock()
 # cap = cv2.VideoCapture('video.mp4')
 # running, img = cap.read()
