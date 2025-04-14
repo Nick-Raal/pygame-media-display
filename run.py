@@ -97,15 +97,13 @@ folder = pygame_menu.Menu('Memories', 320, 240,
     enabled=False, 
     theme=custom_theme,
     overflow=True)
-frame = folder.add.frame_v(320, 240, max_height=200, background_color=(30, 30, 30),  selection_effect=arrow)
-frame._relax = True
 
 # Add buttons directly to the frame menu
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 
 for file in files:
-    frame.add.button(file, lambda f=file: print(f"Open {f}"))
+    folder.add.button(file, lambda f=file: print(f"Open {f}"))
 # clock = pygame.time.Clock()
 # cap = cv2.VideoCapture('video.mp4')
 # running, img = cap.read()
