@@ -94,11 +94,11 @@ def open(f):
         
 
 folder = pygame_menu.Menu('Memories', 320, 240, enabled=False, theme=custom_theme)
+folder.set_widget_max_menu_height(240, scroll_bar=True)
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 for file in files:
     folder.add.button(os.path.basename(file), lambda f=file: open(f))
-
 
 # clock = pygame.time.Clock()
 # cap = cv2.VideoCapture('video.mp4')
