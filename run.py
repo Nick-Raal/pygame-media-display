@@ -61,9 +61,12 @@ display_hat.on_button_pressed(button_callback)
 
 def start_the_game():
     mainmenu._open(folder)
+    
+custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
+custom_theme.widget_selection_effect = pygame_menu.widgets.NoneSelection()
 
 mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
-                                 theme=themes.THEME_SOLARIZED)
+                                 theme=custom_theme)
 mainmenu.add.button('Open', start_the_game)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 
@@ -94,7 +97,7 @@ folder = pygame_menu.Menu('Memories', 320, 240, enabled=False)
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 for file in files:
-    folder.add.button(file.title(), lambda f=file: open(f))
+    folder.add.button(os.path.basename(file), lambda f=file: open(f))
 
 
 # clock = pygame.time.Clock()
