@@ -101,9 +101,10 @@ frame = folder.add.frame_v(320, 240, max_height=200, background_color=(30, 30, 3
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 frame._relax = True
+# Add buttons to frame — correctly
 for file in files:
-    frame.pack(
-    frame._menu.add.button(os.path.basename(file), lambda f=file: open(f)))
+    btn = folder.add.button(os.path.basename(file), lambda f=file: open(f))
+    frame.pack(btn)
 # clock = pygame.time.Clock()
 # cap = cv2.VideoCapture('video.mp4')
 # running, img = cap.read()
