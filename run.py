@@ -91,7 +91,7 @@ def open(f):
         
 
 folder = pygame_menu.Menu('Memories', 320, 240, enabled=False)
-file_types = ['.mp4', '.png'] 
+file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 for file in files:
     folder.add.button(file.title(), lambda f=file: open(f))
