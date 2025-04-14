@@ -93,7 +93,7 @@ def open(f):
         time.sleep(2)
         
 
-folder = pygame_menu.Menu('Memories', 320, 240, enabled=False)
+folder = pygame_menu.Menu('Memories', 320, 240, enabled=False, theme=custom_theme)
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 for file in files:
