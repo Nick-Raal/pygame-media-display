@@ -2,6 +2,7 @@ import os
 import sys
 import signal
 import pygame
+import time
 import pygame_menu
 from pygame_menu import themes
 import cv2
@@ -60,9 +61,6 @@ display_hat.on_button_pressed(button_callback)
 
 def start_the_game():
     mainmenu._open(folder)
- 
-def level_menu():
-    pass
 
 mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                  theme=themes.THEME_SOLARIZED)
@@ -84,10 +82,17 @@ def open(f):
             clock.tick(60)
             playing, img = cap.read()
         cap.release()
+    elif f.endswith('.png'):
+        img = cv2.imread(f)
+        shape = img.shape[1::-1]
+        screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+        update_display()
+        time.sleep(2)
+        
 
 folder = pygame_menu.Menu('Memories', 320, 240, enabled=False)
-file_type = '.mp4'  # change to your file type
-files = [f for f in os.listdir('.') if f.endswith(file_type)]
+file_types = ['.mp4', '.png'] 
+files = [f for f in os.listdir('.') if f.endswith(file_types)]
 for file in files:
     folder.add.button(file.title(), lambda f=file: open(f))
 
