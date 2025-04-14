@@ -66,7 +66,7 @@ custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.widget_selection_effect = pygame_menu.widgets.NoneSelection()
 
 mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
-                                 theme=custom_theme)
+                                 theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', start_the_game)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 
