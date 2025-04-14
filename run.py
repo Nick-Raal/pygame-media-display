@@ -97,7 +97,7 @@ folder = pygame_menu.Menu('Memories', 320, 240,
     enabled=False, 
     theme=custom_theme,
     overflow=True)
-frame = folder.add.frame_v(320, 240, max_height=200, background_color=(30, 30, 30))
+frame = folder.add.frame_v(320, 240, max_height=200, background_color=(30, 30, 30),  selection_effect=arrow)
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 frame._relax = True
