@@ -123,9 +123,6 @@ while running:
     update_display()
     # clock.tick(60)
     # running, img = cap.read()
-    if (menu.get_current().get_selected_widget()):
-        arrow.draw(screen, menu.get_current().get_selected_widget()) 
-        
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -143,6 +140,8 @@ while running:
             menu.get_scrollarea().scroll_to_rect(menu.get_widgets()[menu._index].get_rect(), scroll_parent=True)
             print(menu.get_scrollarea()._scrollbars[0].get_value())
             print(menu._index)
+            if (menu.get_current().get_selected_widget()):
+                arrow.draw(screen, menu.get_current().get_selected_widget()) 
             if event.key == pygame.key.key_code('a'):
                 menu.get_selected_widget().apply()
         if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
