@@ -141,9 +141,8 @@ while running:
                     menu._index = 0
             elif menu._index < 0:
                 menu._index = len(menu.get_widgets())
-            menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets()[menu._index], scroll_parent=True)
+            menu.get_scrollarea().scroll_to_rect(menu.get_widgets()[menu._index].get_rect(), scroll_parent=True)
             print(menu.get_scrollarea()._scrollbars[0].get_value())
-            print(menu.get_widgets()[menu._index].get_title())
             menu.draw(screen)
             if event.key == pygame.key.key_code('a'):
                 menu.get_selected_widget().apply()
