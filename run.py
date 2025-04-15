@@ -142,6 +142,7 @@ while running:
             elif menu._index < 0:
                 menu._index = len(menu.get_widgets())
             menu.get_scrollarea()._scrollbars[0].scroll_to_widget(menu.get_widgets()[menu._index], scroll_parent=True)
+            menu.draw(screen)
             if event.key == pygame.key.key_code('a'):
                 menu.get_selected_widget().apply()
         if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
