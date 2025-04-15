@@ -112,7 +112,9 @@ menu = None
 while running:
     
     if folder.is_enabled():
+        
         menu = folder
+        print(menu.get_scrollarea()._scrollbars[0])
         folder.update(pygame.event.get())
         folder.draw(screen)
         if (folder.get_current().get_selected_widget()):
@@ -132,7 +134,7 @@ while running:
             running = False
             break
         if event.type == pygame.KEYUP:
-            print(menu.get_scrollarea()._scrollbars[0])
+           
             if event.key == pygame.key.key_code('x'):
                 menu._index -= 1
             elif event.key == pygame.key.key_code('y'):
