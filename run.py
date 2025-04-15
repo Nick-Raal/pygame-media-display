@@ -114,7 +114,6 @@ while running:
     if folder.is_enabled():
         
         menu = folder
-        print(menu.get_scrollarea()._scrollbars[0])
         folder.update(pygame.event.get())
         folder.draw(screen)
         if (folder.get_current().get_selected_widget()):
