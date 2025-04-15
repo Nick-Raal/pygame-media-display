@@ -115,14 +115,10 @@ while running:
         menu = folder
         folder.update(pygame.event.get())
         folder.draw(screen)
-        if (folder.get_current().get_selected_widget()):
-            arrow.draw(screen, mainmenu.get_current().get_selected_widget()) 
     elif mainmenu.is_enabled():
         menu = mainmenu
         mainmenu.update(pygame.event.get())
         mainmenu.draw(screen)
-        if (mainmenu.get_current().get_selected_widget()):
-            arrow.draw(screen, mainmenu.get_current().get_selected_widget())
     # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
     # clock.tick(60)
@@ -144,6 +140,8 @@ while running:
             menu.get_scrollarea().scroll_to_rect(menu.get_widgets()[menu._index].get_rect(), scroll_parent=True)
             print(menu.get_scrollarea()._scrollbars[0].get_value())
             print(menu._index)
+            if (menu.get_current().get_selected_widget()):
+                arrow.draw(screen, menu.get_current().get_selected_widget()) 
             if event.key == pygame.key.key_code('a'):
                 menu.get_selected_widget().apply()
         if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
