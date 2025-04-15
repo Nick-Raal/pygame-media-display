@@ -121,6 +121,7 @@ while running:
     menu.update(pygame.event.get())
     menu.draw(screen)
     if (menu.get_current().get_selected_widget()):
+        arrow.set_value(menu._index)
         arrow.draw(screen, menu.get_current().get_selected_widget())
     # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
