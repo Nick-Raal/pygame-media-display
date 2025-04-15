@@ -116,7 +116,7 @@ while running:
         folder.update(pygame.event.get())
         folder.draw(screen)
         if (folder.get_current().get_selected_widget()):
-            arrow.draw(screen, mainmenu.get_current().get_selected_widget()) 
+            arrow.draw(screen, folder.get_current().get_selected_widget()) 
     elif mainmenu.is_enabled():
         menu = mainmenu
         mainmenu.update(pygame.event.get())
