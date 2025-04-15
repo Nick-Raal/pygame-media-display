@@ -111,15 +111,17 @@ running = True
 menu = None
 while running:
     
-    menu.update(pygame.event.get())
-    menu.draw(screen)
-    if (menu.get_current().get_selected_widget()):
-        arrow.draw(screen, menu.get_current().get_selected_widget())
+
     
     if folder.is_enabled():
         menu = folder
     elif mainmenu.is_enabled():
         menu = mainmenu
+        
+    menu.update(pygame.event.get())
+    menu.draw(screen)
+    if (menu.get_current().get_selected_widget()):
+        arrow.draw(screen, menu.get_current().get_selected_widget())
     # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
     # clock.tick(60)
