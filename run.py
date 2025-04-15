@@ -140,7 +140,7 @@ while running:
             if menu._index > len(menu.get_widgets()) - 1:
                     menu._index = 0
             elif menu._index < 0:
-                menu._index = len(menu.get_widgets())
+                menu._index = len(menu.get_widgets()) - 1
             menu.get_scrollarea().scroll_to_rect(menu.get_widgets()[menu._index].get_rect(), scroll_parent=True)
             print(menu.get_scrollarea()._scrollbars[0].get_value())
             print(menu._index)
