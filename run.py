@@ -109,12 +109,6 @@ for file in files:
 
 running = True
 while running:
-        
-    if mainmenu.is_enabled():
-        mainmenu.get_current().update(pygame.event.get())
-        mainmenu.get_current().draw(screen)
-    if (mainmenu.get_current().get_selected_widget()):
-        arrow.draw(screen, mainmenu.get_current().get_selected_widget())
     
     # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
@@ -131,7 +125,7 @@ while running:
             elif event.key == pygame.key.key_code('y'):
                 mainmenu.get_current()._index += 1
             if mainmenu.get_current()._index > len(mainmenu.get_current().get_widgets()) - 1:
-                    mainmenu.get_current()._index = 0
+                mainmenu.get_current()._index = 0
             elif mainmenu.get_current()._index < 0:
                 mainmenu.get_current()._index = len(mainmenu.get_current().get_widgets()) - 1
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect(), scroll_parent=True)
@@ -141,6 +135,11 @@ while running:
         if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
             running = False
             break
+    if mainmenu.is_enabled():
+        mainmenu.get_current().update(pygame.event.get())
+        mainmenu.get_current().draw(screen)
+    if (mainmenu.get_current().get_selected_widget()):
+        arrow.draw(screen, mainmenu.get_current().get_selected_widget())
 
 screen.fill((0, 0, 0))
 update_display()
