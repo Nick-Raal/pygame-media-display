@@ -61,14 +61,12 @@ def start_the_game():
     mainmenu._open(folder)
     
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
-custom_theme.widget_selection_effect = pygame_menu.widgets.NoneSelection()
+#custom_theme.widget_selection_effect = pygame_menu.widgets.NoneSelection()
 
 mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                  theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', start_the_game)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
-
-arrow = pygame_menu.widgets.LeftArrowSelection(arrow_size = (10, 15))
 
 def open(f):
     pygame_menu.events.EXIT
@@ -137,7 +135,6 @@ while running:
                 mainmenu.get_current().get_selected_widget().apply()
                 
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
-            arrow.draw(screen, mainmenu.get_current().get_selected_widget())
         if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
             running = False
             break
