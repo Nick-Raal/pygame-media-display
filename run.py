@@ -112,6 +112,7 @@ while running:
         
     if mainmenu.is_enabled():
         mainmenu.get_current().update(pygame.event.get())
+        mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect(), scroll_parent=True)
         mainmenu.get_current().draw(screen)
         arrow.draw(screen, mainmenu.get_current().get_selected_widget())
     
@@ -132,7 +133,6 @@ while running:
                 mainmenu.get_current()._index = 0
             elif mainmenu.get_current()._index < 0:
                 mainmenu.get_current()._index = len(mainmenu.get_current().get_widgets()) - 1
-            #mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect(), scroll_parent=True)
             print(mainmenu.get_current()._index)
             if event.key == pygame.key.key_code('a'):
                 mainmenu.get_current().get_selected_widget().apply()
