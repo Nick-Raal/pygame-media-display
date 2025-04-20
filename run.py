@@ -63,7 +63,7 @@ def start_the_game():
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.widget_selection_effect = pygame_menu.widgets.NoneSelection()
 
-mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
+mainmenu = pygame_menu.mainmenu.get_current()('Memory Module', 320, 240, 
                                  theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', start_the_game)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
@@ -91,12 +91,12 @@ def open(f):
         time.sleep(2)
         
 
-folder = pygame_menu.Menu('Memories', 320, 240, 
+folder = pygame_menu.mainmenu.get_current()('Memories', 320, 240, 
     enabled=False, 
     theme=custom_theme,
     overflow=True)
 
-# Add buttons directly to the frame menu
+# Add buttons directly to the frame mainmenu.get_current()
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 
@@ -108,18 +108,14 @@ for file in files:
 # shape = img.shape[1::-1]
 
 running = True
-menu = None
 while running:
         
-    if folder.is_enabled():
-        menu = folder
-    elif mainmenu.is_enabled():
-        menu = mainmenu
-        
-    menu.update(pygame.event.get())
-    menu.draw(screen)
-    if (menu.get_current().get_selected_widget()):
-        arrow.draw(screen, menu.get_selected_widget())
+    if mainmenu.is_enabled():
+        mainmenu.get_current().update(pygame.event.get())
+        mainmenu.get_current().draw(screen)
+    if (mainmenu.get_current().get_selected_widget()):
+        arrow.draw(screen, mainmenu.get_selected_widget())
+    
     # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
     # clock.tick(60)
@@ -131,17 +127,17 @@ while running:
         if event.type == pygame.KEYUP:
     
             if event.key == pygame.key.key_code('x'):
-                menu._index -= 1
+                mainmenu.get_current()._index -= 1
             elif event.key == pygame.key.key_code('y'):
-                menu._index += 1
-            if menu._index > len(menu.get_widgets()) - 1:
-                    menu._index = 0
-            elif menu._index < 0:
-                menu._index = len(menu.get_widgets()) - 1
-            menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect(), scroll_parent=True)
-            print(menu._index)
+                mainmenu.get_current()._index += 1
+            if mainmenu.get_current()._index > len(mainmenu.get_current().get_widgets()) - 1:
+                    mainmenu.get_current()._index = 0
+            elif mainmenu.get_current()._index < 0:
+                mainmenu.get_current()._index = len(mainmenu.get_current().get_widgets()) - 1
+            mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect(), scroll_parent=True)
+            print(mainmenu.get_current()._index)
             if event.key == pygame.key.key_code('a'):
-                menu.get_selected_widget().apply()
+                mainmenu.get_current().get_selected_widget().apply()
         if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
             running = False
             break
