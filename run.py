@@ -131,7 +131,7 @@ while running:
                 mainmenu.get_current()._index = 0
             elif mainmenu.get_current()._index < 0:
                 mainmenu.get_current()._index = len(mainmenu.get_current().get_widgets()) - 1
-            widg = mainmenu.get_current().get_widget(0)
+            widg = mainmenu.get_current().get_widgets()[mainmenu.get_current()._index]
             mainmenu.get_current().select_widget(widg)
             if event.key == pygame.key.key_code('a'):
                 mainmenu.get_current().get_selected_widget().apply()
