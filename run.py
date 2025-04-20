@@ -131,9 +131,9 @@ while running:
                 mainmenu.get_current()._index = 0
             elif mainmenu.get_current()._index < 0:
                 mainmenu.get_current()._index = len(mainmenu.get_current().get_widgets()) - 1
+            mainmenu.get_current().select_widget(mainmenu.get_current().get_widget( mainmenu.get_current()._index))
             if event.key == pygame.key.key_code('a'):
-                mainmenu.get_current().get_selected_widget().apply(mainmenu.get_current().get_widget( mainmenu.get_current()._index))
-            mainmenu.get_current().select_widget()
+                mainmenu.get_current().get_selected_widget().apply()
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
         if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
             running = False
