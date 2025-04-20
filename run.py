@@ -132,7 +132,7 @@ while running:
             elif mainmenu.get_current()._index < 0:
                 mainmenu.get_current()._index = len(mainmenu.get_current().get_widgets()) - 1
             widg = mainmenu.get_current().get_widgets()[mainmenu.get_current()._index]
-            mainmenu.get_current().select_widget(widg)
+            mainmenu.get_current().select_widget(widg, update_menu=True)
             if event.key == pygame.key.key_code('a'):
                 mainmenu.get_current().get_selected_widget().apply()
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
