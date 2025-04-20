@@ -109,6 +109,11 @@ for file in files:
 
 running = True
 while running:
+        
+    if mainmenu.is_enabled():
+        mainmenu.get_current().update(pygame.event.get())
+        mainmenu.get_current().draw(screen)
+        arrow.draw(screen, mainmenu.get_current().get_selected_widget())
     
     # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
@@ -135,11 +140,6 @@ while running:
         if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
             running = False
             break
-    if mainmenu.is_enabled():
-        mainmenu.get_current().update(pygame.event.get())
-        mainmenu.get_current().draw(screen)
-    if (mainmenu.get_current().get_selected_widget()):
-        arrow.draw(screen, mainmenu.get_current().get_selected_widget())
 
 screen.fill((0, 0, 0))
 update_display()
