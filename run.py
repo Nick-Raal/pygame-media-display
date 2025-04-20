@@ -110,9 +110,7 @@ for file in files:
 running = True
 menu = None
 while running:
-    
-
-    
+        
     if folder.is_enabled():
         menu = folder
     elif mainmenu.is_enabled():
