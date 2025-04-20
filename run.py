@@ -63,7 +63,7 @@ def start_the_game():
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.widget_selection_effect = pygame_menu.widgets.NoneSelection()
 
-mainmenu = pygame_menu.mainmenu.get_current()('Memory Module', 320, 240, 
+mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                  theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', start_the_game)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
@@ -91,7 +91,7 @@ def open(f):
         time.sleep(2)
         
 
-folder = pygame_menu.mainmenu.get_current()('Memories', 320, 240, 
+folder = pygame_menu.Menu('Memories', 320, 240, 
     enabled=False, 
     theme=custom_theme,
     overflow=True)
