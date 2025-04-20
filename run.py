@@ -114,7 +114,7 @@ while running:
         mainmenu.get_current().update(pygame.event.get())
         mainmenu.get_current().draw(screen)
     if (mainmenu.get_current().get_selected_widget()):
-        arrow.draw(screen, mainmenu.get_selected_widget())
+        arrow.draw(screen, mainmenu.get_current().get_selected_widget())
     
     # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
