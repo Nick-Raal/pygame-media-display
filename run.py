@@ -96,16 +96,12 @@ folder = pygame_menu.Menu('Memories', 320, 240,
     theme=custom_theme,
     overflow=True)
 
-# Add buttons directly to the frame mainmenu.get_current()
+
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 
 for file in files:
     folder.add.button(Path(file).stem, lambda f=file: open(f))
-# clock = pygame.time.Clock()
-# cap = cv2.VideoCapture('video.mp4')
-# running, img = cap.read()
-# shape = img.shape[1::-1]
 
 running = True
 while running:
@@ -114,12 +110,8 @@ while running:
         mainmenu.get_current().update(pygame.event.get())
         mainmenu.get_current().draw(screen)
     
-    
-    
-    # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     update_display()
-    # clock.tick(60)
-    # running, img = cap.read()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -139,7 +131,7 @@ while running:
                 mainmenu.get_current().get_selected_widget().apply()
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
         if event.key == (pygame.key.key_code('b')):
-            pygame_menu.events.EXIT
+            pygame_menu.events.BACK
 
 screen.fill((0, 0, 0))
 update_display()
