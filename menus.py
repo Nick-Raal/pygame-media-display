@@ -3,9 +3,6 @@ import pygame_menu
 import cv2
 import time
 
-from run import update_display, screen, _exit
-
-
     
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
@@ -18,16 +15,16 @@ def open(f):
         playing, img = cap.read()
         shape = img.shape[1::-1]
         while playing:
-            screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
-            update_display()
+            # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+            # update_display()
             clock.tick(60)
             playing, img = cap.read()
         cap.release()
     elif f.endswith('.png'):
         img = cv2.imread(f)
         shape = img.shape[1::-1]
-        screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
-        update_display()
+        # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+        # update_display()
         time.sleep(2)
         
 
