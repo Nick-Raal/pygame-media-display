@@ -64,7 +64,7 @@ custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.font = pygame_menu.font.FONT_FRANCHISE
 
 print(custom_theme.font)
-mainmenu = pygame_menu.Menu('Memory', 320, 240, 
+mainmenu = pygame_menu.Menu('Memory Module v1', 320, 240, 
                                  theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', start_the_game)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
