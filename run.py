@@ -3,13 +3,15 @@ import sys
 import signal
 import pygame
 import time
+from pathlib import Path
+
 import pygame_menu
 from pygame_menu import themes
 import cv2
 
 from displayhatmini import DisplayHATMini
 
-print("""Display HAT Mini: Basic Pygame Demo""")
+print("""PYGAME MEDIA DISPLAY""")
 
 if pygame.vernum < (2, 0, 0):
     print("Need PyGame >= 2.0.0:\n    python3 -m pip install pygame --upgrade")
@@ -99,7 +101,7 @@ file_types = ('.mp4', '.png')
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
 
 for file in files:
-    folder.add.button(file, lambda f=file: open(f))
+    folder.add.button(Path(file).stem, lambda f=file: open(f))
 # clock = pygame.time.Clock()
 # cap = cv2.VideoCapture('video.mp4')
 # running, img = cap.read()
