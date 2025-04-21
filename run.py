@@ -116,7 +116,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
             break
-        if event.type == pygame.KEYUP:
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.key.key_code('x'):
                 mainmenu.get_current()._index -= 1
             elif event.key == pygame.key.key_code('y'):
