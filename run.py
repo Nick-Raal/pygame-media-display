@@ -10,6 +10,7 @@ from pygame_menu import themes
 import cv2
 
 from displayhatmini import DisplayHATMini
+import pygame_menu.events
 
 print("""PYGAME MEDIA DISPLAY""")
 
@@ -69,6 +70,7 @@ mainmenu = pygame_menu.Menu('Memory Module v1', 320, 240,
                                  theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', start_the_game)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
+mainmenu.set_onclose(pygame_menu.events.EXIT)
 
 def open(f):
     pygame_menu.events.EXIT
@@ -95,7 +97,7 @@ folder = pygame_menu.Menu('Memories', 320, 240,
     enabled=False, 
     theme=custom_theme,
     overflow=True)
-
+folder.set_onclose(pygame_menu.events.BACK)
 
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
@@ -130,9 +132,8 @@ while running:
             if event.key == pygame.key.key_code('a'):
                 mainmenu.get_current().get_selected_widget().apply()
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
-        if event.key == (pygame.key.key_code('b')):
-            print("b")
-            mainmenu.get_current().close()
+            if event.key == (pygame.key.key_code('b')):
+                mainmenu.get_current().close()
 
 screen.fill((0, 0, 0))
 update_display()
