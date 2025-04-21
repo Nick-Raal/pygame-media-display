@@ -74,7 +74,7 @@ mainmenu = pygame_menu.Menu('Memory Module v1', 320, 240,
                                  theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', start_the_game)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
-mainmenu.set_onclose(pygame_menu.events.EXIT)
+mainmenu.set_onclose(_exit)
 
 def open(f):
     pygame_menu.events.EXIT
