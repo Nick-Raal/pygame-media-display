@@ -61,7 +61,7 @@ def start_the_game():
     mainmenu._open(folder)
     
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
-#custom_theme.widget_selection_effect = pygame_menu.widgets.NoneSelection()
+custom_theme.font = pygame_menu.font.FONT_FRANCHISE
 
 mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                  theme=custom_theme, overflow=True)
