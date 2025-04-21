@@ -22,6 +22,10 @@ def _exit(sig, frame):
     global running
     running = False
     print("\nExiting!...\n")
+    screen.fill((0, 0, 0))
+    update_display()
+    pygame.quit()
+    sys.exit(0)
 
 
 def update_display():
@@ -97,7 +101,7 @@ folder = pygame_menu.Menu('Memories', 320, 240,
     enabled=False, 
     theme=custom_theme,
     overflow=True)
-folder.set_onclose(pygame_menu.events.EXIT)
+folder.set_onclose(pygame_menu.events.BACK)
 
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
@@ -135,7 +139,4 @@ while running:
             if event.key == (pygame.key.key_code('b')):
                 mainmenu.get_current().close()
 
-screen.fill((0, 0, 0))
-update_display()
-pygame.quit()
-sys.exit(0)
+_exit()
