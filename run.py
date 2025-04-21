@@ -97,7 +97,7 @@ folder = pygame_menu.Menu('Memories', 320, 240,
     enabled=False, 
     theme=custom_theme,
     overflow=True)
-folder.set_onclose(pygame_menu.events.BACK)
+folder.set_onclose(pygame_menu.events.CLOSE)
 
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
