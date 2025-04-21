@@ -64,15 +64,14 @@ def button_callback(pin):
 
 display_hat.on_button_pressed(button_callback)
 
-def start_the_game():
-    mainmenu._open(folder)
+
     
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
 mainmenu = pygame_menu.Menu('Memory Module v1', 320, 240, 
                                  theme=custom_theme, overflow=True)
-mainmenu.add.button('Open', start_the_game)
+mainmenu.add.button('Open', folder)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 mainmenu.set_onclose(_exit)
 
