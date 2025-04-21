@@ -158,7 +158,7 @@ while running:
                 mainmenu.get_current().get_selected_widget().apply()
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
             if event.key == (pygame.key.key_code('b')):
-                print('b')
+                print(mainmenu.get_current().get_title())
                 mainmenu.get_current().close()
                 print(mainmenu.get_current().is_enabled())
                 print(mainmenu.get_current().get_title())
