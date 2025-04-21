@@ -131,7 +131,7 @@ while running:
                 mainmenu.get_current().get_selected_widget().apply()
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
         if event.key == (pygame.key.key_code('b')):
-            pygame_menu.events.BACK
+            mainmenu.get_current().close()
 
 screen.fill((0, 0, 0))
 update_display()
