@@ -138,8 +138,8 @@ while running:
             if event.key == pygame.key.key_code('a'):
                 mainmenu.get_current().get_selected_widget().apply()
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
-        if event.key in (pygame.key.key_code('b'), pygame.K_ESCAPE):
-            running = False
+        if event.key in (pygame.key.key_code('b')):
+            pygame_menu.events.EXIT
             break
 
 screen.fill((0, 0, 0))
