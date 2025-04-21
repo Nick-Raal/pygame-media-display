@@ -73,45 +73,42 @@ display_hat.on_button_pressed(button_callback)
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
-    
-custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
-custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
-def open(f):
-    pygame_menu.events.EXIT
-    if f.endswith('.mp4'):
-        clock = pygame.time.Clock()
-        cap = cv2.VideoCapture(f)
-        playing, img = cap.read()
-        shape = img.shape[1::-1]
-        while playing:
-            screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
-            update_display()
-            clock.tick(60)
-            playing, img = cap.read()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                    break
-                if event.type == pygame.KEYDOWN:
-                    if event.key == (pygame.key.key_code('b')):
-                        playing=False
+# def open(f):
+#     pygame_menu.events.EXIT
+#     if f.endswith('.mp4'):
+#         clock = pygame.time.Clock()
+#         cap = cv2.VideoCapture(f)
+#         playing, img = cap.read()
+#         shape = img.shape[1::-1]
+#         while playing:
+#             screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+#             update_display()
+#             clock.tick(60)
+#             playing, img = cap.read()
+#             for event in pygame.event.get():
+#                 if event.type == pygame.QUIT:
+#                     running = False
+#                     break
+#                 if event.type == pygame.KEYDOWN:
+#                     if event.key == (pygame.key.key_code('b')):
+#                         playing=False
 
-        cap.release()
-    elif f.endswith('.png'):
-        img = cv2.imread(f)
-        shape = img.shape[1::-1]
-        screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
-        update_display()
-        playing = True
-        while playing:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                    break
-                if event.type == pygame.KEYDOWN:
-                    if event.key == (pygame.key.key_code('b')):
-                        playing=False
+#         cap.release()
+#     elif f.endswith('.png'):
+#         img = cv2.imread(f)
+#         shape = img.shape[1::-1]
+#         screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+#         update_display()
+#         playing = True
+#         while playing:
+#             for event in pygame.event.get():
+#                 if event.type == pygame.QUIT:
+#                     running = False
+#                     break
+#                 if event.type == pygame.KEYDOWN:
+#                     if event.key == (pygame.key.key_code('b')):
+#                         playing=False
 
 
 folder = pygame_menu.Menu('Memories', 320, 240, 
@@ -161,6 +158,7 @@ while running:
                 mainmenu.get_current().get_selected_widget().apply()
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
             if event.key == (pygame.key.key_code('b')):
-                mainmenu.get_current().disable()
+                print('b')
+                mainmenu.get_current().close()
 
 _exit()
