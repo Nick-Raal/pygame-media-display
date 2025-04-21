@@ -69,12 +69,6 @@ display_hat.on_button_pressed(button_callback)
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
-mainmenu = pygame_menu.Menu('Memory Module v1', 320, 240, 
-                                 theme=custom_theme, overflow=True)
-mainmenu.add.button('Open', folder)
-mainmenu.add.button('Quit', pygame_menu.events.EXIT)
-mainmenu.set_onclose(_exit)
-
 def open(f):
     pygame_menu.events.EXIT
     if f.endswith('.mp4'):
@@ -107,6 +101,12 @@ files = [f for f in os.listdir('.') if f.endswith(file_types)]
 
 for file in files:
     folder.add.button(Path(file).stem, lambda f=file: open(f))
+
+mainmenu = pygame_menu.Menu('Memory Module v1', 320, 240, 
+                                 theme=custom_theme, overflow=True)
+mainmenu.add.button('Open', folder)
+mainmenu.add.button('Quit', pygame_menu.events.EXIT)
+mainmenu.set_onclose(_exit)
 
 running = True
 while running:
