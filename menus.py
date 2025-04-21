@@ -45,7 +45,7 @@ files = [f for f in os.listdir('.') if f.endswith(file_types)]
 for file in files:
     folder.add.button(Path(file).stem, lambda f=file: open(f))
 
-mainmenu = pygame_menu.Menu('Memory Module v1', 320, 240, 
+mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                  theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', folder)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
