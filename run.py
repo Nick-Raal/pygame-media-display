@@ -85,18 +85,33 @@ def open(f):
         playing, img = cap.read()
         shape = img.shape[1::-1]
         while playing:
-            # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
-            # update_display()
+            screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+            update_display()
             clock.tick(60)
             playing, img = cap.read()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    break
+                if event.type == pygame.KEYDOWN:
+                    if event.key == (pygame.key.key_code('b')):
+                        playing=False
+
         cap.release()
     elif f.endswith('.png'):
         img = cv2.imread(f)
         shape = img.shape[1::-1]
-        # screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
-        # update_display()
-        time.sleep(2)
-        
+        screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+        update_display()
+        playing = True
+        while playing:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    break
+                if event.type == pygame.KEYDOWN:
+                    if event.key == (pygame.key.key_code('b')):
+                        playing=False
 
 
 folder = pygame_menu.Menu('Memories', 320, 240, 
