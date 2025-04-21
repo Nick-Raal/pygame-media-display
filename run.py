@@ -160,6 +160,7 @@ while running:
             if event.key == (pygame.key.key_code('b')):
                 print('b')
                 mainmenu.get_current().close()
+                print(mainmenu.is_enabled())
                 print(mainmenu.get_current().get_title())
 
 _exit()
