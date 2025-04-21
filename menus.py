@@ -3,7 +3,12 @@ import pygame_menu
 import cv2
 import time
 
-from run import update_display, screen
+from run import update_display, screen, _exit
+
+
+    
+custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
+custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
 def open(f):
     pygame_menu.events.EXIT
@@ -25,6 +30,7 @@ def open(f):
         update_display()
         time.sleep(2)
         
+
 
 folder = pygame_menu.Menu('Memories', 320, 240, 
     enabled=False, 
