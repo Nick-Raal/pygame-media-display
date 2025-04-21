@@ -8,8 +8,6 @@ import pygame_menu
 import cv2
 import time
 
-from menus import mainmenu, folder
-
 import pygame_menu
 from pygame_menu import themes
 
