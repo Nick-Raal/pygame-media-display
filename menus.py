@@ -2,16 +2,16 @@ import pygame
 import pygame_menu
 import cv2
 import time
+from pathlib import Path
+import os
 
 from run import update_display, screen, _exit
 
-
-    
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
 def open(f):
-    pygame_menu.events.EXIT
+    mainmenu.disable()
     if f.endswith('.mp4'):
         clock = pygame.time.Clock()
         cap = cv2.VideoCapture(f)
@@ -29,6 +29,7 @@ def open(f):
         screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
         update_display()
         time.sleep(2)
+    mainmenu.enable()
         
 
 

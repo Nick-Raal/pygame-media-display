@@ -2,7 +2,6 @@ import os
 import sys
 import signal
 import pygame
-from pathlib import Path
 
 from menus import mainmenu, folder
 
@@ -64,18 +63,14 @@ def button_callback(pin):
 
 display_hat.on_button_pressed(button_callback)
 
-
-    
-custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
-custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
-
-
 running = True
 while running:
         
     if mainmenu.is_enabled():
         mainmenu.get_current().update(pygame.event.get())
         mainmenu.get_current().draw(screen)
+        
+    
     
     update_display()
 
@@ -98,6 +93,7 @@ while running:
                 mainmenu.get_current().get_selected_widget().apply()
             mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
             if event.key == (pygame.key.key_code('b')):
-                mainmenu.get_current().close()
-
+                running = False
+                break
+                #mainmenu.get_current().close()
 _exit()
