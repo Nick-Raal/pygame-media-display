@@ -32,7 +32,7 @@ class Video(Media):
             print("file not found")
             return img[0]
             
-            
+        print("bruh")
         shape = img[1].shape[1::-1]
 
         return img[0], pygame.image.frombuffer(img[1].tobytes(), shape, "BGR")
