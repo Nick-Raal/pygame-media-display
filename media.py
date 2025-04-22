@@ -30,12 +30,12 @@ class Video(Media):
         except Exception as e:
             cap.release()
             print("file not found")
-            return False
+            return img[0]
             
             
         shape = img[1].shape[1::-1]
 
-        return True, pygame.image.frombuffer(img.tobytes(), shape, "BGR")
+        return img[0], pygame.image.frombuffer(img[1].tobytes(), shape, "BGR")
     
 
         
