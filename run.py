@@ -115,7 +115,7 @@ folder = pygame_menu.Menu('Memories', 320, 240,
     enabled=False, 
     theme=custom_theme,
     overflow=True)
-folder.set_onclose(pygame_menu.events.RESET)
+folder.set_onclose(pygame_menu.events.CLOSE)
 
 file_types = ('.mp4', '.png') 
 files = [f for f in os.listdir('.') if f.endswith(file_types)]
@@ -160,7 +160,7 @@ while running:
             if event.key == (pygame.key.key_code('b')):
                 print(mainmenu.get_current().get_title())
                 mainmenu.get_current().close()
-                print(mainmenu.get_current().is_enabled())
+                print(mainmenu.get_current().enable())
                 print(mainmenu.get_current().get_title())
 
 _exit()
