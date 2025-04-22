@@ -127,7 +127,7 @@ mainmenu = pygame_menu.Menu('Memory Module', 320, 240,
                                  theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', folder)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
-mainmenu.set_onclose(_exit)
+mainmenu.set_onclose(pygame_menu.events.EXIT)
 mainmenu.set_onbeforeopen(mainmenu.enable)
 
 
@@ -161,6 +161,7 @@ while running:
             if event.key == (pygame.key.key_code('b')):
                 print(mainmenu.get_current().get_title())
                 mainmenu.get_current().close()
+                mainmenu.get_current().enable()
 
 screen.fill((0, 0, 0))
 update_display()
