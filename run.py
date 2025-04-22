@@ -76,6 +76,24 @@ display_hat.on_button_pressed(button_callback)
 custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
+def play(m):
+    clock = pygame.time.Clock()
+    var = m.open()
+    playing = var[0]
+    while playing:
+        screen.blit(var[1],  (0, 0))
+        update_display()
+        clock.tick(60)
+        var = m.open()
+        playing = var[0]
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                break
+            if event.type == pygame.KEYDOWN:
+                    if event.key == (pygame.key.key_code('b')):
+                        playing=False
+
 
 # def open(f):
 #     pygame_menu.events.EXIT

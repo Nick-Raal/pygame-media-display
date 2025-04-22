@@ -17,6 +17,7 @@ class Media:
         
     def open(self):
         print("default open")
+        return True
         
     def get_title(self):
         return self.title
@@ -28,11 +29,12 @@ class Video(Media):
             img = cap.read()
         except Exception as e:
             cap.release()
+            return False
             print("file not found")
             
         shape = img.shape[1::-1]
 
-        return pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0)
+        return True, pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0)
     
 
         
