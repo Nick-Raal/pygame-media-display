@@ -29,12 +29,13 @@ class Video(Media):
             img = cap.read()
         except Exception as e:
             cap.release()
-            return False
             print("file not found")
+            return False
             
-        shape = img.shape[1::-1]
+            
+        shape = img[1].shape[1::-1]
 
-        return True, pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0)
+        return True, pygame.image.frombuffer(img.tobytes(), shape, "BGR")
     
 
         
