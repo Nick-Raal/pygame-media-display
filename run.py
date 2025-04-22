@@ -128,6 +128,7 @@ mainmenu = pygame_menu.Menu('Memory Module', 320, 240,
 mainmenu.add.button('Open', folder)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 mainmenu.set_onclose(_exit)
+mainmenu.set_onbeforeopen(mainmenu.enable)
 
 
 running = True
