@@ -142,7 +142,7 @@ file_types = ('.mp4')
 media = [Video(f) for f in os.listdir('.') if f.endswith(file_types)]
 
 for med in media:
-    folder.add.button(med.get_title(), lambda m: m.open())
+    folder.add.button(med.get_title(), lambda m=med: m.open())
     
 settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
 ip_address = socket.gethostbyname(socket.gethostname() + ".local")
