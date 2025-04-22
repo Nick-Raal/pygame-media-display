@@ -7,6 +7,8 @@ import pygame_menu
 import cv2
 import time
 
+import subprocess
+
 import pygame_menu
 from pygame_menu import themes
 
@@ -147,6 +149,7 @@ for med in media:
 settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
 ip_address = socket.gethostbyname(socket.gethostname() + ".local")
 settings.add.label(ip_address)
+#settings.add.label(subprocess.)
 settings.set_onclose(pygame_menu.events.BACK)
 
 mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
@@ -154,7 +157,7 @@ mainmenu = pygame_menu.Menu('Memory Module', 320, 240,
 mainmenu.add.button('Open', folder)
 mainmenu.add.button('Settings', settings)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
-mainmenu.set_onclose(pygame_menu.events.EXIT)
+mainmenu.set_onclose(_exit)
 
 
 running = True
@@ -190,7 +193,6 @@ while running:
             if(mainmenu.get_current().get_selected_widget()):
                 mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
             if event.key == (pygame.key.key_code('b')):
-                print(mainmenu.get_current().get_title())
                 mainmenu.get_current().close()
                 mainmenu.get_current().enable()
 
