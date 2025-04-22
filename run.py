@@ -162,7 +162,7 @@ while running:
                 print(mainmenu.get_current().get_title())
                 mainmenu.get_current().close()
 
-    screen.fill((0, 0, 0))
-    update_display()
-    pygame.quit()
-    sys.exit(0)
+screen.fill((0, 0, 0))
+update_display()
+pygame.quit()
+sys.exit(0)
