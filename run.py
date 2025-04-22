@@ -126,8 +126,9 @@ for file in files:
     folder.add.button(Path(file).stem, lambda f=file: open(f))
     
 settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
-ip_address = socket.gethostbyname(socket.gethostname())
+ip_address = socket.gethostbyname(socket.gethostname() + ".local")
 settings.add.label(ip_address)
+settings.set_onclose(pygame_menu.events.BACK)
 
 mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                  theme=custom_theme, overflow=True)
@@ -135,7 +136,6 @@ mainmenu.add.button('Open', folder)
 mainmenu.add.button('Settings', settings)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 mainmenu.set_onclose(pygame_menu.events.EXIT)
-mainmenu.set_onbeforeopen(mainmenu.enable)
 
 
 running = True
