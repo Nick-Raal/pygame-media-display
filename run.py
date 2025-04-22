@@ -14,6 +14,8 @@ from pygame_menu import themes
 from displayhatmini import DisplayHATMini
 import pygame_menu.events
 
+import socket
+
 print("""PYGAME MEDIA DISPLAY""")
 
 if pygame.vernum < (2, 0, 0):
@@ -122,10 +124,15 @@ files = [f for f in os.listdir('.') if f.endswith(file_types)]
 
 for file in files:
     folder.add.button(Path(file).stem, lambda f=file: open(f))
+    
+settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
+ip_address = socket.gethostbyname(socket.gethostname())
+settings.add.label(ip_address)
 
 mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                  theme=custom_theme, overflow=True)
 mainmenu.add.button('Open', folder)
+mainmenu.add.button('Settings', settings)
 mainmenu.add.button('Quit', pygame_menu.events.EXIT)
 mainmenu.set_onclose(pygame_menu.events.EXIT)
 mainmenu.set_onbeforeopen(mainmenu.enable)
