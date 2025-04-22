@@ -169,6 +169,10 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            screen.fill((0, 0, 0))
+            update_display()
+            pygame.quit()
+            sys.exit(0)
             break
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.key.key_code('x'):
