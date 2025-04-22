@@ -2,7 +2,6 @@ import os
 import sys
 import signal
 import pygame
-from pathlib import Path
 
 import pygame_menu
 import cv2
@@ -13,6 +12,8 @@ from pygame_menu import themes
 
 from displayhatmini import DisplayHATMini
 import pygame_menu.events
+
+from media import Video
 
 import socket
 
@@ -119,11 +120,11 @@ folder = pygame_menu.Menu('Memories', 320, 240,
     overflow=True)
 folder.set_onclose(pygame_menu.events.BACK)
 
-file_types = ('.mp4', '.png') 
-files = [f for f in os.listdir('.') if f.endswith(file_types)]
+file_types = ('.mp4') 
+media = [Video(f) for f in os.listdir('.') if f.endswith(file_types)]
 
-for file in files:
-    folder.add.button(Path(file).stem, lambda f=file: open(f))
+for med in media:
+    folder.add.button(med.get_title(), med.open())
     
 settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
 ip_address = socket.gethostbyname(socket.gethostname() + ".local")
