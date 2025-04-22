@@ -162,6 +162,4 @@ while running:
                 print(mainmenu.get_current().get_title())
                 mainmenu.get_current().close()
                 print(mainmenu.get_current().get_title())
-                print(mainmenu.get_current().is_enabled())
-
 _exit()
