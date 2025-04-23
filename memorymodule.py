@@ -82,28 +82,28 @@ class MemoryModule:
         self.mainmenu.add.button('Settings', self.settings)
         self.mainmenu.add.button('Quit', pygame_menu.events.EXIT)
         
-        self.mainmenu.set_onupdate(self.select(event_list))
+        self.mainmenu.set_onupdate(self.select)
         
-    def select(self, events):
-        for event in pygame.event.get():
+    def select(self, event_list, menu):
+        for event in event_list:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.key.key_code('x'):
-                    self.mainmenu.get_current()._index -= 1
+                    menu._index -= 1
                 elif event.key == pygame.key.key_code('y'):
-                    self.mainmenu.get_current()._index += 1
-                if self.mainmenu.get_current()._index > len(self.mainmenu.get_current().get_widgets()) - 1:
-                    self.mainmenu.get_current()._index = 0
-                elif self.mainmenu.get_current()._index < 0:
-                    self.mainmenu.get_current()._index = len(self.mainmenu.get_current().get_widgets()) - 1
-                widg = self.mainmenu.get_current().get_widgets()[self.mainmenu.get_current()._index]
+                    menu._index += 1
+                if menu._index > len(menu.get_widgets()) - 1:
+                    menu._index = 0
+                elif menu._index < 0:
+                    menu._index = len(menu.get_widgets()) - 1
+                widg = menu.get_widgets()[menu._index]
                 widg.select(update_menu=True)
                 if event.key == pygame.key.key_code('a'):
-                    self.mainmenu.get_current().get_selected_widget().apply()
-                if(self.mainmenu.get_current().get_selected_widget()):
-                    self.mainmenu.get_current().get_scrollarea().scroll_to_rect(self.mainmenu.get_current().get_selected_widget().get_rect())
+                    menu.get_selected_widget().apply()
+                if(menu.get_selected_widget()):
+                    menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
                 if event.key == (pygame.key.key_code('b')):
-                    self.mainmenu.get_current().close()
-                    self.mainmenu.get_current().enable()
+                    menu.close()
+                    menu.enable()
     
     def updater(self, screen):            
         if self.mainmenu.get_current().is_enabled():
