@@ -13,8 +13,8 @@ if pygame.vernum < (2, 0, 0):
     sys.exit(1)
     
 control = DisplayHatController()
-font = pygame.font.SysFont("Comic Sans MS", 40)
-multiline_text(control.get_screen(), "Welcome To Memory Module \nChecking for updates" ,font, (160, 120))
+font = pygame.font.SysFont("Comic Sans MS", 30)
+multiline_text(control.get_screen(), "Welcome To Memory Module\nChecking for updates" ,font, (160, 120))
 control.update_display()
 time.sleep(2)
 
@@ -34,13 +34,11 @@ try:
     for line in process.stdout:
         print(line.strip())  # optional: print the output live
         if "Already up to date." in line:
-            text_surface = font.render("Up to date", True, (255, 255, 255))
-            control.get_screen().blit(text_surface, (160, 120))
+            multiline_text(control.get_screen(), "Up to date" ,font, (160, 120))
             control.update_display()
             break
         elif "Updating" in line:
-            text_surface = font.render("Update Found", True, (255, 255, 255))
-            control.get_screen().blit(text_surface, (160, 120))
+            multiline_text(control.get_screen(), "Update Found\nRestarting" ,font, (160, 120))
             control.update_display()
             break
     #wait for the process to fully exit
