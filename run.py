@@ -16,7 +16,7 @@ control = DisplayHatController()
 font = pygame.font.SysFont("Comic Sans MS", 40)
 multiline_text(control.get_screen(), "Welcome To Memory Module \nChecking for updates" ,font, (160, 120))
 control.update_display()
-time.sleep(0.5)
+time.sleep(2)
 
 try:
     
