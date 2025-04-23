@@ -63,7 +63,7 @@ except Exception as e:
     print(e)
    
    
-memmod = MemoryModule()
+memmod = MemoryModule(control.get_screen())
 running = True 
 while running:
     memmod.updater(screen=control.get_screen())
