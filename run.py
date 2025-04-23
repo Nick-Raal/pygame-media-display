@@ -1,12 +1,20 @@
 import subprocess
 import pygame
 import pygame_menu
+import os
 import time
 import sys
 from driver import DisplayHatController
 from util import multiline_text
 
 print("""PYGAME MEDIA DISPLAY""")
+
+
+def restart_program():
+    print("Restarting...")
+    pygame.quit()
+    python = sys.executable
+    os.execv(python, [python] + sys.argv)
 
 if pygame.vernum < (2, 0, 0):
     print("Need PyGame >= 2.0.0:\n    python3 -m pip install pygame --upgrade")
@@ -39,6 +47,8 @@ try:
             break
         elif "Updating" in line:
             multiline_text(control.get_screen(), "Update Found\nRestarting" ,font, (160, 120))
+            time.sleep(1)
+            restart_program()
             control.update_display()
             break
     #wait for the process to fully exit
