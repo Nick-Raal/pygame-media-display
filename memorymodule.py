@@ -86,8 +86,8 @@ class MemoryModule:
         
     def select(self, event_list, menu):
         for event in event_list:
+            print("Got event: ", event)
             if event.type == pygame.KEYDOWN:
-                print("Got event: ", event)
                 if event.key == pygame.key.key_code('x'):
                     menu._index -= 1
                 elif event.key == pygame.key.key_code('y'):
@@ -106,8 +106,6 @@ class MemoryModule:
                 widg.select(update_menu=True)
                 if(menu.get_selected_widget()):
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
-            elif event.type == pygame.KEYUP:
-                print("Got event up: ", event)
 
     
     def updater(self, screen):            
