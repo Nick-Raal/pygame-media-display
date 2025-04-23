@@ -11,7 +11,7 @@ def multiline_text(scr, s, f, r):
     s = s.split("\n")
     line_height = f.get_linesize()
     total_height = len(s) * line_height
-    start_y = (r[1] - total_height)
+    start_y = (r[1] - total_height)//2
 
     for i, line in enumerate(s):
         rendered = f.render(line, True, (255 ,255, 255))
