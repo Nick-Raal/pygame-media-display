@@ -84,6 +84,7 @@ class MemoryModule:
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
+        self.settings.set_onupdate(self.select)
         
     def select(self, event_list, menu):
         for event in event_list:
