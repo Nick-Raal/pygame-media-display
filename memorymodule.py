@@ -98,6 +98,7 @@ class MemoryModule:
                 widg = menu.get_widgets()[menu._index]
                 widg.select(update_menu=True)
                 if event.key == pygame.key.key_code('a'):
+                    print(menu)
                     menu.get_selected_widget().apply()
                 if(menu.get_selected_widget()):
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
