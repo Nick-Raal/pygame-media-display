@@ -17,8 +17,6 @@ multiline_text(control.get_screen(), "Welcome To Memory Module \nChecking for up
 control.update_display()
 
 try:
-    control.get_screen().fill(0, 0, 0)
-    control.update_display()
     
     process = subprocess.Popen(
         ["git", "pull", "origin", "main"],
@@ -26,6 +24,9 @@ try:
         stderr=subprocess.STDOUT,
         text=True,  # ensures output is decoded into strings
     )
+    
+    control.get_screen().fill((0, 0, 0))
+    control.update_display()
 
     # Wait for the specific message
     for line in process.stdout:
