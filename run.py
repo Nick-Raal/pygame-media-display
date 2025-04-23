@@ -21,6 +21,9 @@ if pygame.vernum < (2, 0, 0):
     sys.exit(1)
     
 control = DisplayHatController()
+control.get_screen().fill((0, 0, 0))
+control.update_display()
+
 font = pygame.font.SysFont("Comic Sans MS", 30)
 multiline_text(control.get_screen(), "Welcome To Memory Module\nChecking for updates" ,font, (160, 120))
 control.update_display()
