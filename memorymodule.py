@@ -110,7 +110,7 @@ class MemoryModule:
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.key.key_code('b'):
                     print('close')
-                    #menu.close()
+                    menu.close()
     
     def updater(self, screen):            
         if self.mainmenu.get_current().is_enabled():
