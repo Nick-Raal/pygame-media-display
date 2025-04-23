@@ -53,6 +53,8 @@ try:
             multiline_text(control.get_screen(), "Update Found\nRestarting" ,font, (160, 120))
             control.update_display()
             time.sleep(1)
+            control.get_screen().fill((0, 0, 0))
+            control.update_display()
             restart_program()
             break
     #wait for the process to fully exit

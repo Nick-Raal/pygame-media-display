@@ -19,17 +19,17 @@ custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 class MemoryModule:
     
     def __init__(self):
-        folder = pygame_menu.Menu('Memories', 320, 240, 
+        self.folder = pygame_menu.Menu('Memories', 320, 240, 
         enabled=False, 
         theme=custom_theme,
         overflow=True)
-        folder.set_onclose(pygame_menu.events.BACK)
+        self.folder.set_onclose(pygame_menu.events.BACK)
 
         file_types = ('.mp4') 
         media = [Video(f) for f in os.listdir('.') if f.endswith(file_types)]
 
         for med in media:
-            folder.add.button(med.get_title(), lambda m=med: self.play(m))
+            self.folder.add.button(med.get_title(), lambda m=med: self.play(m))
             
         def get_wifi_name():
             try:
@@ -78,13 +78,11 @@ class MemoryModule:
 
         self.mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                         theme=custom_theme, overflow=True)
-        self.mainmenu.add.button('Open', folder)
+        self.mainmenu.add.button('Open', self.folder)
         self.mainmenu.add.button('Settings', self.settings)
         self.mainmenu.add.button('Quit', pygame_menu.events.EXIT)
         
         self.mainmenu.set_onupdate(self.select)
-        self.settings.set_onupdate(self.select)
-        self.folder.set_onupdate(self.select)
         
     def select(self, event_list, menu):
         for event in event_list:
