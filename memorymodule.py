@@ -19,6 +19,9 @@ custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 class MemoryModule:
     
     def __init__(self, screen):
+        
+        self.screen = screen
+        
         self.folder = pygame_menu.Menu('Memories', 320, 240, 
         enabled=False, 
         theme=custom_theme,
@@ -29,7 +32,7 @@ class MemoryModule:
         media = [Video(f) for f in os.listdir('.') if f.endswith(file_types)]
 
         for med in media:
-            self.folder.add.button(med.get_title(), lambda m=med: screen.blit(self.play(m)))
+            self.folder.add.button(med.get_title(), lambda m=med: screen.blit(self.play(self.screen, m)))
             
         def get_wifi_name():
             try:
@@ -118,8 +121,9 @@ class MemoryModule:
         if self.mainmenu.get_current().is_enabled():
             self.mainmenu.get_current().update(pygame.event.get())
             self.mainmenu.get_current().draw(screen)
-        
-    def play(self, m):
+            
+    def play(self, screen, m):
+        self.mainmenu.get_current().disable()
         clock = pygame.time.Clock()
         playing, var = m.open()
         while playing:
@@ -131,7 +135,7 @@ class MemoryModule:
                 if event.type == pygame.KEYDOWN:
                         if event.key == (pygame.key.key_code('b')):
                             playing=False
-            return pygame.image.frombuffer(var.tobytes(), var.shape[1::-1], "BGR")
+            screen.blit(pygame.image.frombuffer(var.tobytes(), var.shape[1::-1], "BGR"))
 
 
 # def open(f):
