@@ -13,8 +13,8 @@ class DisplayHatController:
         pygame.display.init()  # Need to init for .convert() to work
         pygame.display.set_mode((self.display_hat.WIDTH, self.display_hat.HEIGHT))
         self.screen = pygame.Surface((self.display_hat.WIDTH, self.display_hat.HEIGHT))
-        signal.signal(signal.SIGINT, self._exit)
-        signal.signal(signal.SIGTERM, self._exit)
+        for sig in [signal.SIGINT, signal.SIGTERM, signal.SIGHUP, signal.SIGQUIT]:
+            signal.signal(sig, self._exit)
         self.display_hat.on_button_pressed(self.button_callback)
         
 
