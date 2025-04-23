@@ -142,11 +142,6 @@ media = [Video(f) for f in os.listdir('.') if f.endswith(file_types)]
 for med in media:
     folder.add.button(med.get_title(), lambda m=med: play(m))
     
-settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
-ip_address = socket.gethostbyname(socket.gethostname() + ".local")
-settings.add.label(ip_address)
-
-
 def get_wifi_name():
     try:
         result = subprocess.check_output(
@@ -183,7 +178,13 @@ def change_wifi():
         return f"Error: {e}"
     
 
+
+settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
+ip_address = socket.gethostbyname(socket.gethostname() + ".local")
+ip_label = settings.add.label(ip_address)
+ip_label.set_font(font_size=10)
 ssid_label = settings.add.label(get_wifi_name())
+ssid_label.set_font(font_size=10)
 change_network_button = settings.add.button("Change Network", change_wifi)
 settings.set_onclose(pygame_menu.events.BACK)
 
