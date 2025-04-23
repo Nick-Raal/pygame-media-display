@@ -3,6 +3,7 @@ import pygame
 import pygame_menu
 import sys
 from driver import DisplayHatController
+from util import multiline_text
 
 print("""PYGAME MEDIA DISPLAY""")
 
@@ -12,12 +13,15 @@ if pygame.vernum < (2, 0, 0):
     
 control = DisplayHatController()
 font = pygame.font.SysFont("Comic Sans MS", 40)
-text_surface = font.render("Welcome to Memory Module\nChecking for Updates", True, (255, 255, 255))
-text_rect = text_surface.get_rect(center=(320/2, 240/2))
-control.get_screen().blit(text_surface, text_rect)
+for text in multiline_text("Welcome To Memory Module \nChecking for updates" ,font):
+    control.get_screen().blit(text[0], text[1])
 control.update_display()
 
 try:
+    
+    control.get_screen().fill(0, 0, 0)
+    control.update_display()
+    
     process = subprocess.Popen(
         ["git", "pull", "origin", "main"],
         stdout=subprocess.PIPE,
@@ -30,12 +34,12 @@ try:
         print(line.strip())  # optional: print the output live
         if "Already up to date." in line:
             text_surface = font.render("Up to date", True, (255, 255, 255))
-            control.get_screen().blit(text_surface, (0, 0))
+            control.get_screen().blit(text_surface, (160, 120))
             control.update_display()
             break
         elif "Updating" in line:
             text_surface = font.render("Update Found", True, (255, 255, 255))
-            control.get_screen().blit(text_surface, (0, 0))
+            control.get_screen().blit(text_surface, (160, 120))
             control.update_display()
             break
     #wait for the process to fully exit
