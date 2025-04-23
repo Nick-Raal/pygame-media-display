@@ -80,14 +80,10 @@ custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
 def play(m):
     clock = pygame.time.Clock()
-    var = m.open()
-    playing = var[0]
+    playing, var = m.open()
     while playing:
-        screen.blit(var[1],  (0, 0))
-        update_display()
+        screen.blit(pygame.image.frombuffer(var.tobytes(), var.shape[1::-1], "BGR"), (0, 0))
         clock.tick(60)
-        var = m.open()
-        playing = var[0]
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -149,7 +145,46 @@ for med in media:
 settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
 ip_address = socket.gethostbyname(socket.gethostname() + ".local")
 settings.add.label(ip_address)
-#settings.add.label(subprocess.)
+
+
+def get_wifi_name():
+    try:
+        result = subprocess.check_output(
+            ["nmcli", "-t", "-f", "active,ssid", "dev", "wifi"],
+            encoding="utf-8"
+        )
+        for line in result.strip().split("\n"):
+            if line.startswith("yes:"):
+                return line.split(":")[1]
+    except Exception as e:
+        return f"Error: {e}"
+    
+def change_wifi():
+    try:
+        # Start wifi-connect and capture its output
+        process = subprocess.Popen(
+            ["sudo", "wifi-connect", "--portal-ssid", "MemoryModule"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,  # ensures output is decoded into strings
+        )
+
+        # Wait for the specific message
+        for line in process.stdout:
+            print(line.strip())  # optional: print the output live
+            if "Internet connectivity established" in line:
+                print("🎉 Network connected!")
+                break
+
+        #Optionally wait for the process to fully exit
+        process.wait()
+        ssid_label._title=get_wifi_name()
+    except Exception as e:
+        return f"Error: {e}"
+    
+
+ssid_label = settings.add.label(get_wifi_name())
+change_network_button = settings.add.button("Change Network", change_wifi)
 settings.set_onclose(pygame_menu.events.BACK)
 
 mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
