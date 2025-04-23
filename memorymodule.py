@@ -106,6 +106,8 @@ class MemoryModule:
                 widg.select(update_menu=True)
                 if(menu.get_selected_widget()):
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
+            elif event.type == pygame.KEYUP:
+                print("Got event up: ", event)
 
     
     def updater(self, screen):            
