@@ -1,5 +1,4 @@
 import pygame
-import pygame_menu
 import os
 import signal
 import sys

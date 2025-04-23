@@ -102,7 +102,9 @@ class MemoryModule:
                 if(menu.get_selected_widget()):
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
                 if event.key == (pygame.key.key_code('b')):
+                    print(menu)
                     menu.close()
+                    print(menu)
                     menu.enable()
     
     def updater(self, screen):            
