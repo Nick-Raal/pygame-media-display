@@ -106,7 +106,10 @@ class MemoryModule:
                 widg.select(update_menu=True)
                 if(menu.get_selected_widget()):
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
-
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.key.key_code('b'):
+                    print('close')
+                    #menu.close()
     
     def updater(self, screen):            
         if self.mainmenu.get_current().is_enabled():
