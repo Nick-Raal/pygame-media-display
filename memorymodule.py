@@ -119,7 +119,7 @@ class MemoryModule:
             self.mainmenu.get_current().update(pygame.event.get())
             self.mainmenu.get_current().draw(screen)
         
-    def play(m):
+    def play(self, m):
         clock = pygame.time.Clock()
         playing, var = m.open()
         while playing:
