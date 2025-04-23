@@ -13,7 +13,8 @@ if pygame.vernum < (2, 0, 0):
 control = DisplayHatController()
 font = pygame.font.SysFont("Comic Sans MS", 40)
 text_surface = font.render("Welcome to Memory Module\nChecking for Updates", True, (255, 255, 255))
-control.get_screen().blit(text_surface, (0, 0))
+text_rect = text_surface.get_rect(center=(320/2, 240/2))
+control.get_screen().blit(text_surface, text_rect)
 control.update_display()
 
 try:
