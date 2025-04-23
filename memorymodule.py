@@ -87,6 +87,7 @@ class MemoryModule:
     def select(self, event_list, menu):
         for event in event_list:
             if event.type == pygame.KEYDOWN:
+                print("Got event: ", event)
                 if event.key == pygame.key.key_code('x'):
                     menu._index -= 1
                 elif event.key == pygame.key.key_code('y'):
