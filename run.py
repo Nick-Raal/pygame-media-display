@@ -18,7 +18,7 @@ control.update_display()
 
 try:
     process = subprocess.Popen(
-        ["git", "pull", "origin", "main", "--assume-unchanged", "run.py"],
+        ["git", "pull", "origin", "main"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,  # ensures output is decoded into strings
