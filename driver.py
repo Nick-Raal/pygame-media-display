@@ -13,7 +13,7 @@ class DisplayHatController:
         pygame.display.init()  # Need to init for .convert() to work
         pygame.display.set_mode((self.display_hat.WIDTH, self.display_hat.HEIGHT))
         self.screen = pygame.Surface((self.display_hat.WIDTH, self.display_hat.HEIGHT))
-        signal.signal(signal.SIGINT, _exit)
+        signal.signal(signal.SIGINT, self._exit)
 
     def update_display(self):
         self.display_hat.st7789.set_window()
