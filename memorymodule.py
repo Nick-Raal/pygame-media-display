@@ -18,9 +18,16 @@ custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
 class MemoryModule:
     
+
+    
     def __init__(self, screen):
         
         self.screen = screen
+        
+        self.current_media_item = None
+        self.clock = None
+        self.img = None
+        self.playing = False
         
         self.folder = pygame_menu.Menu('Memories', 320, 240, 
         enabled=False, 
@@ -117,27 +124,24 @@ class MemoryModule:
                     menu.close()
                     menu.enable()
     
-    def updater(self, screen):            
-        if self.mainmenu.get_current().is_enabled():
+    def updater(self, screen):      
+        if self.playing:
+            self.screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.img.shape[1::-1], "BGR"), (0, 0))
+            self.clock.tick(60)
+            self.playing, self.img =  self.current_media_item.read()
+            
+        elif self.mainmenu.get_current().is_enabled():
             self.mainmenu.get_current().update(pygame.event.get())
             self.mainmenu.get_current().draw(screen)
+        
             
-    def play(self, screen, m):
+    def play(self, m):
         self.mainmenu.get_current().disable()
-        clock = pygame.time.Clock()
-        playing, var = m.open()
-        while playing:
-            clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                    break
-                if event.type == pygame.KEYDOWN:
-                        if event.key == (pygame.key.key_code('b')):
-                            playing=False
-            screen.blit(pygame.image.frombuffer(var.tobytes(), var.shape[1::-1], "BGR"))
+        self.current_media_item, self.clock  = m.open()
+        self.playing, self.img = self.current_media_item.read()
 
 
+#classic control
 # def open(f):
 #     pygame_menu.events.EXIT
 #     if f.endswith('.mp4'):

@@ -23,15 +23,16 @@ class Media:
         return self.title
         
 class Video(Media):
-    def open(self):
+    def open(self, c):
+        
         try:
+            c = pygame.time.Clock()
             cap = cv2.VideoCapture(self.file)
-            img = cap.read()
-            return img
+            return cap, c
         except Exception as e:
             cap.release()
             print("file not found")
-            return img[0]
+            return None
     
     
     
