@@ -6,6 +6,7 @@ import time
 import sys
 from driver import DisplayHatController
 from util import multiline_text
+from memorymodule import MemoryModule
 
 print("""PYGAME MEDIA DISPLAY""")
 
@@ -30,7 +31,6 @@ control.update_display()
 time.sleep(2)
 
 try:
-    
     process = subprocess.Popen(
         ["git", "pull", "origin", "main"],
         stdout=subprocess.PIPE,
@@ -38,17 +38,18 @@ try:
         text=True,  # ensures output is decoded into strings
     )
     
-    control.get_screen().fill((0, 0, 0))
-    control.update_display()
-
-    # Wait for the specific message
+    # Wait for the specific messages
     for line in process.stdout:
         print(line.strip())  # optional: print the output live
         if "Already up to date." in line:
+            control.get_screen().fill((0, 0, 0))
+            control.update_display()
             multiline_text(control.get_screen(), "Up to date" ,font, (160, 120))
             control.update_display()
             break
         elif "Updating" in line:
+            control.get_screen().fill((0, 0, 0))
+            control.update_display()
             multiline_text(control.get_screen(), "Update Found\nRestarting" ,font, (160, 120))
             control.update_display()
             time.sleep(1)
@@ -58,4 +59,11 @@ try:
     process.wait()      
 except Exception as e:
     print(e)
-    
+   
+   
+memmod = MemoryModule()
+running = True 
+while running:
+    MemoryModule.updater(control.get_screen())
+    control.update_display()
+
