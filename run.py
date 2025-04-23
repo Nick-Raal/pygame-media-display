@@ -64,6 +64,6 @@ except Exception as e:
 memmod = MemoryModule()
 running = True 
 while running:
-    MemoryModule.updater(control.get_screen())
+    MemoryModule.updater(screen=control.get_screen())
     control.update_display()
 
