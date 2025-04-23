@@ -11,47 +11,34 @@ if pygame.vernum < (2, 0, 0):
     sys.exit(1)
     
 control = DisplayHatController()
+font = pygame.font.SysFont("Comic Sans MS", 40)
+text_surface = font.render("Welcome to Memory Module\nChecking for Updates", True, (255, 255, 255))
+control.get_screen().blit(text_surface, (0, 0))
+control.update_display()
 
+try:
+    process = subprocess.Popen(
+        ["git", "pull", "origin", "main", "--assume-unchanged", "run.py"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,  # ensures output is decoded into strings
+    )
 
-
-running = True
-while running:
-        
-    if mainmenu.get_current().is_enabled():
-        mainmenu.get_current().update(pygame.event.get())
-        mainmenu.get_current().draw(screen)
-    
-    update_display()
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-            screen.fill((0, 0, 0))
-            update_display()
-            pygame.quit()
-            sys.exit(0)
+    # Wait for the specific message
+    for line in process.stdout:
+        print(line.strip())  # optional: print the output live
+        if "Already up to date." in line:
+            text_surface = font.render("Up to date", True, (255, 255, 255))
+            control.get_screen().blit(text_surface, (0, 0))
+            control.update_display()
             break
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.key.key_code('x'):
-                mainmenu.get_current()._index -= 1
-            elif event.key == pygame.key.key_code('y'):
-                mainmenu.get_current()._index += 1
-            if mainmenu.get_current()._index > len(mainmenu.get_current().get_widgets()) - 1:
-                mainmenu.get_current()._index = 0
-            elif mainmenu.get_current()._index < 0:
-                mainmenu.get_current()._index = len(mainmenu.get_current().get_widgets()) - 1
-            widg = mainmenu.get_current().get_widgets()[mainmenu.get_current()._index]
-            widg.select(update_menu=True)
-            if event.key == pygame.key.key_code('a'):
-                mainmenu.get_current().get_selected_widget().apply()
-            if(mainmenu.get_current().get_selected_widget()):
-                mainmenu.get_current().get_scrollarea().scroll_to_rect(mainmenu.get_current().get_selected_widget().get_rect())
-            if event.key == (pygame.key.key_code('b')):
-                mainmenu.get_current().close()
-                mainmenu.get_current().enable()
-
-
-screen.fill((0, 0, 0))
-update_display()
-pygame.quit()
-sys.exit(0)
+        elif "Updating" in line:
+            text_surface = font.render("Update Found", True, (255, 255, 255))
+            control.get_screen().blit(text_surface, (0, 0))
+            control.update_display()
+            break
+    #wait for the process to fully exit
+    process.wait()      
+except Exception as e:
+    print(e)
+    

@@ -37,7 +37,8 @@ class DisplayHatController:
         event = pygame.KEYDOWN if self.display_hat.read_button(pin) else pygame.KEYUP
         pygame.event.post(pygame.event.Event(event, unicode=key, key=pygame.key.key_code(key)))
 
-
+    def get_screen(self):
+        return self.screen
 
     def _exit(self, sig,frame):
         global running
