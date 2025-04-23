@@ -10,35 +10,35 @@ if pygame.vernum < (2, 0, 0):
     print("Need PyGame >= 2.0.0:\n    python3 -m pip install pygame --upgrade")
     sys.exit(1)
     
-# control = DisplayHatController()
-# font = pygame.font.SysFont("Comic Sans MS", 40)
-# text_surface = font.render("Welcome to Memory Module\nChecking for Updates", True, (255, 255, 255))
-# control.get_screen().blit(text_surface, (0, 0))
-# control.update_display()
+control = DisplayHatController()
+font = pygame.font.SysFont("Comic Sans MS", 40)
+text_surface = font.render("Welcome to Memory Module\nChecking for Updates", True, (255, 255, 255))
+control.get_screen().blit(text_surface, (0, 0))
+control.update_display()
 
-# try:
-#     process = subprocess.Popen(
-#         ["git", "pull", "origin", "main"],
-#         stdout=subprocess.PIPE,
-#         stderr=subprocess.STDOUT,
-#         text=True,  # ensures output is decoded into strings
-#     )
+try:
+    process = subprocess.Popen(
+        ["git", "pull", "origin", "main"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,  # ensures output is decoded into strings
+    )
 
-#     # Wait for the specific message
-#     for line in process.stdout:
-#         print(line.strip())  # optional: print the output live
-#         if "Already up to date." in line:
-#             text_surface = font.render("Up to date", True, (255, 255, 255))
-#             control.get_screen().blit(text_surface, (0, 0))
-#             control.update_display()
-#             break
-#         elif "Updating" in line:
-#             text_surface = font.render("Update Found", True, (255, 255, 255))
-#             control.get_screen().blit(text_surface, (0, 0))
-#             control.update_display()
-#             break
-#     #wait for the process to fully exit
-#     process.wait()      
-# except Exception as e:
-#     print(e)
+    # Wait for the specific message
+    for line in process.stdout:
+        print(line.strip())  # optional: print the output live
+        if "Already up to date." in line:
+            text_surface = font.render("Up to date", True, (255, 255, 255))
+            control.get_screen().blit(text_surface, (0, 0))
+            control.update_display()
+            break
+        elif "Updating" in line:
+            text_surface = font.render("Update Found", True, (255, 255, 255))
+            control.get_screen().blit(text_surface, (0, 0))
+            control.update_display()
+            break
+    #wait for the process to fully exit
+    process.wait()      
+except Exception as e:
+    print(e)
     
