@@ -29,7 +29,7 @@ class MemoryModule:
         media = [Video(f) for f in os.listdir('.') if f.endswith(file_types)]
 
         for med in media:
-            folder.add.button(med.get_title(), lambda m=med: play(m))
+            folder.add.button(med.get_title(), lambda m=med: self.play(m))
             
         def get_wifi_name():
             try:
@@ -69,17 +69,17 @@ class MemoryModule:
 
         self.settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
         ip_address = socket.gethostbyname(socket.gethostname() + ".local")
-        ip_label = settings.add.label(ip_address)
+        ip_label = self.settings.add.label(ip_address)
         ip_label.set_font(font_size=10)
-        ssid_label = settings.add.label(get_wifi_name())
+        ssid_label = self.settings.add.label(get_wifi_name())
         ssid_label.set_font(font_size=10)
-        change_network_button = settings.add.button("Change Network", change_wifi)
+        change_network_button = self.settings.add.button("Change Network", change_wifi)
         self.settings.set_onclose(pygame_menu.events.BACK)
 
         self.mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                         theme=custom_theme, overflow=True)
         self.mainmenu.add.button('Open', folder)
-        self.mainmenu.add.button('Settings', settings)
+        self.mainmenu.add.button('Settings', self.settings)
         self.mainmenu.add.button('Quit', pygame_menu.events.EXIT)
         
         self.mainmenu.set_onupdate(self.select(event_list))
@@ -110,19 +110,19 @@ class MemoryModule:
             self.mainmenu.get_current().update(pygame.event.get())
             self.mainmenu.get_current().draw(screen)
         
-    # def play(m):
-    #     clock = pygame.time.Clock()
-    #     playing, var = m.open()
-    #     while playing:
-    #         screen.blit(pygame.image.frombuffer(var.tobytes(), var.shape[1::-1], "BGR"), (0, 0))
-    #         clock.tick(60)
-    #         for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             running = False
-    #             break
-    #         if event.type == pygame.KEYDOWN:
-    #                 if event.key == (pygame.key.key_code('b')):
-    #                     playing=False
+    def play(m):
+        clock = pygame.time.Clock()
+        playing, var = m.open()
+        while playing:
+            #screen.blit(pygame.image.frombuffer(var.tobytes(), var.shape[1::-1], "BGR"), (0, 0))
+            clock.tick(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    break
+                if event.type == pygame.KEYDOWN:
+                        if event.key == (pygame.key.key_code('b')):
+                            playing=False
 
 
 # def open(f):
