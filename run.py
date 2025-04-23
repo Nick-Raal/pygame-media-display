@@ -1,6 +1,7 @@
 import subprocess
 import pygame
 import pygame_menu
+import time
 import sys
 from driver import DisplayHatController
 from util import multiline_text
@@ -15,6 +16,7 @@ control = DisplayHatController()
 font = pygame.font.SysFont("Comic Sans MS", 40)
 multiline_text(control.get_screen(), "Welcome To Memory Module \nChecking for updates" ,font, (160, 120))
 control.update_display()
+time.sleep(0.5)
 
 try:
     
