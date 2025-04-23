@@ -17,9 +17,7 @@ custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
 custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
 
 class MemoryModule:
-    
-
-    
+        
     def __init__(self, screen):
         
         self.screen = screen
