@@ -91,20 +91,21 @@ class MemoryModule:
                     menu._index -= 1
                 elif event.key == pygame.key.key_code('y'):
                     menu._index += 1
+                elif event.key == (pygame.key.key_code('b')):
+                    print(menu)
+                    #menu.close()
+                elif event.key == pygame.key.key_code('a'):
+                    menu.get_selected_widget().apply()
+                
                 if menu._index > len(menu.get_widgets()) - 1:
                     menu._index = 0
                 elif menu._index < 0:
                     menu._index = len(menu.get_widgets()) - 1
                 widg = menu.get_widgets()[menu._index]
                 widg.select(update_menu=True)
-                if event.key == pygame.key.key_code('a'):
-                    print(menu)
-                    menu.get_selected_widget().apply()
                 if(menu.get_selected_widget()):
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
-                if event.key == (pygame.key.key_code('b')):
-                    print(menu)
-                    #menu.close()
+
     
     def updater(self, screen):            
         if self.mainmenu.get_current().is_enabled():
