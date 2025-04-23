@@ -48,8 +48,8 @@ try:
         elif "Updating" in line:
             multiline_text(control.get_screen(), "Update Found\nRestarting" ,font, (160, 120))
             time.sleep(1)
-            restart_program()
             control.update_display()
+            restart_program()
             break
     #wait for the process to fully exit
     process.wait()      
