@@ -127,9 +127,11 @@ class MemoryModule:
             self.screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.img.shape[1::-1], "BGR"), (0, 0))
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
-        elif self.mainmenu.get_current().is_enabled():
-            self.mainmenu.get_current().update(pygame.event.get())
-            self.mainmenu.draw(screen)
+        else:
+            current_menu = self.mainmenu.get_current()
+            if current_menu.is_enabled():
+                current_menu.update(pygame.event.get())
+                current_menu.draw(self.screen)
         
             
     def play(self, m):
