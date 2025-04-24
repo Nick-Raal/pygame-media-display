@@ -35,9 +35,14 @@ class MemoryModule:
         overflow=True)
         self.folder.set_onclose(pygame_menu.events.BACK)
 
-        video_file_types = ('.mp4') 
+        video_file_types = ('.mp4',) 
         image_file_types = ('.png', '.jpeg')
-        media = [Video(f) if f.endswith(video_file_types) else Image(f) for f in os.listdir('.') if f.endswith(image_file_types)]
+        media_file_types = video_file_types + image_file_types
+
+        media = [
+            Video(f) if f.endswith(video_file_types) else Image(f)
+            for f in os.listdir('.') if f.endswith(media_file_types)
+        ]
 
         for med in media:
             self.folder.add.button(med.get_title(), lambda m=med: self.play(m))
