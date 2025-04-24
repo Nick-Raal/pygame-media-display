@@ -11,10 +11,11 @@ import pygame_menu.events
 
 from media import Video, Image
 
+from themes import custom_theme
+
 import socket
     
-custom_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
-custom_theme.title_font = pygame_menu.font.FONT_FRANCHISE
+
 
 class MemoryModule:
         
@@ -84,7 +85,7 @@ class MemoryModule:
         self.settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
         ip_address = socket.gethostbyname(socket.gethostname() + ".local")
         ip_label = self.settings.add.label(ip_address)
-        ip_label.set_font(pygame_menu.font.FONT_FRANCHISE, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
+        ip_label.set_font(pygame_menu.font.FONT_NEVIS, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
         ssid_label = self.settings.add.label(get_wifi_name())
         #ssid_label.set_font(font_size=10)
         change_network_button = self.settings.add.button("Change Network", change_wifi)
