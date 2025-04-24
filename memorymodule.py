@@ -122,14 +122,14 @@ class MemoryModule:
                     menu.close()
                     menu.enable()
     
-    def updater(self, screen):      
+    def updater(self, screen):
+        print("update")      
         if self.playing:
             print('playing da video')
             self.screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.img.shape[1::-1], "BGR"), (0, 0))
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
         else:
-            print("make it make sense 2", self.mainmenu.get_current().is_enabled())
             current_menu = self.mainmenu.get_current()
             if current_menu.is_enabled():
                 current_menu.update(pygame.event.get())
