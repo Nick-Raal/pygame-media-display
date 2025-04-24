@@ -37,7 +37,7 @@ class MemoryModule:
         media = [Video(f) for f in os.listdir('.') if f.endswith(file_types)]
 
         for med in media:
-            self.folder.add.button(med.get_title(), lambda m=med: screen.blit(self.play(self.screen, m)))
+            self.folder.add.button(med.get_title(), lambda m=med: self.play(self.screen, m))
             
         def get_wifi_name():
             try:
