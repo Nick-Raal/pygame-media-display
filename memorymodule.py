@@ -125,7 +125,7 @@ class MemoryModule:
                     print('close')
                     if menu is not None:
                         menu.close()
-                        menu.enable()
+                        self.mainmenu.get_current().enable()
                     elif self.playing:
                         self.playing = False
                         
