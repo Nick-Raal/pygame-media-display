@@ -134,9 +134,9 @@ class MemoryModule:
             
     def play(self, m):
         self.mainmenu.get_current().disable()
-        self.current_media_item, self.clock  = m.open()
+        self.current_media_item, self.clock  = m.open(self.clock)
         self.playing, self.img = self.current_media_item.read()
-        print(playing)
+        print(self.playing)
 
 
 #classic control
