@@ -129,7 +129,7 @@ class MemoryModule:
             self.playing, self.img =  self.current_media_item.read()  
         elif self.mainmenu.get_current().is_enabled():
             self.mainmenu.get_current().update(pygame.event.get())
-            self.mainmenu.get_current().draw(screen)
+            self.mainmenu.draw(screen)
         
             
     def play(self, m):
