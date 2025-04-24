@@ -136,8 +136,10 @@ class MemoryModule:
             
             if current_menu.is_enabled():
                 current_menu.update(pygame.event.get())
-                current_menu.draw(self.screen)
-        
+                try:
+                    current_menu.draw(self.screen)
+                except RuntimeError as e:
+                    print("Tried to draw a disabled menu!", e)
             
     def play(self, m):
         print("Disabling menu:", id(self.mainmenu.get_current()))
