@@ -144,7 +144,7 @@ class MemoryModule:
             self.mainmenu.get_current().enable()
         else:
             if self.mainmenu.get_current().is_enabled():
-                self.mainmenu.get_current().update(pygame.event.get(), self.mainmenu.get_current())
+                self.mainmenu.get_current().update(pygame.event.get())
                 try:
                     self.mainmenu.get_current().draw(self.screen)
                 except RuntimeError as e:
