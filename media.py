@@ -21,6 +21,17 @@ class Media:
         
     def get_title(self):
         return self.title
+    
+class Photo(Media):
+    def open(self, c):
+        try:
+            c = pygame.time.Clock()
+            cap = cv2.imread(self.file)
+            return cap, c
+        except Exception as e:
+            cap.release()
+            print("file not found")
+            return None
         
 class Video(Media):
     def open(self, c):
