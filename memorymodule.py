@@ -73,8 +73,6 @@ class MemoryModule:
             except Exception as e:
                 return f"Error: {e}"
             
-
-
         self.settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
         ip_address = socket.gethostbyname(socket.gethostname() + ".local")
         ip_label = self.settings.add.label(ip_address)
@@ -108,6 +106,8 @@ class MemoryModule:
                 elif event.key == pygame.key.key_code('a'):
                     menu.get_selected_widget().apply()
                 
+                self.exit_handler(event_list, menu)
+                
                 if menu._index > len(menu.get_widgets()) - 1:
                     menu._index = 0
                 elif menu._index < 0:
@@ -116,22 +116,34 @@ class MemoryModule:
                 widg.select(update_menu=True)
                 if(menu.get_selected_widget()):
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
-            elif event.type == pygame.KEYUP:
+                    
+    def exit_handler(self, event_list):
+        for event in event_list:
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.key.key_code('b'):
+                    print('end playback')
+                    self.playing = False
+                    
+    def exit_handler(self, event_list, menu):
+        for event in event_list:
+            if event.type == pygame.KEYUP:
                 if event.key == pygame.key.key_code('b'):
                     print('close')
                     menu.close()
                     menu.enable()
-    
+                        
+
     def updater(self, screen): 
         if self.playing:
             self.screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.img.shape[1::-1], "BGR"), (0, 0))
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
+            self.exit_handler(pygame.event.get())
         elif not self.playing and not self.mainmenu.get_current().is_enabled():
             self.mainmenu.get_current().enable()
         else:
             if self.mainmenu.get_current().is_enabled():
-                self.mainmenu.get_current().update(pygame.event.get())
+                self.mainmenu.get_current().update(pygame.event.get(), self.mainmenu.get_current())
                 try:
                     self.mainmenu.get_current().draw(self.screen)
                 except RuntimeError as e:
