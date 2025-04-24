@@ -75,7 +75,7 @@ while memmod.updater(control.get_screen()):
     control.update_display()
 
 print("\nExiting!...\n")
-self.screen.fill((0, 0, 0))
-self.update_display()
+control.screen.fill((0, 0, 0))
+control.update_display()
 pygame.quit()
 sys.exit(0)
