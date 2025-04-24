@@ -103,7 +103,7 @@ class MemoryModule:
                 elif event.key == (pygame.key.key_code('b')):
                     print(menu)
                     menu.close()
-                    menu.open()
+                    menu.enable()
                     
                 elif event.key == pygame.key.key_code('a'):
                     menu.get_selected_widget().apply()
