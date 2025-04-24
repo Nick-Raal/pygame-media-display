@@ -71,7 +71,11 @@ except Exception as e:
    
 memmod = MemoryModule(control.get_screen())
 running = True 
-while running:
-    memmod.updater(control.get_screen())
+while memmod.updater(control.get_screen()):
     control.update_display()
 
+print("\nExiting!...\n")
+self.screen.fill((0, 0, 0))
+self.update_display()
+pygame.quit()
+sys.exit(0)

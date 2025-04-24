@@ -49,8 +49,6 @@ class DisplayHatController:
         return self.screen
 
     def _exit(self, sig,frame):
-        global running
-        running = False
         print("\nExiting!...\n")
         self.screen.fill((0, 0, 0))
         self.update_display()

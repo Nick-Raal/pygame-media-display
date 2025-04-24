@@ -20,6 +20,8 @@ class MemoryModule:
         
     def __init__(self, screen):
         
+        self.running = True
+        
         self.screen = screen
         
         self.current_media_item = None
@@ -87,7 +89,7 @@ class MemoryModule:
                                         theme=custom_theme, overflow=True)
         self.mainmenu.add.button('Open', self.folder)
         self.mainmenu.add.button('Settings', self.settings)
-        self.mainmenu.add.button('Quit', pygame_menu.events.EXIT)
+        self.mainmenu.add.button('Quit', self.quit)
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
@@ -144,14 +146,17 @@ class MemoryModule:
                     self.mainmenu.get_current().draw(self.screen)
                 except RuntimeError as e:
                     print("Tried to draw a disabled menu!", e)
+                    
+        return self.running
             
     def play(self, m):
         self.mainmenu.get_current().disable()
         self.current_media_item, self.clock  = m.open(self.clock)
         self.playing, self.img = self.current_media_item.read()
-            
 
 
+    def quit(self):
+        self.running = False
 #classic control
 # def open(f):
 #     pygame_menu.events.EXIT
