@@ -117,20 +117,17 @@ class MemoryModule:
                 if(menu.get_selected_widget()):
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
                     
-    def exit_handler(self, event_list):
-        for event in event_list:
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.key.key_code('b'):
-                    print('end playback')
-                    self.playing = False
                     
-    def exit_handler(self, event_list, menu):
+    def exit_handler(self, event_list, menu=None):
         for event in event_list:
             if event.type == pygame.KEYUP:
                 if event.key == pygame.key.key_code('b'):
                     print('close')
-                    menu.close()
-                    menu.enable()
+                    if menu is not None:
+                        menu.close()
+                        menu.enable()
+                    elif self.playing:
+                        self.playing = False
                         
 
     def updater(self, screen): 
@@ -138,7 +135,6 @@ class MemoryModule:
             self.screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.img.shape[1::-1], "BGR"), (0, 0))
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
-            
             self.exit_handler(pygame.event.get())
         elif not self.playing and not self.mainmenu.get_current().is_enabled():
             self.mainmenu.get_current().enable()
