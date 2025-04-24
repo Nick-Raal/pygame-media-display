@@ -130,15 +130,19 @@ class MemoryModule:
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
         else:
-            print("main loop")
+            
             current_menu = self.mainmenu.get_current()
+            print("Updater using menu:", id(current_menu), "Enabled:", current_menu.is_enabled())
+            
             if current_menu.is_enabled():
                 current_menu.update(pygame.event.get())
                 current_menu.draw(self.screen)
         
             
     def play(self, m):
+        print("Disabling menu:", id(self.mainmenu.get_current()))
         self.mainmenu.get_current().disable()
+        print("Enabled after disabling?", self.mainmenu.get_current().is_enabled())
         print("make it make sense", self.mainmenu.get_current().is_enabled())
         self.current_media_item, self.clock  = m.open(self.clock)
         self.playing, self.img = self.current_media_item.read()
