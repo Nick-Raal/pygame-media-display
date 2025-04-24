@@ -26,7 +26,8 @@ class Image(Media):
     def open(self, c):
         try:
             c = pygame.time.Clock()
-            cap = cv2.imread(self.file)
+            frame = cv2.imread(self.file)
+            cap = ImageCapture(frame)
             return cap, c
         except Exception as e:
             cap.release()
@@ -45,6 +46,21 @@ class Video(Media):
             print("file not found")
             return None
     
+class ImageCapture:
+    """
+    Wraps a OpenCV image read to allow it to mimic a VideoCapture for ease of playback
+    
+    Attributes:
+        frame (np.array): the image being wrapped, stored as an array of BGR values
+    """
+    def __init__(self, frame):
+        self.frame = frame
+
+    def read(self):
+        return True, self.frame
+
+    def release(self):
+        pass  # No actual resource to release
     
     
 
