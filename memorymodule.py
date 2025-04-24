@@ -124,6 +124,7 @@ class MemoryModule:
     
     def updater(self, screen):      
         if self.playing:
+            print('playing da video')
             self.screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.img.shape[1::-1], "BGR"), (0, 0))
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
