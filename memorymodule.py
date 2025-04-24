@@ -122,29 +122,23 @@ class MemoryModule:
                     menu.close()
                     menu.enable()
     
-    def updater(self, screen):
-        print("update")      
+    def updater(self, screen): 
         if self.playing:
-            print('playing da video')
             self.screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.img.shape[1::-1], "BGR"), (0, 0))
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
+        elif not self.playing and not self.mainmenu.get_current().is_enabled():
+            self.mainmenu.get_current().enable()
         else:
-            
-            current_menu = self.mainmenu.get_current()
-            print("Updater using menu:", id(current_menu), "Enabled:", current_menu.is_enabled())
-            
-            if current_menu.is_enabled():
-                current_menu.update(pygame.event.get())
+            if self.mainmenu.get_current().is_enabled():
+                self.mainmenu.get_current().update(pygame.event.get())
                 try:
-                    current_menu.draw(self.screen)
+                    self.mainmenu.get_current().draw(self.screen)
                 except RuntimeError as e:
                     print("Tried to draw a disabled menu!", e)
             
     def play(self, m):
-        print("Disabling menu:", id(self.mainmenu.get_current()))
         self.mainmenu.get_current().disable()
-        print("Enabled after disabling?", self.mainmenu.get_current().is_enabled())
         self.current_media_item, self.clock  = m.open(self.clock)
         self.playing, self.img = self.current_media_item.read()
 
