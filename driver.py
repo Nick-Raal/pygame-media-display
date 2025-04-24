@@ -1,3 +1,9 @@
+"""
+driver.py
+
+Provides a class that handles the hardware interfacing with the displayhatmini
+"""
+
 import pygame
 import os
 import signal

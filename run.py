@@ -1,3 +1,9 @@
+"""
+run.py
+
+This is the primary python module of the Memory Module system.
+It brings together all the other modules on top of handling startup updates.
+"""
 import subprocess
 import pygame
 import pygame_menu
