@@ -130,6 +130,7 @@ class MemoryModule:
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
         else:
+            print("main loop")
             current_menu = self.mainmenu.get_current()
             if current_menu.is_enabled():
                 current_menu.update(pygame.event.get())
