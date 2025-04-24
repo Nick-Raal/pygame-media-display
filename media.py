@@ -22,7 +22,7 @@ class Media:
     def get_title(self):
         return self.title
     
-class Photo(Media):
+class Image(Media):
     def open(self, c):
         try:
             c = pygame.time.Clock()
