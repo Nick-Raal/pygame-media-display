@@ -21,8 +21,6 @@ from media import Video, Image
 from themes import custom_theme
 
 import socket
-    
-
 
 class MemoryModule:
     """
