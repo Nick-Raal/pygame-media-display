@@ -18,6 +18,10 @@ print("""PYGAME MEDIA DISPLAY""")
 
 
 def restart_program():
+    """
+    Restarts the program by finding the path to the python executable
+    """
+    
     print("Restarting...")
     pygame.quit()
     python = sys.executable
@@ -71,7 +75,7 @@ except Exception as e:
    
 memmod = MemoryModule(control.get_screen())
 running = True 
-while memmod.updater(control.get_screen()):
+while memmod.updater():
     control.update_display()
 
 print("\nExiting!...\n")

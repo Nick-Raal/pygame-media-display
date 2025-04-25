@@ -23,7 +23,27 @@ class Media:
         return self.title
     
 class Image(Media):
+    """
+    Represents a static image media file.
+
+    Attributes:
+        title (str): The name of the media object
+        file (str): The path to the media file.
+    """
+    
     def open(self, c):
+        """
+        Uses opencv's imread function to open an image file before wrapping it in an image capture class, 
+        to make it mimic an opencv VideoCapture object
+        
+        Args:
+            c (pygame.time.Clock): The clock that controls the framerate of the media playback, irrelevant for static images
+            
+        Returns:
+            ImageCapture: The image file wrapped in an ImageCapture
+            pygame.time.Clock: The clock that was passed as an argument, reinitialized
+        """
+    
         try:
             c = pygame.time.Clock()
             frame = cv2.imread(self.file)
@@ -36,7 +56,6 @@ class Image(Media):
         
 class Video(Media):
     def open(self, c):
-        
         try:
             c = pygame.time.Clock()
             cap = cv2.VideoCapture(self.file)

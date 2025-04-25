@@ -1,3 +1,10 @@
+"""
+memorymodule.py
+
+This package contains the MemoryModule class, which controls a memory module
+"""
+
+
 import os
 import pygame
 
@@ -18,9 +25,41 @@ import socket
 
 
 class MemoryModule:
+    """
+    MemoryModule manages a multimedia user interface using pygame_menu.
+    
+    This class provides an interactive interface for playing videos and displaying images,
+    as well as viewing network settings and switching Wi-Fi connections. It supports both
+    image (.png, .jpeg) and video (.mp4) files.
+
+    Attributes:
+        running (bool): Indicates whether the module should keep running.
+        screen (pygame.Surface): The display surface where content is rendered.
+        current_media_item (Video or Image): The currently loaded media item.
+        clock (pygame.time.Clock): Clock object for managing frame rate.
+        img (np.ndarray): Current frame/image being displayed.
+        playing (bool): Flag indicating if media is being actively played.
+        folder (pygame_menu.Menu): Menu containing all media files.
+        settings (pygame_menu.Menu): Settings menu with IP and Wi-Fi info.
+        mainmenu (pygame_menu.Menu): The main menu interface.
+
+    Methods:
+        __init__(screen): Initializes the menu system and loads media.
+        select(event_list, menu): Handles custom navigation logic for menu control.
+        exit_handler(event_list): Handles exit behavior while playing media.
+        updater(screen): Updates the display by showing media or menu content.
+        play(m): Begins playing a selected media item.
+        quit(): Sets the running flag to False to exit the main loop.
+    """
+
         
     def __init__(self, screen):
+        """
+        Initializes the Memory Module by creating menus.
         
+        args:
+            screen (pygame.Surface): The surface the Memory Module will be rendered onto
+        """
         self.running = True
         
         self.screen = screen
@@ -49,6 +88,12 @@ class MemoryModule:
             self.folder.add.button(med.get_title(), lambda m=med: self.play(m))
             
         def get_wifi_name():
+            """
+            Uses subprocess along with the ncli command to find the SSID of the currently connected wifi network.
+            
+            Returns:
+                str: The ssid of the current network.
+            """
             try:
                 result = subprocess.check_output(
                     ["nmcli", "-t", "-f", "active,ssid", "dev", "wifi"],
@@ -61,6 +106,18 @@ class MemoryModule:
                 return f"Error: {e}"
             
         def change_wifi():
+            """
+            Uses subprocess to launch BalenaOS' wifi-connect system which allows the user to connect to a captive wifi portal and change
+            the memory module's current network
+            
+            This function waits until internet connectivity is established via the portal, and 
+            then updates the displayed SSID label with the newly connected network.
+
+            Returns:
+                str or None: Returns an error message string if an exception occurs, 
+                otherwise returns None.
+            """
+            
             try:
                 # Start wifi-connect and capture its output
                 process = subprocess.Popen(
@@ -102,6 +159,17 @@ class MemoryModule:
         self.settings.set_onupdate(self.select)
         
     def select(self, event_list, menu):
+        """
+        Handle custom menu navigation using physical buttons.
+        
+        Typically used as an on_update callback by the various pygame_menu.Menus that
+        comprise Memory Module
+
+        Args:
+            event_list (list): A list of pygame events.
+            menu (pygame_menu.Menu): The currently focused menu.
+        """
+        
         for event in event_list:
             print("Got this event: ", event)
             if event.type == pygame.KEYDOWN:
@@ -130,6 +198,15 @@ class MemoryModule:
                     
                     
     def exit_handler(self, event_list):
+        """
+        Checks for one specific event and exits playback if that event is found.
+        
+        Used for exit_handling in logic outside of the pygame_menu update system
+        
+        Args:
+            event_list (list): A list of pygame events
+        """
+        
         for event in event_list:
             if event.type == pygame.KEYUP:
                 if event.key == pygame.key.key_code('b'):
@@ -137,7 +214,14 @@ class MemoryModule:
                     self.playing = False
                         
 
-    def updater(self, screen): 
+    def updater(self): 
+        """
+        Controls the central logic of the MemoryModule. 
+        This function should be called by a higher level package each frame.
+        
+        Returns:
+            bool: self.running, which determines if the module is running or not
+        """
         if self.playing:
             self.screen.blit(pygame.image.frombuffer(self.img.tobytes(), self.img.shape[1::-1], "BGR"), (0, 0))
             self.clock.tick(60)
@@ -156,51 +240,20 @@ class MemoryModule:
         return self.running
             
     def play(self, m):
+        """
+        Opens and prepares a media file (a photo or a video) for playback
+        
+        Args:
+            m (Video or Image): A media item with `.open()` and `.read()` methods.
+        """
         self.mainmenu.get_current().disable()
         self.current_media_item, self.clock  = m.open(self.clock)
         self.playing, self.img = self.current_media_item.read()
 
 
     def quit(self):
+        """
+        Sets the self.running flag to False, which effectively exits the program
+        """
         self.running = False
-#classic control
-# def open(f):
-#     pygame_menu.events.EXIT
-#     if f.endswith('.mp4'):
-#         clock = pygame.time.Clock()
-#         cap = cv2.VideoCapture(f)
-#         playing, img = cap.read()
-#         shape = img.shape[1::-1]
-#         while playing:
-#             screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
-#             update_display()
-#             clock.tick(60)
-#             playing, img = cap.read()
-#             for event in pygame.event.get():
-#                 if event.type == pygame.QUIT:
-#                     running = False
-#                     break
-#                 if event.type == pygame.KEYDOWN:
-#                     if event.key == (pygame.key.key_code('b')):
-#                         playing=False
-
-#         cap.release()
-#     elif f.endswith('.png'):
-#         img = cv2.imread(f)
-#         shape = img.shape[1::-1]
-#         screen.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
-#         update_display()
-#         playing = True
-#         while playing:
-#             for event in pygame.event.get():
-#                 if event.type == pygame.QUIT:
-#                     running = False
-#                     break
-#                 if event.type == pygame.KEYDOWN:
-#                     if event.key == (pygame.key.key_code('b')):
-#                         playing=False
-
-
     
-    # mainmenu.set_onclose(_exit)
-
