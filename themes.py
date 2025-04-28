@@ -13,3 +13,4 @@ bgimage = pygame_menu.baseimage.BaseImage(
 custom_theme.background_color = bgimage
 #custom_theme.locals.ALIGN_CENTER
 custom_theme.widget_font = pygame_menu.font.FONT_NEVIS
+custom_theme.widget_font_color =(240, 240, 240)
