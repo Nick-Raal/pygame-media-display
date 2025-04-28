@@ -6,8 +6,7 @@ custom_theme.title_font_size= 60
 custom_theme.widget_background_inflate_to_selection=True
 bgimage = pygame_menu.baseimage.BaseImage(
     image_path=(".\graphics\bg.svg"),
-    drawing_mode=pygame_menu.baseimage.IMAGE_MODE_CENTER,
-    offset=(0,0)
+    drawing_mode=pygame_menu.baseimage.IMAGE_MODE_CENTERS
 )
 custom_theme.background_color = bgimage
 #custom_theme.locals.ALIGN_CENTER
