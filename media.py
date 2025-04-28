@@ -80,7 +80,3 @@ class ImageCapture:
 
     def release(self):
         pass  # No actual resource to release
-    
-    
-
-        
