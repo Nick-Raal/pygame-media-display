@@ -245,7 +245,7 @@ class MemoryModule:
             if self.mainmenu.get_current().is_enabled():
                 self.mainmenu.get_current().update(pygame.event.get())
                 try:
-                    self.mainmenu.get_current().draw(self.screen)
+                    #self.mainmenu.get_current().draw(self.screen)
                     self.select_rect.update(self.screen)
                 except RuntimeError as e:
                     print("Tried to draw a disabled menu!", e)
@@ -278,8 +278,6 @@ class SelectRect(pygame.Rect):
         self.duration = 0.2
     
     def change_target(self, new_target):
-        clock = pygame.time.Clock()
-        print(clock.get_fps())
         self.target = new_target
         self.current_position = self.centery
         self.timer = 0

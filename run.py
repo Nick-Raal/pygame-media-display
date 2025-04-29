@@ -76,6 +76,7 @@ if(__name__ == '__main__'):
     
     
 memmod = MemoryModule(control.get_screen())
+clock = pygame.time.Clock()
 while memmod.updater():
     control.update_display()
     clock.tick(0)
