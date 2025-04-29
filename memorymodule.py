@@ -23,7 +23,15 @@ from themes import custom_theme
 
 import socket
 
-
+async def button_resize(button, start, end, time):
+    current = start
+    while current <= end:
+        current = min(current / end, 1)  # clamp between 0 and 1
+        eased_progress = 1 - (1 - current) ** 2
+        new_size = int(start + (end - start) * eased_progress)
+        button.scale(new_size, new_size, False, True)
+        asyncio.sleep(0.01)
+    
 class MemoryModule:
     """
     MemoryModule manages a multimedia user interface using pygame_menu.
