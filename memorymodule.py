@@ -31,7 +31,7 @@ async def button_resize(button, start, end, time):
         eased_progress = 1 - (1 - current) ** 2
         new_size = int(start + (end - start) * eased_progress)
         button.scale(new_size, new_size, False, True)
-        asyncio.sleep(0.01)
+        await asyncio.sleep(0.01)
         current_time += 0.01
     
 class MemoryModule:
