@@ -300,7 +300,8 @@ class SelectRect(pygame.Rect):
     def update(self, screen):
         print(self.center)
         self.timer += 1/60
-        self.y = self.easing(self.timer, self.current_position, self.target)
+        if self.timer <= 1:
+            self.y = self.easing(self.timer, self.current_position, self.target)
         pygame.draw.rect(screen, (255, 0, 0), self)
         
     def easing(self, time, start, end):
