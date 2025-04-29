@@ -75,12 +75,12 @@ if(__name__ == '__main__'):
     except Exception as e:
         print(e)
     
-    
-memmod = MemoryModule(control.get_screen())
-clock = pygame.time.Clock()
-while memmod.updater():
-    control.update_display()
-    clock.tick(0)
+def main():
+    memmod = MemoryModule(control.get_screen())
+    clock = pygame.time.Clock()
+    while memmod.updater():
+        control.update_display()
+        clock.tick(0)
     
 cProfile.run('main()', sort='cumtime')
 
