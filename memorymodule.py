@@ -26,7 +26,7 @@ import socket
 async def button_resize(button, start, end, time):
     current = start
     current_time = 0
-    while current_time <= end:
+    while current_time <= time:
         current = min(current_time / time, 1)  # clamp between 0 and 1
         eased_progress = 1 - (1 - current) ** 2
         new_size = int(start + (end - start) * eased_progress)
@@ -167,9 +167,9 @@ class MemoryModule:
         quit_button = self.mainmenu.add.button('Quit', self.quit)
         def button_select_handler(buttons):
             for b in buttons:
-                if not b.is_selected():
-                    asyncio.run(button_resize(b, 1.2, 1, 0.2))
-                else:
+                #if not b.is_selected():
+                    #asyncio.run(button_resize(b, 1.2, 1, 0.2))
+                #else:
                     asyncio.run(button_resize(b, 1.0, 1.2, 0.2))
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
