@@ -40,7 +40,7 @@ class DisplayHatController:
             pixelbytes[i], pixelbytes[i + 1] = pixelbytes[i + 1], pixelbytes[i]
 
         # Send in larger chunks if your driver allows
-        CHUNK_SIZE = 2048  # Try 8192 or 16384 if 4096 is too small
+        CHUNK_SIZE = 4096  # Try 8192 or 16384 if 4096 is too small
         for i in range(0, len(pixelbytes), CHUNK_SIZE):
             self.display_hat.st7789.data(pixelbytes[i:i + CHUNK_SIZE])
         
