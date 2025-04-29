@@ -13,7 +13,6 @@ import sys
 from driver import DisplayHatController
 from util import multiline_text
 from memorymodule import MemoryModule
-import asyncio
 
 print("""PYGAME MEDIA DISPLAY""")
 
@@ -76,16 +75,12 @@ if(__name__ == '__main__'):
         print(e)
     
     
-async def main():
-    memmod = MemoryModule(control.get_screen())
-    while memmod.updater():
-        control.update_display()
-
-    print("\nExiting!...\n")
-    control.screen.fill((0, 0, 0))
+memmod = MemoryModule(control.get_screen())
+while memmod.updater():
     control.update_display()
-    pygame.quit()
-    sys.exit(0)
 
-if __name__ == "__main__":
-    asyncio.run(main())
+print("\nExiting!...\n")
+control.screen.fill((0, 0, 0))
+control.update_display()
+pygame.quit()
+sys.exit(0)
