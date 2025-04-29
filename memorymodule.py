@@ -223,8 +223,8 @@ class MemoryModule:
                 
                 widg = menu.get_widgets()[menu._index]
                 widg.select(update_menu=True)
-                # if(menu.get_selected_widget()):
-                #     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())               
+                if(menu.get_selected_widget()):
+                    menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())               
                     
     def exit_handler(self, event_list):
         """
@@ -303,7 +303,7 @@ class SelectRect(pygame.Rect):
         if self.timer <= 1:
             self.y = int(self.easing(self.timer, self.current_position, self.target))
         else:
-            self.y = int(self.target) 
+            self.y = int(self.target)  # Snap to final position after easing ends
         pygame.draw.rect(screen, (255, 0, 0), self)
         
     def easing(self, time, start, end):
