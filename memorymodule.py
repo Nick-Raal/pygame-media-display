@@ -26,7 +26,7 @@ import socket
 async def button_resize(button, start, end, time):
     current = start
     current_time = 0
-    time_step = 0.01
+    time_step = 0.001
     while current_time <= time:
         current = min(current_time / time, 1)  # clamp between 0 and 1
         eased_progress = 1 - (1 - current) ** 2
@@ -178,7 +178,7 @@ class MemoryModule:
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
-            b.set_onselect(lambda b=b: asyncio.create_task(button_resize(b, 1.0, 1.2, 0.05)))
+            b.set_onselect(lambda b=b: asyncio.create_task(button_resize(b, 1.0, 1.2, 0.01)))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
