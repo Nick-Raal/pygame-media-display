@@ -179,7 +179,7 @@ class MemoryModule:
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
-            b.set_onselect(lambda: asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2)))
+            b.set_onselect(lambda: asyncio.create_task(button_resize(b, 1.0, 1.2, 0.2)))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
