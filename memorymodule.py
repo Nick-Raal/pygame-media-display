@@ -150,14 +150,26 @@ class MemoryModule:
 
         self.mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                         theme=custom_theme, overflow=True)
+        
         open_button = self.mainmenu.add.button('Open', self.folder)
-        open_button.set_onselect(lambda: open_button.scale(1.2, 1.2, True, True))
         settings_button = self.mainmenu.add.button('Settings', self.settings)
         quit_button = self.mainmenu.add.button('Quit', self.quit)
+        def button_select_handler(buttons):
+            for b in buttons:
+                if not b.is_selected():
+                    b.scale(1.0, 1.0, True, True)
+                else:
+                    b.scale(1.2, 1.2, True, True)
+                    
+        mainmenu_buttons = [open_button, settings_button, quit_button]
+        for b in mainmenu_buttons:
+            b.set_onselect(lambda: button_select_handler(mainmenu_buttons))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
         self.settings.set_onupdate(self.select)
+        
+
         
     def select(self, event_list, menu):
         """
