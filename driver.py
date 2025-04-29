@@ -31,8 +31,8 @@ class DisplayHatController:
         pixelbytes = bytearray(pixelbytes)
         pixelbytes[0::2], pixelbytes[1::2] = pixelbytes[1::2], pixelbytes[0::2]
         # Bypass the ST7789 PIL image RGB888->RGB565 conversion
-        for i in range(0, len(pixelbytes), 8192):
-            self.display_hat.st7789.data(pixelbytes[i:i + 8192])
+        for i in range(0, len(pixelbytes), 16384):
+            self.display_hat.st7789.data(pixelbytes[i:i + 16384])
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
     def button_callback(self, pin):
