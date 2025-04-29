@@ -81,7 +81,6 @@ def main():
     while memmod.updater():
         control.update_display()
         clock.tick(0)
-        print(clock.get_fps())
     
 cProfile.run('main()', sort='cumtime')
 
