@@ -31,7 +31,7 @@ async def button_resize(button, start, end, time):
         current = min(current_time / time, 1)  # clamp between 0 and 1
         eased_progress = 1 - (1 - current) ** 2
         new_size = start + (end - start) * eased_progress
-        button.scale(new_size, new_size, True, True)
+        button.resize(new_size, new_size, True, True)
         button.render()
         print(button.get_title(), " : ", current_time, " - ", new_size)
         await asyncio.sleep(time_step)
@@ -170,9 +170,9 @@ class MemoryModule:
         def button_select_handler(buttons):
             for b in buttons:
                 if not b.is_selected():
-                    asyncio.create_task(button_resize(b, b.get_size(), 1, 0.2))
+                    asyncio.create_task(button_resize(b, b.get_size(), (50, 100), 0.2))
                 else:
-                    asyncio.create_task(button_resize(b, b.get_size(), 1.2, 0.2))
+                    asyncio.create_task(button_resize(b, b.get_size(), 1.2 * b.get_size(), 0.2))
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
