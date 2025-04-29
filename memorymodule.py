@@ -26,14 +26,16 @@ import socket
 async def button_resize(button, start, end, time):
     current = start
     current_time = 0
+    time_step = 0.1
     while current_time <= time:
         current = min(current_time / time, 1)  # clamp between 0 and 1
         eased_progress = 1 - (1 - current) ** 2
         new_size = start + (end - start) * eased_progress
         button.scale(new_size, new_size, True, True)
+        button.render()
         print(current_time, " - ", new_size)
-        await asyncio.sleep(0.01)
-        current_time += 0.01
+        await asyncio.sleep(time_step)
+        current_time += time_step
     
 class MemoryModule:
     """
