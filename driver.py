@@ -31,9 +31,14 @@ class DisplayHatController:
         # Lazy (slow) byteswap:
         pixelbytes = np.array(object=bytearray(pixelbytes), dtype=np.int16)
         pixelbytes.byteswap(inplace=True)
-        # Bypass the ST7789 PIL image RGB888->RGB565 conversion
-        for i in range(0, len(pixelbytes), 4096):
-            self.display_hat.st7789.data(pixelbytes[i:i + 4096])
+        # After byteswap
+        pixelbytes = pixelbytes.astype(np.uint16)  # Ensure unsigned for correct byte values
+        pixelbytes_bytes = pixelbytes.tobytes()
+
+        # Send in 4096-byte chunks
+        for i in range(0, len(pixelbytes_bytes), 4096):
+            chunk = pixelbytes_bytes[i:i + 4096]
+            self.display_hat.st7789.data(chunk)
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
     def button_callback(self, pin):
