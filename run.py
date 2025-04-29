@@ -13,6 +13,7 @@ import sys
 from driver import DisplayHatController
 from util import multiline_text
 from memorymodule import MemoryModule
+import asyncio
 
 print("""PYGAME MEDIA DISPLAY""")
 
@@ -76,9 +77,12 @@ if(__name__ == '__main__'):
     
     
     memmod = MemoryModule(control.get_screen())
+    loop = asyncio.get_event_loop()
     running = True 
     while memmod.updater():
         control.update_display()
+        loop.run_until_complete(asyncio.sleep(0))
+        
 
     print("\nExiting!...\n")
     control.screen.fill((0, 0, 0))

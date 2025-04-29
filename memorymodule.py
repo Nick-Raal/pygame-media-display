@@ -172,7 +172,7 @@ class MemoryModule:
                 #if not b.is_selected():
                     #asyncio.run(button_resize(b, 1.2, 1, 0.2))
                 #else:
-                    asyncio.run(button_resize(b, 1.0, 1.2, 0.2))
+                asyncio.create_task(button_resize(b, 1.0, 1.2, 0.2))
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
@@ -279,4 +279,3 @@ class MemoryModule:
         Sets the self.running flag to False, which effectively exits the program
         """
         self.running = False
-    
