@@ -23,20 +23,6 @@ from themes import custom_theme
 
 import socket
 
-# async def button_resize(button, start, end, time):
-#     current = start
-#     current_time = 0
-#     time_step = 0.001
-#     while current_time <= time:
-#         current = min(current_time / time, 1)  # clamp between 0 and 1
-#         eased_progress = 1 - (1 - current) ** 2
-#         new_size = start + (end - start) * eased_progress
-#         button.scale(new_size, new_size, True, True)
-#         print(button.get_title(), " : ", current_time, " - ", new_size)
-#         await asyncio.sleep(time_step)
-#         current_time += time_step
-
-
     
 class MemoryModule:
     """
@@ -202,14 +188,12 @@ class MemoryModule:
         """
         
         for event in event_list:
-            print("Got this event: ", event)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.key.key_code('x'):
                     menu._index -= 1
                 elif event.key == pygame.key.key_code('y'):
                     menu._index += 1
                 elif event.key == (pygame.key.key_code('b')):
-                    print(menu)
                     menu.close()
                     menu.enable()
                     
@@ -299,7 +283,6 @@ class SelectRect(pygame.Rect):
         self.timer = 0
     
     def update(self, screen):
-        print(self.center)
         self.timer += 1/60
         t = min(self.timer / self.duration, 1)
         if self.timer <= 1:

@@ -76,8 +76,10 @@ if(__name__ == '__main__'):
     
     
 memmod = MemoryModule(control.get_screen())
+clock = pygame.time.Clock()
 while memmod.updater():
     control.update_display()
+    print(clock.get_fps())
 
 print("\nExiting!...\n")
 control.screen.fill((0, 0, 0))
