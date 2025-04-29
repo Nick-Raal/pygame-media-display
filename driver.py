@@ -28,16 +28,21 @@ class DisplayHatController:
     def update_display(self):
         self.display_hat.st7789.set_window()
 
+        # Rotate and convert the Pygame surface
         surface = pygame.transform.rotate(self.screen, 180)
-        pixel_array = pygame.surfarray.pixels2d(surface).copy()
+        surface = surface.convert(16, 0)  # Assumes RGB565 format
 
-        # Convert ARGB -> RGB565
-        rgb565 = ((pixel_array >> 8) & 0xF800) | ((pixel_array >> 5) & 0x07E0) | ((pixel_array >> 3) & 0x001F)
-        byte_data = rgb565.astype('>u2').tobytes()  # Big-endian for SPI
+        # Get raw bytes from the surface
+        pixelbytes = bytearray(surface.get_buffer())
 
-        # Send in chunks
-        for i in range(0, len(byte_data), 4096):
-            self.display_hat.st7789.data(byte_data[i:i + 4096])
+        # More efficient in-place byte swap (still pure Python)
+        for i in range(0, len(pixelbytes), 2):
+            pixelbytes[i], pixelbytes[i + 1] = pixelbytes[i + 1], pixelbytes[i]
+
+        # Send in larger chunks if your driver allows
+        CHUNK_SIZE = 8192  # Try 8192 or 16384 if 4096 is too small
+        for i in range(0, len(pixelbytes), CHUNK_SIZE):
+            self.display_hat.st7789.data(pixelbytes[i:i + CHUNK_SIZE])
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
     def button_callback(self, pin):
