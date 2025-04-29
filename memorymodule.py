@@ -180,7 +180,7 @@ class MemoryModule:
                     
         self.mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in self.mainmenu_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center[1]))
+            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
@@ -289,15 +289,16 @@ class SelectRect(pygame.Rect):
     def __init__(self, x, y, width, height, target=None):
         super().__init__(x, y, width, height)
         self.target = target
-        self.current_position = self.center[1]
+        self.current_position = self.centery
         self.timer = 0
     
     def change_target(self, new_target):
         self.target = new_target
-        self.current_position = self.center[1]
+        self.current_position = self.centery
         self.timer = 0
     
     def update(self, screen):
+        print(self.center)
         self.timer += 1/60
         self.y = self.easing(self.timer, self.current_position, self.target)
         pygame.draw.rect(screen, (255, 0, 0), self)
