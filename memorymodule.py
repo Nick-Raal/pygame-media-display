@@ -301,9 +301,9 @@ class SelectRect(pygame.Rect):
         print(self.center)
         self.timer += 1/60
         if self.timer <= 1:
-            self.y = int(self.easing(self.timer, self.current_position, self.target) + self.height/2)
+            self.y = int(self.easing(self.timer, self.current_position, self.target) - self.height/2)
         else:
-            self.y = int(self.target + self.height/2)  # Snap to final position after easing ends
+            self.y = int(self.target - self.height/2)  # Snap to final position after easing ends
         pygame.draw.rect(screen, (255, 0, 0), self)
         
     def easing(self, time, start, end):
