@@ -180,7 +180,7 @@ class MemoryModule:
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
-            b.set_onselect(lambda but = b: asyncio.create_task(move_select(but)))
+            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center[1]))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
@@ -261,6 +261,7 @@ class MemoryModule:
             if self.mainmenu.get_current().is_enabled():
                 self.mainmenu.get_current().update(pygame.event.get())
                 try:
+                    self.select_rect.update()
                     self.mainmenu.get_current().draw(self.screen)
                 except RuntimeError as e:
                     print("Tried to draw a disabled menu!", e)
@@ -296,9 +297,10 @@ class SelectRect(pygame.Rect):
         self.current_position = self.center[1]
         self.timer = 0
     
-    def update(self):
+    def update(self, screen):
         self.timer += 1/60
         self.y = self.easing(self.timer, self.current_position, self.target)
+        pygame.draw.rect(screen, (255, 0, 0), self)
         
     def easing(self, time, start, end):
         first_quart = (start+end)/4
