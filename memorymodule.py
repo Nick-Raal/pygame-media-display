@@ -7,6 +7,8 @@ This package contains the MemoryModule class, which controls a memory module
 import os
 import pygame
 
+import asyncio
+
 import subprocess
 
 import pygame_menu
@@ -20,6 +22,7 @@ from media import Video, Image
 from themes import custom_theme
 
 import socket
+
 
 class MemoryModule:
     """
@@ -147,9 +150,10 @@ class MemoryModule:
 
         self.mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
                                         theme=custom_theme, overflow=True)
-        self.mainmenu.add.button('Open', self.folder)
-        self.mainmenu.add.button('Settings', self.settings)
-        self.mainmenu.add.button('Quit', self.quit)
+        open_button = self.mainmenu.add.button('Open', self.folder)
+        open_button.set_onselect(lambda: open_button.scale(1.2, 1.2, True, True))
+        settings_button = self.mainmenu.add.button('Settings', self.settings)
+        quit_button = self.mainmenu.add.button('Quit', self.quit)
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
@@ -245,6 +249,7 @@ class MemoryModule:
         self.playing, self.img = self.current_media_item.read()
 
     def quit(self):
+        
         """
         Sets the self.running flag to False, which effectively exits the program
         """
