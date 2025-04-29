@@ -8,6 +8,7 @@ import pygame
 import os
 import signal
 import sys
+import numpy as np
 from displayhatmini import DisplayHATMini
 
 class DisplayHatController:   
@@ -23,16 +24,20 @@ class DisplayHatController:
         self.display_hat.on_button_pressed(self.button_callback)
         
 
+    
     def update_display(self):
         self.display_hat.st7789.set_window()
-        # Grab the pygame screen as a bytes object
-        pixelbytes = pygame.transform.rotate(self.screen, 180).convert(16, 0).get_buffer()
-        # Lazy (slow) byteswap:
-        pixelbytes = bytearray(pixelbytes)
-        pixelbytes[0::2], pixelbytes[1::2] = pixelbytes[1::2], pixelbytes[0::2]
-        # Bypass the ST7789 PIL image RGB888->RGB565 conversion
-        for i in range(0, len(pixelbytes), 4096):
-            self.display_hat.st7789.data(pixelbytes[i:i + 4096])
+
+        surface = pygame.transform.rotate(self.screen, 180)
+        pixel_array = pygame.surfarray.pixels2d(surface).copy()
+
+        # Convert ARGB -> RGB565
+        rgb565 = ((pixel_array >> 8) & 0xF800) | ((pixel_array >> 5) & 0x07E0) | ((pixel_array >> 3) & 0x001F)
+        byte_data = rgb565.astype('>u2').tobytes()  # Big-endian for SPI
+
+        # Send in chunks
+        for i in range(0, len(byte_data), 4096):
+            self.display_hat.st7789.data(byte_data[i:i + 4096])
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
     def button_callback(self, pin):
