@@ -76,16 +76,17 @@ if(__name__ == '__main__'):
         print(e)
     
     
+async def main():
     memmod = MemoryModule(control.get_screen())
-    loop = asyncio.get_event_loop()
-    running = True 
     while memmod.updater():
         control.update_display()
-        loop.run_until_complete(asyncio.sleep(0))
-        
+        await asyncio.sleep(0)
 
     print("\nExiting!...\n")
     control.screen.fill((0, 0, 0))
     control.update_display()
     pygame.quit()
     sys.exit(0)
+
+if __name__ == "__main__":
+    asyncio.run(main())
