@@ -80,7 +80,6 @@ async def main():
     memmod = MemoryModule(control.get_screen())
     while memmod.updater():
         control.update_display()
-        await asyncio.sleep(0)
 
     print("\nExiting!...\n")
     control.screen.fill((0, 0, 0))

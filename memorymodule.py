@@ -23,18 +23,20 @@ from themes import custom_theme
 
 import socket
 
-async def button_resize(button, start, end, time):
-    current = start
-    current_time = 0
-    time_step = 0.001
-    while current_time <= time:
-        current = min(current_time / time, 1)  # clamp between 0 and 1
-        eased_progress = 1 - (1 - current) ** 2
-        new_size = start + (end - start) * eased_progress
-        button.scale(new_size, new_size, True, True)
-        print(button.get_title(), " : ", current_time, " - ", new_size)
-        await asyncio.sleep(time_step)
-        current_time += time_step
+# async def button_resize(button, start, end, time):
+#     current = start
+#     current_time = 0
+#     time_step = 0.001
+#     while current_time <= time:
+#         current = min(current_time / time, 1)  # clamp between 0 and 1
+#         eased_progress = 1 - (1 - current) ** 2
+#         new_size = start + (end - start) * eased_progress
+#         button.scale(new_size, new_size, True, True)
+#         print(button.get_title(), " : ", current_time, " - ", new_size)
+#         await asyncio.sleep(time_step)
+#         current_time += time_step
+
+
     
 class MemoryModule:
     """
@@ -167,8 +169,8 @@ class MemoryModule:
         open_button = self.mainmenu.add.button('Open', self.folder)
         settings_button = self.mainmenu.add.button('Settings', self.settings)
         quit_button = self.mainmenu.add.button('Quit', self.quit)
-        start_size = quit_button.get_size()
-        print(start_size)
+        # start_size = quit_button.get_size()
+        # print(start_size)
         # def button_select_handler(buttons):
         #     for b in buttons:
         #         if not b.is_selected():
@@ -178,13 +180,20 @@ class MemoryModule:
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
-            b.set_onselect(lambda but=b: asyncio.create_task(button_resize(but, 1.0, 1.2, 0.001)))
+            b.set_onselect(lambda but = b: asyncio.create_task(move_select(but)))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
         self.settings.set_onupdate(self.select)
         
+        self.select_rect = pygame.Rect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 10, 10)
+        self.rect
 
+    def move_select(self):
+        self.select_rect.y
+        
+        
+    def update_select(self, button):
         
     def select(self, event_list, menu):
         """
@@ -280,3 +289,18 @@ class MemoryModule:
         Sets the self.running flag to False, which effectively exits the program
         """
         self.running = False
+        
+class SelectRect(pygame.Rect):
+    def __init__(self, x, y, width, height, target=None):
+        super().__init__(x, y, width, height)
+        self.target = target
+        self.current_position = self.center
+        self.timer = 0
+    
+    def change_target(self, new_target):
+        self.target = new_target
+        self.current_position = self.center
+    
+    def update(self):
+        distance = self.centery - self.target.centery
+        self.move(0, )
