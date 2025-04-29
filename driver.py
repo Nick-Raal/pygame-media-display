@@ -29,8 +29,8 @@ class DisplayHatController:
         # Grab the pygame screen as a bytes object
         pixelbytes = pygame.transform.rotate(self.screen, 180).convert(16, 0).get_buffer()
         # Lazy (slow) byteswap:
-        pixelbytes = np.array(bytearray(pixelbytes))
-        pixelbytes.byteswap()
+        pixelbytes = np.array(object=bytearray(pixelbytes))
+        pixelbytes.byteswap(inplace=True)
         # Bypass the ST7789 PIL image RGB888->RGB565 conversion
         for i in range(0, len(pixelbytes), 4096):
             self.display_hat.st7789.data(pixelbytes[i:i + 4096])
