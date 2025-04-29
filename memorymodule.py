@@ -186,7 +186,7 @@ class MemoryModule:
         self.folder.set_onupdate(self.select)
         self.settings.set_onupdate(self.select)
         
-        self.select_rect = SelectRect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 10, 10, self.mainmenu_buttons[0].get_rect().center[1])
+        self.select_rect = SelectRect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 100, 50, self.mainmenu_buttons[0].get_rect().centery)
 
         
     def select(self, event_list, menu):
