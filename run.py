@@ -41,7 +41,7 @@ if(__name__ == '__main__'):
     font = pygame.font.SysFont("Comic Sans MS", 30)
     multiline_text(control.get_screen(), "Welcome To Memory Module\nChecking for updates" ,font, (160, 120))
     control.update_display()
-    time.sleep(2)
+    #time.sleep(2)
 
     try:
         process = subprocess.Popen(
@@ -65,7 +65,7 @@ if(__name__ == '__main__'):
                 control.update_display()
                 multiline_text(control.get_screen(), "Update Found\nRestarting" ,font, (160, 120))
                 control.update_display()
-                time.sleep(1)
+                #time.sleep(1)
                 control.get_screen().fill((0, 0, 0))
                 control.update_display()
                 restart_program()

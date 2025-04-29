@@ -26,7 +26,7 @@ import socket
 async def button_resize(button, start, end, time):
     current = start
     current_time = 0
-    time_step = 0.1
+    time_step = 0.02
     while current_time <= time:
         current = min(current_time / time, 1)  # clamp between 0 and 1
         eased_progress = 1 - (1 - current) ** 2
@@ -169,10 +169,10 @@ class MemoryModule:
         quit_button = self.mainmenu.add.button('Quit', self.quit)
         def button_select_handler(buttons):
             for b in buttons:
-                #if not b.is_selected():
-                    #asyncio.run(button_resize(b, 1.2, 1, 0.2))
-                #else:
-                asyncio.create_task(button_resize(b, 1.0, 1.2, 0.2))
+                if not b.is_selected():
+                    asyncio.create_task(button_resize(b, 1.2, 1, 0.2))
+                else:
+                    asyncio.create_task(button_resize(b, 1.0, 1.2, 0.2))
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
@@ -274,7 +274,6 @@ class MemoryModule:
         self.playing, self.img = self.current_media_item.read()
 
     def quit(self):
-        
         """
         Sets the self.running flag to False, which effectively exits the program
         """
