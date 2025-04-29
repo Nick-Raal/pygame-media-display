@@ -80,6 +80,7 @@ clock = pygame.time.Clock()
 while memmod.updater():
     control.update_display()
     clock.tick(0)
+    print(clock.get_fps())
 
 print("\nExiting!...\n")
 control.screen.fill((0, 0, 0))
