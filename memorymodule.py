@@ -32,7 +32,6 @@ async def button_resize(button, start, end, time):
         eased_progress = 1 - (1 - current) ** 2
         new_size = start + (end - start) * eased_progress
         button.resize(new_size, new_size, True, True)
-        button.render()
         print(button.get_title(), " : ", current_time, " - ", new_size)
         await asyncio.sleep(time_step)
         current_time += time_step
