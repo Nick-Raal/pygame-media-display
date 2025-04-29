@@ -186,14 +186,8 @@ class MemoryModule:
         self.folder.set_onupdate(self.select)
         self.settings.set_onupdate(self.select)
         
-        self.select_rect = pygame.Rect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 10, 10)
-        self.rect
+        self.select_rect = SelectRect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 10, 10, self.mainmenu_buttons[0].get_rect().center[1])
 
-    def move_select(self):
-        self.select_rect.y
-        
-        
-    def update_select(self, button):
         
     def select(self, event_list, menu):
         """
@@ -294,13 +288,20 @@ class SelectRect(pygame.Rect):
     def __init__(self, x, y, width, height, target=None):
         super().__init__(x, y, width, height)
         self.target = target
-        self.current_position = self.center
+        self.current_position = self.center[1]
         self.timer = 0
     
     def change_target(self, new_target):
         self.target = new_target
-        self.current_position = self.center
+        self.current_position = self.center[1]
+        self.timer = 0
     
     def update(self):
-        distance = self.centery - self.target.centery
-        self.move(0, )
+        self.timer += 1/60
+        self.y = self.easing(self.timer, self.current_position, self.target)
+        
+    def easing(self, time, start, end):
+        first_quart = (start+end)/4
+        third_quart = (start+end)* (3/4)
+        return start * (1-time)**3 + 3 * first_quart * time * (1 - time)**2 + 3 * third_quart * (1-time) * time**2 + end * time **3
+        
