@@ -25,12 +25,14 @@ import socket
 
 async def button_resize(button, start, end, time):
     current = start
+    current_time = 0
     while current <= end:
-        current = min(current / end, 1)  # clamp between 0 and 1
+        current = min(current_time / time, 1)  # clamp between 0 and 1
         eased_progress = 1 - (1 - current) ** 2
         new_size = int(start + (end - start) * eased_progress)
         button.scale(new_size, new_size, False, True)
         asyncio.sleep(0.01)
+        current_time += 0.01
     
 class MemoryModule:
     """
@@ -165,9 +167,9 @@ class MemoryModule:
         def button_select_handler(buttons):
             for b in buttons:
                 if not b.is_selected():
-                    b.scale(1.0, 1.0, True, True)
+                    button_resize(b, 1.2, 1, 0.2)
                 else:
-                    b.scale(1.2, 1.2, True, True)
+                    button_resize(b, 1.0, 1.2, 0.2)
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
