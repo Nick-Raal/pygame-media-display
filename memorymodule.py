@@ -159,6 +159,7 @@ class MemoryModule:
         ssid_label = self.settings.add.label(get_wifi_name())
         ssid_label.set_font(pygame_menu.font.FONT_NEVIS, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
         change_network_button = self.settings.add.button("Change Network", change_wifi)
+        
         self.settings.set_onclose(pygame_menu.events.BACK)
 
         self.mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
@@ -167,12 +168,14 @@ class MemoryModule:
         open_button = self.mainmenu.add.button('Open', self.folder)
         settings_button = self.mainmenu.add.button('Settings', self.settings)
         quit_button = self.mainmenu.add.button('Quit', self.quit)
+        start_size = quit_button.get_size()
+        print(start_size)
         def button_select_handler(buttons):
             for b in buttons:
                 if not b.is_selected():
-                    asyncio.create_task(button_resize(b, b.get_size(), (50, 100), 0.2))
+                    asyncio.create_task(button_resize(b, b.get_size()[0]/start_size, 1.0, 0.2))
                 else:
-                    asyncio.create_task(button_resize(b, b.get_size(), 1.2 * b.get_size(), 0.2))
+                    asyncio.create_task(button_resize(b, b.get_size()[0]/start_size, 1.2 * b.get_size()[0], 0.2))
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
