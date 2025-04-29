@@ -29,12 +29,12 @@ class DisplayHatController:
         # Grab the pygame screen as a bytes object
         pixelbytes = pygame.transform.rotate(self.screen, 180).convert(16, 0).get_buffer()
         # Lazy (slow) byteswap:
-        pixelbytes = np.array(object=bytearray(pixelbytes), dtype=np.uint8)
+        pixelbytes = np.array(object=pixelbytes, dtype=np.uint8)
         pixelbytes.byteswap(inplace=True)
-
+        pixelbytes_bytes = pixelbytes.tobytes()
         # Send in 4096-byte chunks
-        for i in range(0, len(pixelbytes), 4096):
-            chunk = pixelbytes[i:i + 4096]
+        for i in range(0, len(pixelbytes_bytes), 4096):
+            chunk = pixelbytes_bytes[i:i + 4096]
             self.display_hat.st7789.data(chunk)
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
