@@ -13,6 +13,7 @@ import sys
 from driver import DisplayHatController
 from util import multiline_text
 from memorymodule import MemoryModule
+import cProfile
 
 print("""PYGAME MEDIA DISPLAY""")
 
@@ -80,7 +81,8 @@ clock = pygame.time.Clock()
 while memmod.updater():
     control.update_display()
     clock.tick(0)
-    print(clock.get_fps())
+    
+cProfile.run('main()', sort='cumtime')
 
 print("\nExiting!...\n")
 control.screen.fill((0, 0, 0))
