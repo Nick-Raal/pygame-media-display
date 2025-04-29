@@ -170,16 +170,16 @@ class MemoryModule:
         quit_button = self.mainmenu.add.button('Quit', self.quit)
         start_size = quit_button.get_size()
         print(start_size)
-        def button_select_handler(buttons):
-            for b in buttons:
-                if not b.is_selected():
-                    asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.0, 0.2))
-                else:
-                    asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
+        # def button_select_handler(buttons):
+        #     for b in buttons:
+        #         if not b.is_selected():
+        #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.0, 0.2))
+        #         else:
+        #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
                     
         mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in mainmenu_buttons:
-            b.set_onselect(lambda: button_select_handler(mainmenu_buttons))
+            b.set_onselect(lambda: asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2)))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
