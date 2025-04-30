@@ -304,7 +304,7 @@ class SelectRect(pygame.Rect):
     
     def update(self):
         self.timer += 1/60
-        old_rect = self
+        old_rect = self.copy()
         t = min(self.timer / self.duration, 1)
         if self.timer <= 1:
             self.y = int(self.easing(t, self.current_position, self.target) - self.height/2)
