@@ -19,6 +19,7 @@ import pygame_menu.events
 
 from media import Video, Image
 
+import pygame_menu.menu
 from themes import custom_theme
 
 import socket
@@ -277,6 +278,7 @@ class MemoryModule:
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
             self.exit_handler(pygame.event.get())
+            return self.running, pygame.Rect(0, 0, 320, 240)
         elif not self.playing and not self.mainmenu.get_current().is_enabled():
             self.mainmenu.get_current().enable()
         else:
@@ -338,3 +340,14 @@ class SelectRect(pygame.Rect):
         third_quart = start + (end - start) * 0.75
         return start * (1-time)**3 + 3 * first_quart * time * (1 - time)**2 + 3 * third_quart * (1-time) * time**2 + end * time **3
         
+class MenuWrapper (pygame_menu.Menu):
+    def __init__(self, title, width, height, theme, overflow):
+        super().__init__(title, width, height, theme=theme, overflow=overflow)
+        self.buttons = []
+        
+    def add_button(self, button):
+        self.buttons.append(button)
+        
+    def add_select_rect_callbacks(self, select_rect):
+        for b in self.buttons:
+            self.buttons.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
