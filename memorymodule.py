@@ -172,10 +172,24 @@ class MemoryModule:
         self.folder.set_onupdate(self.select)
         self.settings.set_onupdate(self.select)
         
-        # self.mainmenu.set_onbeforeopen(self.draw)
+        self.mainmenu.set_onbeforeopen(self.need_to_draw)
+        self.folder.set_onbeforeopen(self.need_to_draw)
+        self.settings.set_onbeforeopen(self.need_to_draw)
         
         self.select_rect = SelectRect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 100, 50, self.mainmenu_buttons[0].get_rect().centery)
 
+    def drawing_handler(self):
+        if not self.has_drawn:
+            self.mainmenu.get_current().draw(self.screen)
+            pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
+            self.has_drawn=True
+            return pygame.rect(0,0,320,240)
+        else:
+            pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
+            return self.select_rect
+        
+    def need_to_draw(self):
+        self.has_drawn = True
         
     def select(self, event_list, menu):
         """
@@ -248,8 +262,8 @@ class MemoryModule:
                 self.mainmenu.get_current().update(pygame.event.get())
                 try:
                     #TODO: change to only when a menu is changed
-                    #self.mainmenu.get_current().draw(self.screen)
-                    return self.running, self.select_rect.update(self.screen)
+                    self.select_rect.update()
+                    return self.running, self.drawing_handler()
                 except RuntimeError as e:
                     print("Tried to draw a disabled menu!", e)
                     
@@ -292,8 +306,7 @@ class SelectRect(pygame.Rect):
             self.y = int(self.easing(t, self.current_position, self.target) - self.height/2)
         else:
             self.y = int(self.target - self.height/2)  # Snap to final position after easing ends
-        pygame.draw.rect(screen, (255, 0, 0), self)
-        
+
         return self
         
     def easing(self, time, start, end):
