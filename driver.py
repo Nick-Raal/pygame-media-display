@@ -57,9 +57,7 @@ class DisplayHatController:
             data = bytearray(pixelbytes)
             
             # Send the data for just this rectangle
-            chunk_size = 8192
-            for i in range(0, len(data), chunk_size):
-                self.display_hat.st7789.data(data[i:i + chunk_size])
+            self.display_hat.st7789.data(data)
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
     def button_callback(self, pin):
