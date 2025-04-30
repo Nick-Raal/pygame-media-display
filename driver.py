@@ -25,22 +25,20 @@ class DisplayHatController:
         
 
     def update_display(self):
-        self.display_hat.st7789.set_window()
-        # Grab the pygame screen as a bytes object
-        surface = pygame.transform.flip(self.screen, False, True).convert(16,0)
-        pixelbytes = surface.get_buffer()
+        # Use numpy's optimized functions for faster processing
+        # Get raw pixel buffer and reshape to correct dimensions
+        buffer = np.frombuffer(surface.get_buffer(), dtype=np.uint16)
         
-        # Use numpy for efficient byteswap
-        pixelbytes = np.frombuffer(pixelbytes, dtype=np.uint16)
-        pixelbytes.byteswap(inplace=True)
+        # Perform byteswap more efficiently
+        buffer_swapped = buffer.byteswap()
         
-        # Convert back to a bytearray (not bytes) which should work with SPI
-        pixelbytes_bytearray = bytearray(pixelbytes)
+        # Convert directly to bytearray (the format expected by the ST7789 driver)
+        data = bytearray(buffer_swapped)
         
-        # Send in 4096-byte chunks
-        for i in range(0, len(pixelbytes_bytearray), 4096):
-            chunk = pixelbytes_bytearray[i:i + 4096]
-            self.display_hat.st7789.data(chunk)
+        # Send data in larger chunks for better performance
+        chunk_size = 8192  # Try a larger chunk size
+        for i in range(0, len(data), chunk_size):
+            self.display_hat.st7789.data(data[i:i + chunk_size])
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
     def button_callback(self, pin):
