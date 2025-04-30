@@ -25,15 +25,27 @@ class DisplayHatController:
         
 
     def update_display(self, dirty_rects):
-        
-        self.display_hat.st7789.set_window()
-        
+
+            
         for dirty_rect in dirty_rects:
+            x1, y1 = dirty_rect.topleft
+            x2, y2 = dirty_rect.bottomright
+            x2 -= 1  # Convert from exclusive to inclusive bounds
+            y2 -= 1
+            
+            # Adjust for 180 degree rotation if needed
+            # Since you're rotating the surface, we need to adjust coordinates too
+            width, height = self.screen.get_size()
+            rotated_x1 = width - x2 - 1
+            rotated_y1 = height - y2 - 1
+            rotated_x2 = width - x1 - 1
+            rotated_y2 = height - y1 - 1
+            
+            # Set window with rotated coordinates
             self.display_hat.st7789.set_window(
-                dirty_rect.x, dirty_rect.y, 
-                dirty_rect.x + dirty_rect.width - 1, 
-                dirty_rect.y + dirty_rect.height - 1
-            )   
+                rotated_x1, rotated_y1,
+                rotated_x2, rotated_y2
+            )
             
             # Extract just this portion of the screen
             subsurface = self.screen.subsurface(dirty_rect)
