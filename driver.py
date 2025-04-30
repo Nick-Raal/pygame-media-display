@@ -25,24 +25,36 @@ class DisplayHatController:
         
 
     def update_display(self, dirty_rects):
+        # Update pygame's internal buffer first
+        pygame.display.update(dirty_rects)
         
-        self.display_hat.st7789.set_window()
+        # Get the complete surface
+        surface = pygame.display.get_surface()
         
-        for dirty_rect in dirty_rects:
-            pygame.display.update(dirty_rect)
-           
-        subsurface = pygame.display.get_surface()
-        # Rotate and convert the subsurface
-        rotated = pygame.transform.rotate(subsurface, 180).convert(16, 0)
-        # Process pixels for this rectangle only
-        pixelbytes = np.frombuffer(rotated.get_buffer(), dtype=np.uint16)
-        pixelbytes = pixelbytes.byteswap()
-        data = bytearray(pixelbytes)
-        
-        # Send the data for just this rectangle
-        chunk_size = 4096
-        for i in range(0, len(data), chunk_size):
-            self.display_hat.st7789.data(data[i:i + chunk_size])
+        # Process each dirty rectangle separately for the ST7789 display
+        for rect in dirty_rects:
+            # Set the window for just this rectangle on the ST7789
+            self.display_hat.st7789.set_window(
+                rect.x, rect.y, 
+                rect.x + rect.width - 1, 
+                rect.y + rect.height - 1
+            )
+            
+            # Extract just this portion of the screen
+            subsurface = surface.subsurface(rect)
+            
+            # Rotate and convert the subsurface
+            rotated = pygame.transform.rotate(subsurface, 180).convert(16, 0)
+            
+            # Process pixels for this rectangle only
+            pixelbytes = np.frombuffer(rotated.get_buffer(), dtype=np.uint16)
+            pixelbytes = pixelbytes.byteswap()
+            data = bytearray(pixelbytes)
+            
+            # Send the data for just this rectangle
+            chunk_size = 4096
+            for i in range(0, len(data), chunk_size):
+                self.display_hat.st7789.data(data[i:i + chunk_size])
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
     def button_callback(self, pin):
