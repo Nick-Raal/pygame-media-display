@@ -78,10 +78,13 @@ if(__name__ == '__main__'):
 def main():
     memmod = MemoryModule(control.get_screen())
     clock = pygame.time.Clock()
-    while memmod.updater():
-        control.update_display()
+    running, dirty_rect =  memmod.updater()
+    while running:
+        control.update_display(dirty_rect)
+        running, dirty_rect =  memmod.updater()
         clock.tick(0)
         print(clock.get_fps())
+        
 cProfile.run('main()', sort='cumtime')
 
 print("\nExiting!...\n")

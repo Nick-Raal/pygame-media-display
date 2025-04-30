@@ -172,6 +172,8 @@ class MemoryModule:
         self.folder.set_onupdate(self.select)
         self.settings.set_onupdate(self.select)
         
+        self.mainmenu.set_onbeforeopen(self.draw)
+        
         self.select_rect = SelectRect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 100, 50, self.mainmenu_buttons[0].get_rect().centery)
 
         
@@ -245,12 +247,13 @@ class MemoryModule:
             if self.mainmenu.get_current().is_enabled():
                 self.mainmenu.get_current().update(pygame.event.get())
                 try:
-                    self.mainmenu.get_current().draw(self.screen)
-                    self.select_rect.update(self.screen)
+                    #TODO: change to only when a menu is changed
+                    #self.mainmenu.get_current().draw(self.screen)
+                    return self.running, self.select_rect.update(self.screen)
                 except RuntimeError as e:
                     print("Tried to draw a disabled menu!", e)
                     
-        return self.running
+        return self.running, None
             
     def play(self, m):
         """
@@ -290,6 +293,8 @@ class SelectRect(pygame.Rect):
         else:
             self.y = int(self.target - self.height/2)  # Snap to final position after easing ends
         pygame.draw.rect(screen, (255, 0, 0), self)
+        
+        return self
         
     def easing(self, time, start, end):
         first_quart = start + (end - start) * 0.25

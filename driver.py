@@ -24,22 +24,25 @@ class DisplayHatController:
         self.display_hat.on_button_pressed(self.button_callback)
         
 
-    def update_display(self):
+    def update_display(self, dirty_rect):
         
-        surface = pygame.transform.flip(self.screen, False, True).convert(16,0)
-                
-        # Use numpy's optimized functions for faster processing
-        # Get raw pixel buffer and reshape to correct dimensions
-        buffer = np.frombuffer(surface.get_buffer(), dtype=np.uint16)
+        # Set the window for this specific rectangle
+        self.display_hat.st7789.set_window(dirty_rect.x, dirty_rect.y, 
+                                         dirty_rect.x + dirty_rect.width - 1, 
+                                         dirty_rect.y + dirty_rect.height - 1)
         
-        # Perform byteswap more efficiently
-        buffer_swapped = buffer.byteswap()
+        # Extract just this portion of the screen
+        subsurface = self.screen.subsurface(dirty_rect)
+        # Rotate and convert the subsurface
+        rotated = pygame.transform.rotate(subsurface, 180).convert(16, 0)
         
-        # Convert directly to bytearray (the format expected by the ST7789 driver)
-        data = bytearray(buffer_swapped)
+        # Process pixels for this rectangle only
+        pixelbytes = np.frombuffer(rotated.get_buffer(), dtype=np.uint16)
+        pixelbytes = pixelbytes.byteswap()
+        data = bytearray(pixelbytes)
         
-        # Send data in larger chunks for better performance
-        chunk_size = 8192  # Try a larger chunk size
+        # Send the data for just this rectangle
+        chunk_size = 4096
         for i in range(0, len(data), chunk_size):
             self.display_hat.st7789.data(data[i:i + chunk_size])
         
