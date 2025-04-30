@@ -28,8 +28,9 @@ class DisplayHatController:
 
         for dirty_rect in dirty_rects:
             # Set the window for this specific rectangle
-            self.display_hat.st7789.set_window()
-            
+            self.display_hat.st7789.set_window(dirty_rect.x, dirty_rect.y, 
+                                            dirty_rect.x + dirty_rect.width - 1, 
+                                            dirty_rect.y + dirty_rect.height - 1)
             # Extract just this portion of the screen
             subsurface = self.screen.subsurface(dirty_rect)
             # Rotate and convert the subsurface
