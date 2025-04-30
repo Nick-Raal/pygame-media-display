@@ -203,7 +203,7 @@ class MemoryModule:
             
             return [expanded_new.unionall(tuple([expanded_old])),]
         
-    def need_to_draw(self):
+    def need_to_draw(self, current_menu=None, target_menu=None):
         self.has_drawn = True
         
     def select(self, event_list, menu):
