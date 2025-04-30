@@ -279,7 +279,6 @@ class MemoryModule:
             self.clock.tick(60)
             self.playing, self.img =  self.current_media_item.read()  
             self.exit_handler(pygame.event.get())
-            return self.running, pygame.Rect(0, 0, 320, 240)
         elif not self.playing and not self.mainmenu.get_current().is_enabled():
             self.mainmenu.get_current().enable()
         else:
@@ -290,7 +289,7 @@ class MemoryModule:
                 except RuntimeError as e:
                     print("Tried to draw a disabled menu!", e)
                     
-        return self.running, None
+        return self.running, pygame.Rect(0, 0, 320, 240)
             
     def play(self, m):
         """
