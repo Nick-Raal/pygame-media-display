@@ -206,7 +206,7 @@ class MemoryModule:
         
     def need_to_draw(self, current_menu=None, target_menu=None):
         print("menu open")
-        self.has_drawn = True
+        self.has_drawn = False
         
     def select(self, event_list, menu):
         """
