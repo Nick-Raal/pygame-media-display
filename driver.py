@@ -25,16 +25,18 @@ class DisplayHatController:
         
 
     def update_display(self, dirty_rects):
-
+        
+        self.display_hat.st7789.set_window()
+        
         for dirty_rect in dirty_rects:
             # Extract just this portion of the screen
             subsurface = self.screen.subsurface(dirty_rect)
             # Rotate and convert the subsurface
-            rotated = pygame.transform.rotate(subsurface, 180).convert(16, 0)
+            rotated = pygame.transform.rotate(surface=subsurface, 180).convert(16, 0)
             
 
             # Set the window for this specific rectangle
-            self.display_hat.st7789.set_window()
+            
             print("ao ", dirty_rect)
             
             # Process pixels for this rectangle only
