@@ -329,14 +329,16 @@ class SelectRect(pygame.Rect):
     
     def update(self):
         self.timer += 1/60
-        self.old_rect = self.copy()
+        old_rect = self.copy()  # Store the old position before updating
+        
         t = min(self.timer / self.duration, 1)
         if self.timer <= 1:
-            self.y = int(self.easing(t, self.current_position, self.target) - self.height/2)
+            self.y = int(self.easing(t, self.current_position, self.target) - self.height)
         else:
-            self.y = int(self.target - self.height/2)  # Snap to final position after easing ends
-
-        return self, self.old_rect
+            self.y = int(self.target - self.height)  # Snap to final position
+        
+        # Return both the new (self) and old rectangle positions
+        return self, old_rect
         
     def easing(self, time, start, end):
         first_quart = start + (end - start) * 0.25
