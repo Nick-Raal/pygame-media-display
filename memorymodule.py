@@ -69,6 +69,8 @@ class MemoryModule:
         self.img = None
         self.playing = False
         
+        self.has_drawn = False
+        
         self.folder = pygame_menu.Menu('Memories', 320, 240, 
         enabled=False, 
         theme=custom_theme,
