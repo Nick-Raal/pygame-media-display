@@ -299,7 +299,7 @@ class SelectRect(pygame.Rect):
         self.current_position = self.centery
         self.timer = 0
     
-    def update(self, screen):
+    def update(self):
         self.timer += 1/60
         t = min(self.timer / self.duration, 1)
         if self.timer <= 1:
