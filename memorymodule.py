@@ -181,7 +181,7 @@ class MemoryModule:
         self.select_rect = SelectRect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 100, 50, self.mainmenu_buttons[0].get_rect().centery)
 
     def drawing_handler(self):
-        dirty_select_rect = self.select_rect.update()
+        new_rect, old_rect = self.select_rect.update()
         if not self.has_drawn:
             self.mainmenu.draw(self.screen)
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
@@ -189,9 +189,17 @@ class MemoryModule:
             
             return [pygame.Rect(0,0,320,240),]
         else:
+            # Redraw the menu - this will clear the old rectangle position
             self.mainmenu.draw(self.screen)
+            
+            # Draw the rectangle at its new position
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
-            return dirty_select_rect
+            
+            # Return both rectangles as dirty areas
+            # Making them slightly larger to ensure no artifacts remain
+            expanded_old = old_rect.inflate(2, 2)
+            expanded_new = new_rect.inflate(2, 2)
+            return [expanded_old, expanded_new]
         
     def need_to_draw(self):
         self.has_drawn = True
