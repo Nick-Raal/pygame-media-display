@@ -183,7 +183,7 @@ class MemoryModule:
     def drawing_handler(self):
         dirty_select_rect = self.select_rect.update()
         if not self.has_drawn:
-            self.mainmenu.get_current().draw(self.screen)
+            self.mainmenu.draw(self.screen)
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             self.has_drawn=True
             
@@ -191,7 +191,7 @@ class MemoryModule:
         else:
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             subsurface = self.screen.subsurface(self.select_rect.old_rect)
-            self.mainmenu.get_current.draw(subsurface)
+            self.mainmenu.draw(subsurface)
             return dirty_select_rect
         
     def need_to_draw(self):
