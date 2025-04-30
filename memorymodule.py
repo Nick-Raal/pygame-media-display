@@ -174,7 +174,7 @@ class MemoryModule:
             b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
             
         for b in folder_buttons:
-            folder_buttons.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
