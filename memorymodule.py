@@ -172,7 +172,7 @@ class MemoryModule:
         self.folder.set_onupdate(self.select)
         self.settings.set_onupdate(self.select)
         
-        self.mainmenu.set_onbeforeopen(self.draw)
+        # self.mainmenu.set_onbeforeopen(self.draw)
         
         self.select_rect = SelectRect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 100, 50, self.mainmenu_buttons[0].get_rect().centery)
 
