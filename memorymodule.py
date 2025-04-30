@@ -333,9 +333,9 @@ class SelectRect(pygame.Rect):
         
         t = min(self.timer / self.duration, 1)
         if self.timer <= 1:
-            self.y = int(self.easing(t, self.current_position, self.target) - self.height)
+            self.y = int(self.easing(t, self.current_position, self.target) - self.height/2)
         else:
-            self.y = int(self.target - self.height)  # Snap to final position
+            self.y = int(self.target - self.height/2)  # Snap to final position
         
         # Return both the new (self) and old rectangle positions
         return self, old_rect
