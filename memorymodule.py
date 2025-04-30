@@ -309,9 +309,9 @@ class SelectRect(pygame.Rect):
         self.old_rect = self.copy()
         t = min(self.timer / self.duration, 1)
         if self.timer <= 1:
-            self.y = int(self.easing(t, self.current_position, self.target) + self.height/2)
+            self.y = int(self.easing(t, self.current_position, self.target) - self.height)
         else:
-            self.y = int(self.target + self.height/2)  # Snap to final position after easing ends
+            self.y = int(self.target - self.height)  # Snap to final position after easing ends
 
         return self, self.old_rect
         
