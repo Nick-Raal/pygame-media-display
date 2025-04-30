@@ -28,9 +28,7 @@ class DisplayHatController:
 
         for dirty_rect in dirty_rects:
             # Set the window for this specific rectangle
-            self.display_hat.st7789.set_window(dirty_rect.x, dirty_rect.y, 
-                                            dirty_rect.x + dirty_rect.width - 1, 
-                                            dirty_rect.y + dirty_rect.height - 1)
+            self.display_hat.st7789.set_window()
             
             # Extract just this portion of the screen
             subsurface = self.screen.subsurface(dirty_rect)

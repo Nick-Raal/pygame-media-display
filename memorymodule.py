@@ -195,17 +195,10 @@ class MemoryModule:
             # Draw the rectangle at its new position
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             
-<<<<<<< HEAD
-            # Step 3: Return both areas as dirty rectangles
-            # Make them slightly larger to catch any rounding errors
-            expanded_old = old_rect.inflate(4, 100)
-            expanded_new = new_rect.inflate(4, 4)
-=======
             # Return both rectangles as dirty areas
             # Making them slightly larger to ensure no artifacts remain
             expanded_old = old_rect.inflate(20, 20)
             expanded_new = new_rect.inflate(20, 20)
->>>>>>> parent of 31748ec (jean claude van damme)
             
             return [expanded_new.unionall(tuple([expanded_old])),]
         
