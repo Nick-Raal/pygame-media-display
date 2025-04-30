@@ -204,7 +204,7 @@ class MemoryModule:
 
             
             
-            #return [expanded_new.unionall(tuple([expanded_old])),]
+            return [expanded_new.unionall(tuple([expanded_old])),]
             #return [pygame.Rect(self.select_rect.left, self.select_rect.top, self.select_rect.width, abs(self.select_rect.top - self.select_rect.target)),]
             #return [pygame.Rect(80, 100, 20, 120)]
             print("eo ", expanded_old)
