@@ -197,8 +197,8 @@ class MemoryModule:
             
             # Return both rectangles as dirty areas
             # Making them slightly larger to ensure no artifacts remain
-            expanded_old = old_rect.inflate(2, 2)
-            expanded_new = new_rect.inflate(2, 2)
+            expanded_old = old_rect.inflate(20, 20)
+            expanded_new = new_rect.inflate(20, 20)
             return [expanded_old, expanded_new]
         
     def need_to_draw(self):
