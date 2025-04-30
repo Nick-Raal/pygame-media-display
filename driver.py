@@ -25,6 +25,9 @@ class DisplayHatController:
         
 
     def update_display(self):
+        
+        surface = pygame.transform.flip(self.screen, False, True).convert(16,0)
+                
         # Use numpy's optimized functions for faster processing
         # Get raw pixel buffer and reshape to correct dimensions
         buffer = np.frombuffer(surface.get_buffer(), dtype=np.uint16)
