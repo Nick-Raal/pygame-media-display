@@ -212,7 +212,7 @@ class MemoryModule:
             
             # Step 3: Return both areas as dirty rectangles
             # Make them slightly larger to catch any rounding errors
-            expanded_old = old_rect.inflate(4, 4)
+            expanded_old = old_rect.inflate(4, 40)
             expanded_new = new_rect.inflate(4, 4)
             
             return [expanded_old, expanded_new]
