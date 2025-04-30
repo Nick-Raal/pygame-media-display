@@ -32,10 +32,14 @@ class DisplayHatController:
             # Rotate and convert the subsurface
             rotated = pygame.transform.rotate(subsurface, 180).convert(16, 0)
             
-            rotated_rect = rotated.get_rect(center=dirty_rect.center)
+            rect = rotated.get_rect(center=dirty_rect.center)
 
-            self.display_hat.st7789.set_window(rotated_rect.left, rotated_rect.top,
-                                            rotated_rect.right, rotated_rect.bottom)
+                    # Set the window for this specific rectangle
+            self.display_hat.st7789.set_window(
+                rect.x, rect.y, 
+                rect.x + rect.width - 1, 
+                rect.y + rect.height - 1
+            )
             
             # Process pixels for this rectangle only
             pixelbytes = np.frombuffer(rotated.get_buffer(), dtype=np.uint16)
