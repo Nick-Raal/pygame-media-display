@@ -185,7 +185,7 @@ class MemoryModule:
             self.mainmenu.get_current().draw(self.screen)
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             self.has_drawn=True
-            return pygame.rect(0,0,320,240)
+            return pygame.Rect(0,0,320,240)
         else:
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             return self.select_rect
