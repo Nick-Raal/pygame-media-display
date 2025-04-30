@@ -51,11 +51,7 @@ class DisplayHatController:
             subsurface = self.screen.subsurface(dirty_rect)
             # Rotate and convert the subsurface
             rotated = pygame.transform.rotate(subsurface, 180).convert(16, 0)
-            
-
-            # Set the window for this specific rectangle
-            
-            print("ao ", dirty_rect)
+        
             
             # Process pixels for this rectangle only
             pixelbytes = np.frombuffer(rotated.get_buffer(), dtype=np.uint16)
@@ -63,7 +59,7 @@ class DisplayHatController:
             data = bytearray(pixelbytes)
             
             # Send the data for just this rectangle
-            chunk_size = 4096
+            chunk_size = 8192
             for i in range(0, len(data), chunk_size):
                 self.display_hat.st7789.data(data[i:i + chunk_size])
         
