@@ -183,14 +183,15 @@ class MemoryModule:
     def drawing_handler(self):
         new_rect, old_rect = self.select_rect.update()
         if not self.has_drawn:
-            self.mainmenu.get_current().draw(self.screen)
+            print("draw new")
+            self.mainmenu.draw(self.screen)
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             self.has_drawn=True
             
             return [pygame.Rect(0,0,320,240),]
         else:
             # Redraw the menu - this will clear the old rectangle position
-            self.mainmenu.get_current().draw(self.screen)
+            self.mainmenu.draw(self.screen)
             
             # Return both rectangles as dirty areas
             # Making them slightly larger to ensure no artifacts remain
