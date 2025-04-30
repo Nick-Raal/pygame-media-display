@@ -24,7 +24,6 @@ class DisplayHatController:
         self.display_hat.on_button_pressed(self.button_callback)
         
 
-    @profile
     def update_display(self, dirty_rects):
         for dirty_rect in dirty_rects:
             x1, y1 = dirty_rect.topleft

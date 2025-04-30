@@ -14,6 +14,8 @@ from driver import DisplayHatController
 from util import multiline_text
 from memorymodule import MemoryModule
 import cProfile
+import pstats
+import io
 
 print("""PYGAME MEDIA DISPLAY""")
 
@@ -85,7 +87,19 @@ def main():
         clock.tick(60)
         print(clock.get_fps())
         
-cProfile.run('main()', sort='cumtime')
+profiler = cProfile.Profile()
+profiler.enable()
+
+main()  # This will include calls to your Raspberry Pi display logic, etc.
+
+profiler.disable()
+
+# Print nicely formatted stats
+s = io.StringIO()
+stats = pstats.Stats(profiler, stream=s).sort_stats("cumtime")
+stats.print_stats("update_display")
+
+print(s.getvalue())
 
 print("\nExiting!...\n")
 control.screen.fill((0, 0, 0))
