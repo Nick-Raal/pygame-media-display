@@ -23,8 +23,6 @@ import pygame_menu.menu
 from themes import custom_theme
 
 import socket
-import numpy as np
-from scipy.ndimage import label
 
     
 class MemoryModule:
@@ -196,6 +194,7 @@ class MemoryModule:
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             self.has_drawn=True
             
+            return [pygame.Rect(0,0,320,240),]
         else:
             # Redraw the menu - this will clear the old rectangle position
             self.mainmenu.draw(self.screen)
@@ -209,8 +208,8 @@ class MemoryModule:
             # Draw the rectangle at its new position
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             
+            return [expanded_new.unionall(tuple([expanded_old])),]
             #return [pygame.Rect(0,0,320,240),]
-        return self.detect_dirty_rects()
             
     def need_to_draw(self, current_menu=None, target_menu=None):
         print("menu open")
@@ -252,7 +251,6 @@ class MemoryModule:
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())               
                     
     def exit_handler(self, event_list):
-        
         """
         Checks for one specific event and exits playback if that event is found.
         
@@ -267,42 +265,8 @@ class MemoryModule:
                 if event.key == pygame.key.key_code('b'):
                     print('close')
                     self.playing = False
-                      
-    def detect_dirty_rects(self):
-        # Create a copy of the previous frame if it doesn't exist
-        if not hasattr(self, 'previous_frame'):
-            self.previous_frame = pygame.Surface(self.screen.get_size())
-            self.previous_frame.blit(self.screen, (0, 0))
-            return [pygame.Rect(0, 0, *self.screen.get_size())]
-        
-        # Find differences between current and previous frames
-        dirty_rects = []
-        
-        # Option 1: Pixel-by-pixel comparison (slower but accurate)
-        current_array = pygame.surfarray.array3d(self.screen)
-        prev_array = pygame.surfarray.array3d(self.previous_frame)
-        
-        # Create a difference mask
-        diff = current_array != prev_array
-        diff = diff.any(axis=2)  # Combine RGB differences
-        
-        # Find contiguous regions of changes
-        
-        labeled_array, num_features = label(diff)
-        
-        # Convert each labeled region to a rectangle
-        for i in range(1, num_features + 1):
-            y, x = np.where(labeled_array == i)
-            if len(x) > 0 and len(y) > 0:
-                rect = pygame.Rect(min(x), min(y), max(x) - min(x) + 1, max(y) - min(y) + 1)
-                dirty_rects.append(rect)
-        
-        # Update previous frame for next comparison
-        self.previous_frame.blit(self.screen, (0, 0))
-    
-        return dirty_rects  
-    
-    def updater(self):
+                        
+    def updater(self): 
         """
         Controls the central logic of the MemoryModule. 
         This function should be called by a higher level package each frame.
@@ -325,7 +289,7 @@ class MemoryModule:
                 except RuntimeError as e:
                     print("Tried to draw a disabled menu!", e)
                     
-        return self.running, [pygame.Rect(0, 0, 320, 240),]
+        return self.running, pygame.Rect(0, 0, 320, 240)
             
     def play(self, m):
         """
