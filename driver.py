@@ -54,10 +54,9 @@ class DisplayHatController:
             # Process pixels for this rectangle only
             pixelbytes = np.frombuffer(rotated.get_buffer(), dtype=np.uint16)
             pixelbytes = pixelbytes.byteswap()
-            data = bytearray(pixelbytes)
             
             # Send the data for just this rectangle
-            self.display_hat.st7789.data(data)
+            self.display_hat.st7789.data(pixelbytes)
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
     def button_callback(self, pin):
