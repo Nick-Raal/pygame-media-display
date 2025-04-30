@@ -190,7 +190,8 @@ class MemoryModule:
             return [pygame.Rect(0,0,320,240),]
         else:
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
-            self.screen.blit(self.background, self.select_rect.old_rect.topleft, self.select_rect.old_rect)
+            subsurface = self.screen.subsurface(self.select_rect.old_rect)
+            self.mainmenu.get_current.draw(subsurface)
             return dirty_select_rect
         
     def need_to_draw(self):
