@@ -199,6 +199,8 @@ class MemoryModule:
             # Making them slightly larger to ensure no artifacts remain
             expanded_old = old_rect.inflate(20, 20)
             expanded_new = new_rect.inflate(20, 20)
+            pygame.draw.rect(self.screen, (0, 255, 0), expanded_old)
+            
             
             #return [expanded_new.unionall(tuple([expanded_old])),]
             #return [pygame.Rect(self.select_rect.left, self.select_rect.top, self.select_rect.width, abs(self.select_rect.top - self.select_rect.target)),]

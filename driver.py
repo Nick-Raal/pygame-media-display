@@ -34,7 +34,7 @@ class DisplayHatController:
             
             rect = rotated.get_rect(center=dirty_rect.center)
 
-                    # Set the window for this specific rectangle
+            # Set the window for this specific rectangle
             self.display_hat.st7789.set_window(
                 rect.x, rect.y, 
                 rect.x + rect.width - 1, 
