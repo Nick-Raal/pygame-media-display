@@ -86,8 +86,10 @@ class MemoryModule:
             for f in os.listdir('.') if f.endswith(media_file_types)
         ]
 
+        folder_buttons = []
+        
         for med in media:
-            self.folder.add.button(med.get_title(), lambda m=med: self.play(m))
+            folder_buttons.append(self.folder.add.button(med.get_title(), lambda m=med: self.play(m)))
             
         def get_wifi_name():
             """
@@ -169,6 +171,9 @@ class MemoryModule:
         self.mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in self.mainmenu_buttons:
             b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            
+        for b in folder_buttons:
+            folder_buttons.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
@@ -176,7 +181,7 @@ class MemoryModule:
         
         self.mainmenu.set_onbeforeopen(self.need_to_draw)
         self.folder.set_onbeforeopen(self.need_to_draw)
-        self.settings.set_onbeforeopen(self.need_to_draw)
+        self.settings.set_onbeforeopen(onbeforeopen=self.need_to_draw)
         
         self.select_rect = SelectRect(self.mainmenu_buttons[1].get_rect().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
 
