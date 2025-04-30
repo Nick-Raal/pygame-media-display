@@ -97,7 +97,7 @@ profiler.disable()
 # Print nicely formatted stats
 s = io.StringIO()
 stats = pstats.Stats(profiler, stream=s).sort_stats("cumtime")
-stats.print_stats("driver.py")
+stats.print_callees("update_display")
 
 print(s.getvalue())
 
