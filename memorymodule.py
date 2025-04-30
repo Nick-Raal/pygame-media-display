@@ -190,7 +190,7 @@ class MemoryModule:
             return [pygame.Rect(0,0,320,240),]
         else:
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
-            print(dirty_select_rect)
+            self.screen.blit(self.background, self.select_rect.old_rect.topleft, self.select_rect.old_rect)
             return dirty_select_rect
         
     def need_to_draw(self):
@@ -296,6 +296,7 @@ class SelectRect(pygame.Rect):
         self.current_position = self.centery
         self.timer = 0
         self.duration = 0.2
+        self.old_rect = self.copy()
     
     def change_target(self, new_target):
         self.target = new_target
@@ -304,14 +305,14 @@ class SelectRect(pygame.Rect):
     
     def update(self):
         self.timer += 1/60
-        old_rect = self.copy()
+        self.old_rect = self.copy()
         t = min(self.timer / self.duration, 1)
         if self.timer <= 1:
             self.y = int(self.easing(t, self.current_position, self.target) - self.height/2)
         else:
             self.y = int(self.target - self.height/2)  # Snap to final position after easing ends
 
-        return self, old_rect
+        return self, self.old_rect
         
     def easing(self, time, start, end):
         first_quart = start + (end - start) * 0.25
