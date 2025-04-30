@@ -82,7 +82,7 @@ def main():
     while running:
         control.update_display(dirty_rect)
         running, dirty_rect =  memmod.updater()
-        clock.tick(0)
+        clock.tick(60)
         
 cProfile.run('main()', sort='cumtime')
 
