@@ -186,11 +186,11 @@ class MemoryModule:
             self.mainmenu.get_current().draw(self.screen)
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             self.has_drawn=True
-            print("new menu")
+            
             return [pygame.Rect(0,0,320,240),]
         else:
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
-            
+            print(dirty_select_rect)
             return dirty_select_rect
         
     def need_to_draw(self):
