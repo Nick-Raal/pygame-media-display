@@ -181,26 +181,41 @@ class MemoryModule:
         self.select_rect = SelectRect(self.mainmenu_buttons[0].get_rect().left, self.mainmenu_buttons[0].get_rect().top, 100, 50, self.mainmenu_buttons[0].get_rect().centery)
 
     def drawing_handler(self):
+        # Get new and old rectangles
         new_rect, old_rect = self.select_rect.update()
+        
+        # Create a clean screen with just the menu (no selection rectangle)
+        if not hasattr(self, 'clean_background') or self.menu_needs_update:
+            # Store a clean background (menu only, no selection rect)
+            self.clean_background = pygame.Surface((320, 240))
+            self.mainmenu.draw(self.clean_background)
+            self.menu_needs_update = False
+        
+        # Clean approach: work with a fresh copy of the background each frame
         if not self.has_drawn:
-            self.mainmenu.draw(self.screen)
+            # First draw - use the clean background
+            self.screen.blit(self.clean_background, (0, 0))
+            # Draw selection rectangle
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
-            self.has_drawn=True
+            self.has_drawn = True
             
-            return [pygame.Rect(0,0,320,240),]
+            # First time - update the whole screen
+            return [pygame.Rect(0, 0, 320, 240)]
         else:
-            # Redraw the menu - this will clear the old rectangle position
-            self.mainmenu.draw(self.screen)
+            # Step 1: Clear both old and new rectangle areas with clean background
+            self.screen.blit(self.clean_background, old_rect.topleft, old_rect)
+            if old_rect != new_rect:  # Don't draw twice if rectangles overlap
+                self.screen.blit(self.clean_background, new_rect.topleft, new_rect)
             
-            # Draw the rectangle at its new position
-            pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
+            # Step 2: Draw the selection rectangle at its new position
+            pygame.draw.rect(self.screen, (255, 0, 0), new_rect)
             
-            # Return both rectangles as dirty areas
-            # Making them slightly larger to ensure no artifacts remain
-            expanded_old = old_rect.inflate(20, 20)
-            expanded_new = new_rect.inflate(20, 20)
+            # Step 3: Return both areas as dirty rectangles
+            # Make them slightly larger to catch any rounding errors
+            expanded_old = old_rect.inflate(4, 4)
+            expanded_new = new_rect.inflate(4, 4)
             
-            return [expanded_new.unionall(tuple([expanded_old])),]
+            return [expanded_old, expanded_new]
         
     def need_to_draw(self):
         self.has_drawn = True
