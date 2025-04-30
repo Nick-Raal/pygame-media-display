@@ -34,11 +34,7 @@ class DisplayHatController:
             
 
             # Set the window for this specific rectangle
-            self.display_hat.st7789.set_window(
-                dirty_rect.x, dirty_rect.y, 
-                dirty_rect.x + dirty_rect.width - 1, 
-                dirty_rect.y + dirty_rect.height - 1
-            )
+            self.display_hat.st7789.set_window()
             print("ao ", dirty_rect)
             
             # Process pixels for this rectangle only
