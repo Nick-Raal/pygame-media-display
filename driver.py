@@ -25,8 +25,6 @@ class DisplayHatController:
         
 
     def update_display(self, dirty_rects):
-
-            
         for dirty_rect in dirty_rects:
             x1, y1 = dirty_rect.topleft
             x2, y2 = dirty_rect.bottomright
