@@ -36,11 +36,11 @@ if pygame.vernum < (2, 0, 0):
 if(__name__ == '__main__'):
     control = DisplayHatController()
     control.get_screen().fill((0, 0, 0))
-    control.update_display(pygame.Rect(0, 0, 320, 240))
+    control.update_display([pygame.Rect(0, 0, 320, 240),])
 
     font = pygame.font.SysFont("Comic Sans MS", 30)
     multiline_text(control.get_screen(), "Welcome To Memory Module\nChecking for updates" ,font, (160, 120))
-    control.update_display(pygame.Rect(0, 0, 320, 240))
+    control.update_display([pygame.Rect(0, 0, 320, 240),])
     #time.sleep(2)
 
     try:
@@ -56,18 +56,18 @@ if(__name__ == '__main__'):
             print(line.strip())  # optional: print the output live
             if "Already up to date." in line:
                 control.get_screen().fill((0, 0, 0))
-                control.update_display(pygame.Rect(0, 0, 320, 240))
+                control.update_display([pygame.Rect(0, 0, 320, 240),])
                 multiline_text(control.get_screen(), "Up to date" ,font, (160, 120))
-                control.update_display(pygame.Rect(0, 0, 320, 240))
+                control.update_display([pygame.Rect(0, 0, 320, 240),])
                 break
             elif "Updating" in line:
                 control.get_screen().fill((0, 0, 0))
-                control.update_display(pygame.Rect(0, 0, 320, 240))
+                control.update_display([pygame.Rect(0, 0, 320, 240),])
                 multiline_text(control.get_screen(), "Update Found\nRestarting" ,font, (160, 120))
-                control.update_display(pygame.Rect(0, 0, 320, 240))
+                control.update_display([pygame.Rect(0, 0, 320, 240),])
                 #time.sleep(1)
                 control.get_screen().fill((0, 0, 0))
-                control.update_display(pygame.Rect(0, 0, 320, 240))
+                control.update_display([pygame.Rect(0, 0, 320, 240),])
                 restart_program()
                 break
         #wait for the process to fully exit
@@ -89,6 +89,6 @@ cProfile.run('main()', sort='cumtime')
 
 print("\nExiting!...\n")
 control.screen.fill((0, 0, 0))
-control.update_display(pygame.Rect(0, 0, 320, 240))
+control.update_display([pygame.Rect(0, 0, 320, 240),])
 pygame.quit()
 sys.exit(0)
