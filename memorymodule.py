@@ -200,7 +200,7 @@ class MemoryModule:
             expanded_old = old_rect.inflate(20, 20)
             expanded_new = new_rect.inflate(20, 20)
             
-            return pygame.Rect.unionall(tuple([expanded_new, expanded_old]))
+            return expanded_new.unionall(tuple([expanded_old]))
         
     def need_to_draw(self):
         self.has_drawn = True
