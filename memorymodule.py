@@ -194,15 +194,12 @@ class MemoryModule:
             
             # Return both rectangles as dirty areas
             # Making them slightly larger to ensure no artifacts remain
-            expanded_old = old_rect.inflate(20, 20)
+            expanded_old = old_rect.inflate(20, 40)
             expanded_new = new_rect.inflate(20, 20)
             pygame.draw.rect(self.screen, (0, 255, 0), expanded_old)
             
             # Draw the rectangle at its new position
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
-            
-
-            
             
             return [expanded_new.unionall(tuple([expanded_old])),]
             #return [pygame.Rect(self.select_rect.left, self.select_rect.top, self.select_rect.width, abs(self.select_rect.top - self.select_rect.target)),]
