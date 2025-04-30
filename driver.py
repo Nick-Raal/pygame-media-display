@@ -24,6 +24,7 @@ class DisplayHatController:
         self.display_hat.on_button_pressed(self.button_callback)
         
 
+    @profile
     def update_display(self, dirty_rects):
         for dirty_rect in dirty_rects:
             x1, y1 = dirty_rect.topleft
@@ -48,7 +49,7 @@ class DisplayHatController:
             # Extract just this portion of the screen
             subsurface = self.screen.subsurface(dirty_rect)
             # Rotate and convert the subsurface
-            rotated = pygame.transform.rotate(subsurface, 180).convert(16, 0)
+            rotated = pygame.transform.flip(subsurface, True, True).convert(16, 0)
         
             
             # Process pixels for this rectangle only
