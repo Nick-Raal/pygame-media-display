@@ -40,6 +40,7 @@ class DisplayHatController:
                 rect.x + rect.width - 1, 
                 rect.y + rect.height - 1
             )
+            print("ao ", rect)
             
             # Process pixels for this rectangle only
             pixelbytes = np.frombuffer(rotated.get_buffer(), dtype=np.uint16)
