@@ -289,7 +289,7 @@ class MemoryModule:
                 except RuntimeError as e:
                     print("Tried to draw a disabled menu!", e)
                     
-        return self.running, pygame.Rect(0, 0, 320, 240)
+        return self.running, [pygame.Rect(0, 0, 320, 240),]
             
     def play(self, m):
         """
