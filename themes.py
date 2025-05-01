@@ -9,7 +9,7 @@ custom_theme.title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_NONE
 custom_theme.widget_selection_color=pygame_menu.widgets.NoneSelection
 #custom_theme.widget_background_inflate_to_selection=True
 bgimage = pygame_menu.baseimage.BaseImage(
-    image_path="./graphics/mmbg.jpg",
+    image_path="./graphics/PenPal.png",
     drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL
 )
 custom_theme.background_color = bgimage
