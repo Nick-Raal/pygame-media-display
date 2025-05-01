@@ -156,7 +156,7 @@ class MemoryModule:
         
         self.settings.set_onclose(pygame_menu.events.BACK)
 
-        self.mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
+        self.mainmenu = pygame_menu.Menu('', 320, 240, 
                                         theme=custom_theme, overflow=True)
         
         open_button = self.mainmenu.add.button('Open', self.folder)
