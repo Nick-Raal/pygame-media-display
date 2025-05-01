@@ -265,6 +265,7 @@ class MemoryModule:
                 if event.key == pygame.key.key_code('b'):
                     print('close')
                     self.playing = False
+                    self.has_drawn = False
                         
     def updater(self): 
         """
@@ -280,6 +281,7 @@ class MemoryModule:
             self.playing, self.img =  self.current_media_item.read()  
             self.exit_handler(pygame.event.get())
         elif not self.playing and not self.mainmenu.get_current().is_enabled():
+            self.has_drawn = False
             self.mainmenu.get_current().enable()
         else:
             if self.mainmenu.get_current().is_enabled():
