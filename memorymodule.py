@@ -184,7 +184,7 @@ class MemoryModule:
         self.folder.set_onbeforeopen(self.need_to_draw)
         self.settings.set_onbeforeopen(onbeforeopen=self.need_to_draw)
         
-        self.select_rect = SelectRect(self.mainmenu_buttons[1].get_rect().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
+        self.select_rect = SelectRect(self.mainmenu_buttons[1].get_rect().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().center)
 
     def drawing_handler(self):
         new_rect, old_rect = self.select_rect.update()
@@ -314,7 +314,7 @@ class SelectRect(pygame.Rect):
     def __init__(self, x, y, width, height, target=None):
         super().__init__(x, y, width, height)
         self.target = target
-        self.current_position = self.centery
+        self.current_position = self.center
         self.timer = 0
         self.duration = 0.2
         self.old_rect = self.copy()
