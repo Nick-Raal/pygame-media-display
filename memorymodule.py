@@ -171,10 +171,10 @@ class MemoryModule:
                     
         self.mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in self.mainmenu_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center))
             
         for b in folder_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
@@ -321,7 +321,7 @@ class SelectRect(pygame.Rect):
     
     def change_target(self, new_target):
         self.target = new_target
-        self.current_position = self.centery
+        self.current_position = self.center
         self.timer = 0
     
     def update(self):
@@ -330,9 +330,11 @@ class SelectRect(pygame.Rect):
         
         t = min(self.timer / self.duration, 1)
         if self.timer <= 1:
-            self.y = int(self.easing(t, self.current_position, self.target) - self.height/2)
+            self.y = int(self.easing(t, self.current_position[1], self.target[1]) - self.height/2)
+            self.x = int(self.easing(t, self.current_position[0], self.target[0]) + self.width/2)
         else:
-            self.y = int(self.target - self.height/2)  # Snap to final position
+            self.y = int(self.target[1] - self.height/2)  # Snap to final position
+            self.x = int(self.target[0] - self.width/2)
         
         # Return both the new (self) and old rectangle positions
         return self, old_rect
@@ -352,4 +354,4 @@ class MenuWrapper (pygame_menu.Menu):
         
     def add_select_rect_callbacks(self, select_rect):
         for b in self.buttons:
-            self.buttons.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            self.buttons.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center))
