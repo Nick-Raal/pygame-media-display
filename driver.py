@@ -26,6 +26,7 @@ class DisplayHatController:
 
     def update_display(self, dirty_rects):
         for dirty_rect in dirty_rects:
+            dirty_rect = dirty_rect.clip(self.screen.get_clip())
             x1, y1 = dirty_rect.topleft
             x2, y2 = dirty_rect.bottomright
             x2 -= 1  # Convert from exclusive to inclusive bounds
