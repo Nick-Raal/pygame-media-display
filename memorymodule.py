@@ -171,10 +171,10 @@ class MemoryModule:
                     
         self.mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in self.mainmenu_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center))
+            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center + (but.get_rect().width, 0)))
             
         for b in folder_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center))
+            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center  + (but.get_rect().width, 0)))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
