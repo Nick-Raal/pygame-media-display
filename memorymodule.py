@@ -255,7 +255,7 @@ class MemoryModule:
                     #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
                     self.select_rect.change_target(menu.get_selected_widget().get_rect().centery)
                     self.has_drawn = False
-                print(menu.get_selected_widget().get_rect().centery)
+                print(menu.get_scrollarea().to_world_position(menu.get_selected_widget().get_rect()))
     def exit_handler(self, event_list):
         """
         Checks for one specific event and exits playback if that event is found.
