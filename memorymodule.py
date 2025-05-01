@@ -318,7 +318,7 @@ class SelectRect(pygame.Rect):
         self.old_rect = self.copy()
     
     def change_target(self, new_target):
-        self.target = (new_target.center - (new_target.width, 0))
+        self.target = (new_target.center + (-new_target.width, 0))
         self.current_position = self.center
         self.timer = 0
     
