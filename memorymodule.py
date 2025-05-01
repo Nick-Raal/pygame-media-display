@@ -171,10 +171,10 @@ class MemoryModule:
                     
         self.mainmenu_buttons = [open_button, settings_button, quit_button]
         for b in self.mainmenu_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect()))
             
         for b in folder_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect()))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
@@ -184,7 +184,7 @@ class MemoryModule:
         self.folder.set_onbeforeopen(self.need_to_draw)
         self.settings.set_onbeforeopen(onbeforeopen=self.need_to_draw)
         
-        self.select_rect = SelectRect(self.mainmenu_buttons[1].get_rect().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
+        self.select_rect = SelectRect(self.mainmenu_buttons[1].get_rect().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect())
 
     def drawing_handler(self):
         new_rect, old_rect = self.select_rect.update()
@@ -208,8 +208,8 @@ class MemoryModule:
             # Draw the rectangle at its new position
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             
-            return [expanded_new.unionall(tuple([expanded_old])),]
-            #return [pygame.Rect(0,0,320,240),]
+            #return [expanded_new.unionall(tuple([expanded_old])),]
+            return [pygame.Rect(0,0,320,240),]
             
     def need_to_draw(self, current_menu=None, target_menu=None):
         print("menu open")
@@ -313,26 +313,26 @@ class MemoryModule:
 class SelectRect(pygame.Rect):
     def __init__(self, x, y, width, height, target=None):
         super().__init__(x, y, width, height)
-        self.target = target
-        self.current_position = self.centery
-        self.timer = 0
+        self.change_target(target)
         self.duration = 0.2
         self.old_rect = self.copy()
     
     def change_target(self, new_target):
-        self.target = new_target
-        self.current_position = self.centery
+        self.target = (new_target.center[0] - 100, new_target.center[1])
+        self.current_position = self.center
         self.timer = 0
     
     def update(self):
         self.timer += 1/60
         old_rect = self.copy()  # Store the old position before updating
-        
+        print(self.target[0])
         t = min(self.timer / self.duration, 1)
         if self.timer <= 1:
-            self.y = int(self.easing(t, self.current_position, self.target) - self.height/2)
+            self.y = int(self.easing(t, self.current_position[1], (self.target[1] - self.height/2)))
+            self.x = int(self.easing(t, self.current_position[0], (self.target[0] - self.width/2)))
         else:
-            self.y = int(self.target - self.height/2)  # Snap to final position
+            self.y = int(self.target[1] - self.height/2)  # Snap to final position
+            self.x = int(self.target[0] - self.width/2)
         
         # Return both the new (self) and old rectangle positions
         return self, old_rect
@@ -352,4 +352,4 @@ class MenuWrapper (pygame_menu.Menu):
         
     def add_select_rect_callbacks(self, select_rect):
         for b in self.buttons:
-            self.buttons.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            self.buttons.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().center))
