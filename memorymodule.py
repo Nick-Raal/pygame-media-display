@@ -208,8 +208,8 @@ class MemoryModule:
             # Draw the rectangle at its new position
             pygame.draw.rect(self.screen, (255, 0, 0), self.select_rect)
             
-            return [expanded_new.unionall(tuple([expanded_old])),]
-            #return [pygame.Rect(0,0,320,240),]
+            #return [expanded_new.unionall(tuple([expanded_old])),]
+            return [pygame.Rect(0,0,320,240),]
             
     def need_to_draw(self, current_menu=None, target_menu=None):
         print("menu open")
