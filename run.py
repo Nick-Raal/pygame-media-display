@@ -85,7 +85,8 @@ def main():
         control.update_display(dirty_rect)
         running, dirty_rect =  memmod.updater()
         clock.tick(60)
-        print(clock.get_fps())
+        if(clock.get_time() % 10 == 0):
+            print(clock.get_fps())
         
 profiler = cProfile.Profile()
 profiler.enable()
