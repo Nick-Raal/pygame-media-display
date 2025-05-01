@@ -251,6 +251,7 @@ class MemoryModule:
                 widg.select(update_menu=True)
                 if(menu.get_selected_widget()):
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())    
+                    self.select_rect.change_target(menu.get_selected_widget().get_rect().centery)
                     self.has_drawn = False
                     
     def exit_handler(self, event_list):
