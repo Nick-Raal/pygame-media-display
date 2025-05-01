@@ -156,7 +156,7 @@ class MemoryModule:
         
         self.settings.set_onclose(pygame_menu.events.BACK)
 
-        self.mainmenu = pygame_menu.Menu('Memory Module', 320, 240, 
+        self.mainmenu = pygame_menu.Menu('', 320, 240, 
                                         theme=custom_theme, overflow=True)
         
         open_button = self.mainmenu.add.button('Open', self.folder)
@@ -237,6 +237,7 @@ class MemoryModule:
                     menu._index += 1
                 elif event.key == (pygame.key.key_code('b')):
                     menu.close()
+                    self.has_drawn = False
                     menu.enable()
                     
                 elif event.key == pygame.key.key_code('a'):
@@ -250,8 +251,11 @@ class MemoryModule:
                 widg = menu.get_widgets()[menu._index]
                 widg.select(update_menu=True)
                 if(menu.get_selected_widget()):
-                    menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())               
-                    
+                    #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
+                    menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())    
+                    #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
+                    self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
+                    self.has_drawn = False
     def exit_handler(self, event_list):
         """
         Checks for one specific event and exits playback if that event is found.

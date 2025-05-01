@@ -47,7 +47,7 @@ if(__name__ == '__main__'):
 
     try:
         process = subprocess.Popen(
-            ["git", "pull", "origin", "main"],
+            ["git", "pull", "origin", "fix-folder-scrolling"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,  # ensures output is decoded into strings

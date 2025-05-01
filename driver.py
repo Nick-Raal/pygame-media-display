@@ -26,6 +26,7 @@ class DisplayHatController:
 
     def update_display(self, dirty_rects):
         for dirty_rect in dirty_rects:
+            dirty_rect = dirty_rect.clip(self.screen.get_clip())
             x1, y1 = dirty_rect.topleft
             x2, y2 = dirty_rect.bottomright
             x2 -= 1  # Convert from exclusive to inclusive bounds
@@ -55,7 +56,7 @@ class DisplayHatController:
             pixelbytes = np.frombuffer(rotated.get_buffer(), dtype=np.uint16)
             pixelbytes = pixelbytes.byteswap()
             # Send the data for just this rectangle
-            print(sys.getsizeof(pixelbytes.tobytes()))
+            #print(sys.getsizeof(pixelbytes.tobytes()))
             self.display_hat.st7789.data(pixelbytes.tobytes())
         
     # Plumbing to convert Display HAT Mini button presses into pygame events
