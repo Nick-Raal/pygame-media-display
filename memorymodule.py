@@ -250,7 +250,9 @@ class MemoryModule:
                 widg = menu.get_widgets()[menu._index]
                 widg.select(update_menu=True)
                 if(menu.get_selected_widget()):
-                    menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())               
+                    menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())
+                    print(menu.get_scrollarea().get_translate())
+                    self.select_rect.move(menu.get_scrollarea().get_translate())               
                     
     def exit_handler(self, event_list):
         """
