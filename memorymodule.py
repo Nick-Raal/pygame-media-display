@@ -195,7 +195,6 @@ class MemoryModule:
             self.mainmenu.draw(self.screen)
             self.screen.blit(self.selector_image, self.select_rect.topleft)
             self.has_drawn=True
-            
             return [pygame.Rect(0,0,320,240),]
         else:
             # Redraw the menu - this will clear the old rectangle position
