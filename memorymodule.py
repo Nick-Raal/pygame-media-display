@@ -193,7 +193,7 @@ class MemoryModule:
         if not self.has_drawn:
             print("draw new")
             self.mainmenu.draw(self.screen)
-            pygame.blit(self.selector_image, self.select_rect.topleft)
+            self.screen.blit(self.selector_image, self.select_rect.topleft)
             self.has_drawn=True
             
             return [pygame.Rect(0,0,320,240),]
@@ -208,7 +208,7 @@ class MemoryModule:
             #pygame.draw.rect(self.screen, (0, 255, 0), expanded_old)
             
             # Draw the rectangle at its new position
-            pygame.blit(self.selector_image, self.select_rect.topleft)
+            self.screen.blit(self.selector_image, self.select_rect.topleft)
             
             return [expanded_new.unionall(tuple([expanded_old])),]
             #return [pygame.Rect(0,0,320,240),]
