@@ -371,5 +371,5 @@ class MenuWrapper (pygame_menu.Menu):
             b.set_onselect(lambda b=b: select_rect.change_target(b.get_rect().centery))
             
     def get_widest_button(self):
-        print("got b ", b.get_title())
+        print("got b ", self.widest_button.get_title())
         return self.widest_button
