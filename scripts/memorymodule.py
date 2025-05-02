@@ -72,7 +72,7 @@ class MemoryModule:
         
         self.has_drawn = False
         
-        self.selector_image = pygame.image.load("./graphics/selector.png").convert()
+        self.selector_image = pygame.image.load("../graphics/selector.png").convert()
         
         self.folder = pygame_menu.Menu('Memories', 320, 240, 
         enabled=False, 
