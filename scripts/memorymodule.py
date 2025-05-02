@@ -69,7 +69,6 @@ class MemoryModule:
         self.clock = None
         self.img = None
         self.playing = False
-        
         self.has_drawn = False
         
         self.selector_image = pygame.image.load("../graphics/selector.png").convert()
@@ -322,7 +321,6 @@ class SelectRect(pygame.Rect):
         self.timer = 0
         self.duration = 0.2
         self.old_rect = self.copy()
-        self.widest_button = None
     
     def change_target(self, new_target):
         self.target = new_target
@@ -355,6 +353,7 @@ class MenuWrapper (pygame_menu.Menu):
     def __init__(self, title, width, height, theme, overflow):
         super().__init__(title, width, height, theme=theme, overflow=overflow)
         self.buttons = []
+        self.widest_button = 0
         
     def add_button(self, button):
         self.buttons.append(button)
