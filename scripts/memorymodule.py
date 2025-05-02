@@ -149,7 +149,7 @@ class MemoryModule:
         ip_label.set_font(pygame_menu.font.FONT_NEVIS, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
         ssid_label = self.settings.add.label(get_wifi_name())
         ssid_label.set_font(pygame_menu.font.FONT_NEVIS, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
-        self.settings.add_button("Change Network", change_wifi))
+        self.settings.add_button("Change Network", change_wifi)
         
         self.settings.set_onclose(pygame_menu.events.BACK)
 
