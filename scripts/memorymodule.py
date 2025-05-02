@@ -169,6 +169,8 @@ class MemoryModule:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
         
         self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 30, self.mainmenu.buttons[0].get_rect().top, 20, 50, self.mainmenu.buttons[0].get_rect().centery)
+        
+        #TODO: Change this into a loop structure
         self.mainmenu.add_select_rect_callbacks(self.select_rect)
         self.settings.add_select_rect_callbacks(select_rect=self.select_rect)
         self.folder.add_select_rect_callbacks(self.select_rect)
@@ -206,7 +208,8 @@ class MemoryModule:
             #return [pygame.Rect(0,0,320,240),]
             
     def need_to_draw(self, current_menu=None, target_menu=None):
-        print("menu open ", current_menu)
+        print("menu open: ", target_menu)
+        print("menu closed ", current_menu)
         self.select_rect.reset_position(target_menu)
         self.has_drawn = False
         
