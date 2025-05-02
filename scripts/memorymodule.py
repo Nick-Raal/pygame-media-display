@@ -168,7 +168,7 @@ class MemoryModule:
         #         else:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
         
-        self.select_rect = SelectRect(width=20, height=50, target=self.mainmenu.buttons[0].get_rect().centery)
+        self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 40, self.mainmenu.buttons[0].get_rect().top, 20, 50, self.mainmenu.buttons[0].get_rect().centery)
         
         #TODO: Change this into a loop structure
         self.mainmenu.add_select_rect_callbacks(self.select_rect)
@@ -316,8 +316,8 @@ class MemoryModule:
         self.running = False
         
 class SelectRect(pygame.Rect):
-    def __init__(self, x=None, y=None, width=10, height=10, target=None):
-        super().__init__(x=0, y=0, width=width, height=height)
+    def __init__(self, x, y, width, height, target=None):
+        super().__init__(x, y, width, height)
         self.target = target
         self.current_position = self.centery
         self.timer = 0
