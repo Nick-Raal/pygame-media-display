@@ -211,7 +211,7 @@ class MemoryModule:
             
     def need_to_draw(self, current_menu=None, target_menu=None):
         print("menu open: ", target_menu.get_title())
-        # print("menu closed ", current_menu)
+        print("menu closed ", current_menu.get_title())
         self.select_rect.reset_position(target_menu)
         self.has_drawn = False
         
