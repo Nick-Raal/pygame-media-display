@@ -209,7 +209,7 @@ class MemoryModule:
             return [expanded_new.unionall(tuple([expanded_old])),]
             #return [pygame.Rect(0,0,320,240),]
             
-    def need_to_draw(self, current_menu=None, target_menu=None):
+    def need_to_draw(self, target_menu=None):
         print("menu open: ", target_menu.get_title())
         self.select_rect.reset_position(target_menu)
         self.has_drawn = False
