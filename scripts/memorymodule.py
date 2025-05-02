@@ -170,7 +170,8 @@ class MemoryModule:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.0, 0.2))
         #         else:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
-                    
+        
+        self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
         self.mainmenu.add_select_rect_callbacks(self.select_rect)
             
         for b in folder_buttons:
@@ -184,8 +185,6 @@ class MemoryModule:
         self.folder.set_onbeforeopen(self.need_to_draw)
         self.settings.set_onbeforeopen(onbeforeopen=self.need_to_draw)
         
-        self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
-
     def drawing_handler(self):
         new_rect, old_rect = self.select_rect.update()
         if not self.has_drawn:
