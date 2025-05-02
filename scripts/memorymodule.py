@@ -86,7 +86,7 @@ class MemoryModule:
 
         media = [
             Video(f) if f.endswith(video_file_types) else Image(f)
-            for f in os.listdir('.') if f.endswith(media_file_types)
+            for f in os.listdir('..') if f.endswith(media_file_types)
         ]
 
         folder_buttons = []
