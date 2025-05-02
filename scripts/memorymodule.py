@@ -235,6 +235,7 @@ class MemoryModule:
                     menu._index += 1
                 elif event.key == (pygame.key.key_code('b')):
                     menu.close()
+                    #self.need_to_draw(menu)
                     #menu.enable()
                     
                 elif event.key == pygame.key.key_code('a'):
@@ -342,7 +343,7 @@ class SelectRect(pygame.Rect):
         return self, old_rect
 
     def reset_position(self, menu):
-        print("position reset ", menu.get_widest_button())
+        # print("position reset ", menu.get_widest_button())
         self.change_target(menu.buttons[0].get_rect().centery)
         self.position = (menu.get_widest_button().left, menu.buttons[0].get_rect().centery - self.height/2)
         
