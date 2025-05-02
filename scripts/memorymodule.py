@@ -322,6 +322,7 @@ class SelectRect(pygame.Rect):
         self.timer = 0
         self.duration = 0.2
         self.old_rect = self.copy()
+        self.widest_button = None
     
     def change_target(self, new_target):
         self.target = new_target
