@@ -235,7 +235,7 @@ class MemoryModule:
                     menu._index += 1
                 elif event.key == (pygame.key.key_code('b')):
                     menu.close()
-                    menu.enable()
+                    #menu.enable()
                     
                 elif event.key == pygame.key.key_code('a'):
                     menu.get_selected_widget().apply()
@@ -344,7 +344,6 @@ class SelectRect(pygame.Rect):
     def reset_position(self, menu):
         print("position reset ", menu.get_widest_button())
         self.change_target(menu.buttons[0].get_rect().centery)
-        
         self.position = (menu.get_widest_button().left, menu.buttons[0].get_rect().centery - self.height/2)
         
     def easing(self, time, start, end):
