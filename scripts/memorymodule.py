@@ -337,6 +337,7 @@ class SelectRect(pygame.Rect):
         self.old_rect = self.copy()
     
     def change_target(self, new_target):
+        print("target changed")
         self.target = new_target
         self.current_position = self.centery
         self.timer = 0
@@ -389,10 +390,8 @@ class MenuWrapper (pygame_menu.Menu):
         self.widest_button = self.buttons[0]
         for b in self.buttons:
             if b.get_rect().width > self.widest_button.get_rect().width:
-                print("new wider b ", b.get_title())
                 self.widest_button = b
             b.set_onselect(lambda b=b: select_rect.change_target(b.get_rect().centery))
             
     def get_widest_button(self):
-        print("got b ", self.widest_button.get_title())
         return self.widest_button.get_rect()
