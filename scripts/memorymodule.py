@@ -168,7 +168,7 @@ class MemoryModule:
         #         else:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
         
-        self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 40, self.mainmenu.buttons[0].get_rect().top, 20, 50, self.mainmenu.buttons[0].get_rect().centery)
+        self.select_rect = SelectRect(0, 0, 20, 50, self.mainmenu.buttons[0].get_rect().centery)
         
         #TODO: Change this into a loop structure
         self.mainmenu.add_select_rect_callbacks(self.select_rect)
@@ -357,7 +357,7 @@ class MenuWrapper (pygame_menu.Menu):
     def __init__(self, title, width, height, theme, **kwargs):
         super().__init__(title, width, height, theme=theme, **kwargs)
         self.buttons = []
-        self.widest_button = pygame.Rect(160, 120, 0, 0)
+        self.widest_button = None
         
     def add_button(self, title, action = None, **kwargs):
         self.buttons.append(self.add.button(title, action, **kwargs))
