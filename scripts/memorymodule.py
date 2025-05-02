@@ -316,8 +316,8 @@ class MemoryModule:
         self.running = False
         
 class SelectRect(pygame.Rect):
-    def __init__(self, x=0, y=0, width=10, height=10, target=None):
-        super().__init__(x=x, y=y, width=width, height=height)
+    def __init__(self, x=None, y=None, width=10, height=10, target=None):
+        super().__init__(x=0, y=0, width=width, height=height)
         self.target = target
         self.current_position = self.centery
         self.timer = 0
