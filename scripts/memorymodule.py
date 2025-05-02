@@ -233,17 +233,21 @@ class MemoryModule:
                 elif event.key == pygame.key.key_code('y'):
                     menu._index += 1
                 elif event.key == (pygame.key.key_code('b')):
-                    # Store the parent menu before closing
-                    parent_menu = menu.get_top().get_current()._prev
+                     # Store reference to the current menu before closing
+                    current_menu = menu
+                    print("oldmenu ", current_menu.get_title())
                     
                     # Close the current menu
                     menu.close()
                     
-                    # If there's a parent menu and it has an onbeforeopen callback, manually trigger it
-                    if parent_menu and parent_menu.get_onbeforeopen() is not None:
-                        parent_menu.get_onbeforeopen()(menu, parent_menu)
+                    # Get the new current menu after closing
+                    new_current = self.mainmenu.get_current()
                     
-                    print("curmenu ", menu.get_current().get_title())
+                    # Manually trigger onbeforeopen
+                    if new_current != current_menu:  # Only if we actually changed menus
+                        self.need_to_draw(current_menu, new_current)
+                    
+                    print("curmenu ", new_current.get_title())
                     
                 elif event.key == pygame.key.key_code('a'):
                     menu.get_selected_widget().apply()
