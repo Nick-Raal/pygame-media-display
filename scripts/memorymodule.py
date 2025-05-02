@@ -353,16 +353,16 @@ class MenuWrapper (pygame_menu.Menu):
     def __init__(self, title, width, height, theme, overflow):
         super().__init__(title, width, height, theme=theme, overflow=overflow)
         self.buttons = []
-        self.widest_button = 0
+        self.widest_button = pygame.Rect(0, 0, 0, 0)
         
     def add_button(self, button):
         self.buttons.append(button)
         
     def add_select_rect_callbacks(self, select_rect):
-        self.widest_button = self.buttons[0].get_rect().width
+        self.widest_button = self.buttons[0].get_rect()
         for b in self.buttons:
             if(b.get_rect().width > self.widest_button):
-                self.widest_button = b.get_rect().width
+                self.widest_button = b.get_rect()
             self.buttons.set_onselect(lambda but = b: select_rect.change_target(but.get_rect().centery))
             
     def get_widest_button(self):
