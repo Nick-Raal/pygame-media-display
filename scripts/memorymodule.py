@@ -172,9 +172,6 @@ class MemoryModule:
         self.mainmenu.add_select_rect_callbacks(self.select_rect)
         self.settings.add_select_rect_callbacks(select_rect=self.select_rect)
         self.folder.add_select_rect_callbacks(self.select_rect)
-            
-        for b in folder_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
