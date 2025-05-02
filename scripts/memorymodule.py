@@ -350,8 +350,8 @@ class SelectRect(pygame.Rect):
         return start * (1-time)**3 + 3 * first_quart * time * (1 - time)**2 + 3 * third_quart * (1-time) * time**2 + end * time **3
         
 class MenuWrapper (pygame_menu.Menu):
-    def __init__(self, title, width, height, theme, overflow, **kwargs):
-        super().__init__(title, width, height, theme=theme, overflow=overflow, **kwargs)
+    def __init__(self, title, width, height, theme, **kwargs):
+        super().__init__(title, width, height, theme=theme, **kwargs)
         self.buttons = []
         self.widest_button = pygame.Rect(160, 120, 0, 0)
         
