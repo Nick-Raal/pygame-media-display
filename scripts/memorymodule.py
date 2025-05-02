@@ -73,7 +73,7 @@ class MemoryModule:
         
         self.selector_image = pygame.image.load("../graphics/selector.png").convert()
         
-        self.folder = pygame_menu.Menu('Memories', 320, 240, 
+        self.folder = MenuWrapper('Memories', 320, 240, 
         enabled=False, 
         theme=custom_theme,
         overflow=True)
@@ -87,11 +87,9 @@ class MemoryModule:
             Video(f) if f.endswith(video_file_types) else Image(f)
             for f in os.listdir('..') if f.endswith(media_file_types)
         ]
-
-        folder_buttons = []
         
         for med in media:
-            folder_buttons.append(self.folder.add.button(med.get_title(), lambda m=med: self.play(m)))
+            self.folder.add_button(med.get_title(), lambda m=med: self.play(m))
             
         def get_wifi_name():
             """
@@ -145,22 +143,22 @@ class MemoryModule:
             except Exception as e:
                 return f"Error: {e}"
             
-        self.settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
+        self.settings = MenuWrapper('Settings', width=320, height=240, enabled=False, theme=custom_theme)
         ip_address = socket.gethostbyname(socket.gethostname() + ".local")
         ip_label = self.settings.add.label(ip_address)
         ip_label.set_font(pygame_menu.font.FONT_NEVIS, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
         ssid_label = self.settings.add.label(get_wifi_name())
         ssid_label.set_font(pygame_menu.font.FONT_NEVIS, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
-        change_network_button = self.settings.add.button("Change Network", change_wifi)
+        self.settings.add_button("Change Network", change_wifi))
         
         self.settings.set_onclose(pygame_menu.events.BACK)
 
         self.mainmenu = MenuWrapper('', 320, 240, 
                                         theme=custom_theme, overflow=True)
         
-        self.mainmenu.add_button(self.mainmenu.add.button('Open', self.folder))
-        self.mainmenu.add_button(self.mainmenu.add.button('Settings', self.settings))
-        self.mainmenu.add_button(self.mainmenu.add.button('Quit', self.quit))
+        self.mainmenu.add_button('Open', self.folder)
+        self.mainmenu.add_button('Settings', self.settings)
+        self.mainmenu.add_button('Quit', self.quit)
         # start_size = quit_button.get_size()
         # print(start_size)
         # def button_select_handler(buttons):
@@ -172,6 +170,8 @@ class MemoryModule:
         
         self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 30, self.mainmenu.buttons[0].get_rect().top, 20, 50, self.mainmenu.buttons[0].get_rect().centery)
         self.mainmenu.add_select_rect_callbacks(self.select_rect)
+        self.settings.add_select_rect_callbacks(select_rect=self.select_rect)
+        self.folder.add_select_rect_callbacks(self.select_rect)
             
         for b in folder_buttons:
             b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
@@ -350,13 +350,13 @@ class SelectRect(pygame.Rect):
         return start * (1-time)**3 + 3 * first_quart * time * (1 - time)**2 + 3 * third_quart * (1-time) * time**2 + end * time **3
         
 class MenuWrapper (pygame_menu.Menu):
-    def __init__(self, title, width, height, theme, overflow):
-        super().__init__(title, width, height, theme=theme, overflow=overflow)
+    def __init__(self, title, width, height, theme, overflow, **kwargs):
+        super().__init__(title, width, height, theme=theme, overflow=overflow, **kwargs)
         self.buttons = []
         self.widest_button = pygame.Rect(160, 120, 0, 0)
         
-    def add_button(self, button):
-        self.buttons.append(button)
+    def add_button(self, title, action = None, **kwargs):
+        self.buttons.append(super().add.button(title, action, **kwargs))
         
     def add_select_rect_callbacks(self, select_rect):
         self.widest_button = self.buttons[0].get_rect()
