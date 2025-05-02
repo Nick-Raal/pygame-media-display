@@ -225,15 +225,17 @@ class MemoryModule:
             event_list (list): A list of pygame events.
             menu (pygame_menu.Menu): The currently focused menu.
         """
-        
+    
         for event in event_list:
             if event.type == pygame.KEYDOWN:
+                old_index = menu._index
+                
                 if event.key == pygame.key.key_code('x'):
                     menu._index -= 1
                 elif event.key == pygame.key.key_code('y'):
                     menu._index += 1
                 elif event.key == (pygame.key.key_code('b')):
-                     # Store reference to the current menu before closing
+                    # Store reference to the current menu before closing
                     current_menu = menu
                     print("oldmenu ", current_menu.get_title())
                     
@@ -253,20 +255,36 @@ class MemoryModule:
                 elif event.key == pygame.key.key_code('a'):
                     menu.get_selected_widget().apply()
                 
+                # Handle wrap-around navigation
                 if menu._index > len(menu.get_widgets()) - 1:
                     menu._index = 0
                 elif menu._index < 0:
                     menu._index = len(menu.get_widgets()) - 1
                 
-                widg = menu.get_widgets()[menu._index]
-                widg.select(update_menu=True)
-                if(menu.get_selected_widget()):
-                    #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
-                    menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())    
-                    #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
-                    #self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
-                    self.has_drawn = False
+                # Only update selection if the index actually changed
+                if old_index != menu._index:
+                    # Select the widget at the new index
+                    widget = menu.get_widgets()[menu._index]
+                    widget.select(update_menu=True)
                     
+                    # Only scroll to the widget if it's actually selected
+                    if menu.get_selected_widget() == widget:
+                        # First check if widget is already visible before scrolling
+                        widget_rect = widget.get_rect()
+                        scroll_area = menu.get_scrollarea()
+                        
+                        # Get visible area and widget position in absolute coordinates
+                        visible_rect = scroll_area.get_view_rect()
+                        widget_pos = scroll_area.to_absolute_position(widget_rect)
+                        
+                        # Only scroll if the widget is not fully visible
+                        if (widget_pos.top < visible_rect.top or 
+                            widget_pos.bottom > visible_rect.bottom):
+                            menu.get_scrollarea().scroll_to_rect(widget_rect)
+                            
+                        # Force update of select rect position
+                        self.has_drawn = False
+                        
     def exit_handler(self, event_list):
         """
         Checks for one specific event and exits playback if that event is found.
