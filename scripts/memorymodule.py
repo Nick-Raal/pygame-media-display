@@ -175,7 +175,7 @@ class MemoryModule:
         self.settings.add_select_rect_callbacks(select_rect=self.select_rect)
         self.folder.add_select_rect_callbacks(self.select_rect)
         
-        self.select_rect.reset_position(self.mainmenu.get_widest_button())
+        self.select_rect.reset_position(self.mainmenu)
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
