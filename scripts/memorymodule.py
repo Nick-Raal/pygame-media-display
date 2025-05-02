@@ -210,7 +210,6 @@ class MemoryModule:
             #return [pygame.Rect(0,0,320,240),]
             
     def need_to_draw(self, from_menu, to_menu):
-        print("menu open: ", to_menu.get_title())
         self.select_rect.reset_position(to_menu)
         self.has_drawn = False
         
@@ -245,7 +244,8 @@ class MemoryModule:
                     
                     # Manually trigger onbeforeopen
                     if new_current != current_menu:  # Only if we actually changed menus
-                        self.need_to_draw(current_menu, new_current)
+                        print("changed menus")
+                        self.need_to_draw(current_menu, to_menu=new_current)
                     
                     print("curmenu ", new_current.get_title())
                     
