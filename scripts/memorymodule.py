@@ -365,11 +365,11 @@ class MenuWrapper (pygame_menu.Menu):
     def add_select_rect_callbacks(self, select_rect):
         self.widest_button = self.buttons[0].get_rect()
         for b in self.buttons:
-            if b.get_rect().width > self.widest_button.width:
+            if b.get_rect().width > self.widest_button.get_rect().width:
                 print("new wider b ", b.get_title())
-                self.widest_button = b.get_rect()
+                self.widest_button = b
             b.set_onselect(lambda b=b: select_rect.change_target(b.get_rect().centery))
             
     def get_widest_button(self):
         print("got b ", self.widest_button.get_title())
-        return self.widest_button
+        return self.widest_button.get_rect()
