@@ -357,7 +357,7 @@ class SelectRect(pygame.Rect):
     def reset_position(self, menu):
         # print("position reset ", menu.get_widest_button())
         new_x = menu.get_widest_button().left
-        new_y = menu.buttons[0].get_rect().centery - self.height/2
+        new_y = menu.buttons[0].get_rect().centery
         
         # Set the rectangle's position by updating its x and y attributes
         self.x = new_x
