@@ -210,6 +210,7 @@ class MemoryModule:
             #return [pygame.Rect(0,0,320,240),]
             
     def need_to_draw(self, from_menu, to_menu):
+        print("bruhhhh")
         self.select_rect.reset_position(to_menu)
         self.has_drawn = False
         
