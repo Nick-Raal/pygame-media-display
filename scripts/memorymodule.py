@@ -356,7 +356,13 @@ class SelectRect(pygame.Rect):
 
     def reset_position(self, menu):
         # print("position reset ", menu.get_widest_button())
-        self.position = (menu.get_widest_button().left, menu.buttons[0].get_rect().centery - self.height/2)
+        new_x = menu.get_widest_button().left
+        new_y = menu.buttons[0].get_rect().centery - self.height/2
+        
+        # Set the rectangle's position by updating its x and y attributes
+        self.x = new_x
+        self.y = new_y
+    
         self.change_target(menu.buttons[0].get_rect().centery)
         
     def easing(self, time, start, end):
