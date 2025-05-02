@@ -188,7 +188,7 @@ class MemoryModule:
     def drawing_handler(self):
         new_rect, old_rect = self.select_rect.update()
         if not self.has_drawn:
-            print("draw new")
+            #print("draw new")
             self.mainmenu.draw(self.screen)
             self.screen.blit(self.selector_image, self.select_rect.topleft)
             self.has_drawn=True
@@ -210,8 +210,8 @@ class MemoryModule:
             #return [pygame.Rect(0,0,320,240),]
             
     def need_to_draw(self, current_menu=None, target_menu=None):
-        print("menu open: ", target_menu)
-        print("menu closed ", current_menu)
+        # print("menu open: ", target_menu)
+        # print("menu closed ", current_menu)
         self.select_rect.reset_position(target_menu)
         self.has_drawn = False
         
@@ -343,6 +343,7 @@ class SelectRect(pygame.Rect):
         return self, old_rect
 
     def reset_position(self, menu):
+        print("position reset")
         self.change_target(menu.buttons[0].get_rect().centery)
         self.position = (menu.get_widest_button().left - self.width, menu.buttons[0].get_rect().centery -self.height/2)
         
