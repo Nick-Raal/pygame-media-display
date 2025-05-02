@@ -283,6 +283,7 @@ class MemoryModule:
                             menu.get_scrollarea().scroll_to_rect(widget_rect)
                             
                         # Force update of select rect position
+                        self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
                         self.has_drawn = False
                         
     def exit_handler(self, event_list):
