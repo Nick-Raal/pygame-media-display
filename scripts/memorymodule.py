@@ -233,7 +233,16 @@ class MemoryModule:
                 elif event.key == pygame.key.key_code('y'):
                     menu._index += 1
                 elif event.key == (pygame.key.key_code('b')):
+                    # Store the parent menu before closing
+                    parent_menu = menu.get_top().get_current()._prev
+                    
+                    # Close the current menu
                     menu.close()
+                    
+                    # If there's a parent menu and it has an onbeforeopen callback, manually trigger it
+                    if parent_menu and parent_menu.get_onbeforeopen() is not None:
+                        parent_menu.get_onbeforeopen()(menu, parent_menu)
+                    
                     print("curmenu ", menu.get_current().get_title())
                     
                 elif event.key == pygame.key.key_code('a'):
