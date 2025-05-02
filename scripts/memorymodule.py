@@ -69,12 +69,11 @@ class MemoryModule:
         self.clock = None
         self.img = None
         self.playing = False
-        
         self.has_drawn = False
         
         self.selector_image = pygame.image.load("../graphics/selector.png").convert()
         
-        self.folder = pygame_menu.Menu('Memories', 320, 240, 
+        self.folder = MenuWrapper('Memories', 320, 240, 
         enabled=False, 
         theme=custom_theme,
         overflow=True)
@@ -88,11 +87,9 @@ class MemoryModule:
             Video(f) if f.endswith(video_file_types) else Image(f)
             for f in os.listdir('..') if f.endswith(media_file_types)
         ]
-
-        folder_buttons = []
         
         for med in media:
-            folder_buttons.append(self.folder.add.button(med.get_title(), lambda m=med: self.play(m)))
+            self.folder.add_button(med.get_title(), lambda m=med: self.play(m))
             
         def get_wifi_name():
             """
@@ -146,22 +143,22 @@ class MemoryModule:
             except Exception as e:
                 return f"Error: {e}"
             
-        self.settings = pygame_menu.Menu('Settings', width=320, height=240, enabled=False, theme=custom_theme)
+        self.settings = MenuWrapper('Settings', width=320, height=240, enabled=False, theme=custom_theme)
         ip_address = socket.gethostbyname(socket.gethostname() + ".local")
         ip_label = self.settings.add.label(ip_address)
         ip_label.set_font(pygame_menu.font.FONT_NEVIS, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
         ssid_label = self.settings.add.label(get_wifi_name())
         ssid_label.set_font(pygame_menu.font.FONT_NEVIS, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
-        change_network_button = self.settings.add.button("Change Network", change_wifi)
+        self.settings.add_button("Change Network", change_wifi)
         
         self.settings.set_onclose(pygame_menu.events.BACK)
 
-        self.mainmenu = pygame_menu.Menu('', 320, 240, 
+        self.mainmenu = MenuWrapper('', 320, 240, 
                                         theme=custom_theme, overflow=True)
         
-        open_button = self.mainmenu.add.button('Open', self.folder)
-        settings_button = self.mainmenu.add.button('Settings', self.settings)
-        quit_button = self.mainmenu.add.button('Quit', self.quit)
+        self.mainmenu.add_button('Open', self.folder)
+        self.mainmenu.add_button('Settings', self.settings)
+        self.mainmenu.add_button('Quit', self.quit)
         # start_size = quit_button.get_size()
         # print(start_size)
         # def button_select_handler(buttons):
@@ -170,13 +167,15 @@ class MemoryModule:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.0, 0.2))
         #         else:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
-                    
-        self.mainmenu_buttons = [open_button, settings_button, quit_button]
-        for b in self.mainmenu_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
-            
-        for b in folder_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+        
+        self.select_rect = SelectRect(0, 0, 20, 50, self.mainmenu.buttons[0].get_rect().centery)
+        
+        #TODO: Change this into a loop structure
+        self.mainmenu.add_select_rect_callbacks(self.select_rect)
+        self.settings.add_select_rect_callbacks(select_rect=self.select_rect)
+        self.folder.add_select_rect_callbacks(self.select_rect)
+        
+        self.select_rect.reset_position(self.mainmenu)
         
         self.mainmenu.set_onupdate(self.select)
         self.folder.set_onupdate(self.select)
@@ -186,12 +185,10 @@ class MemoryModule:
         self.folder.set_onbeforeopen(self.need_to_draw)
         self.settings.set_onbeforeopen(onbeforeopen=self.need_to_draw)
         
-        self.select_rect = SelectRect(self.mainmenu_buttons[1].get_rect().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
-
     def drawing_handler(self):
         new_rect, old_rect = self.select_rect.update()
         if not self.has_drawn:
-            print("draw new")
+            #print("draw new")
             self.mainmenu.draw(self.screen)
             self.screen.blit(self.selector_image, self.select_rect.topleft)
             self.has_drawn=True
@@ -212,8 +209,9 @@ class MemoryModule:
             return [expanded_new.unionall(tuple([expanded_old])),]
             #return [pygame.Rect(0,0,320,240),]
             
-    def need_to_draw(self, current_menu=None, target_menu=None):
-        print("menu open")
+    def need_to_draw(self, from_menu, to_menu):
+        print("bruhhhh")
+        self.select_rect.reset_position(to_menu)
         self.has_drawn = False
         
     def select(self, event_list, menu):
@@ -227,34 +225,67 @@ class MemoryModule:
             event_list (list): A list of pygame events.
             menu (pygame_menu.Menu): The currently focused menu.
         """
-        
+    
         for event in event_list:
             if event.type == pygame.KEYDOWN:
+                old_index = menu._index
+                
                 if event.key == pygame.key.key_code('x'):
                     menu._index -= 1
                 elif event.key == pygame.key.key_code('y'):
                     menu._index += 1
                 elif event.key == (pygame.key.key_code('b')):
+                    # Store reference to the current menu before closing
+                    current_menu = menu
+                    print("oldmenu ", current_menu.get_title())
+                    
+                    # Close the current menu
                     menu.close()
-                    self.has_drawn = False
-                    menu.enable()
+                    
+                    # Get the new current menu after closing
+                    new_current = self.mainmenu.get_current()
+                    
+                    # Manually trigger onbeforeopen
+                    if new_current != current_menu:  # Only if we actually changed menus
+                        print("changed menus")
+                        self.need_to_draw(current_menu, to_menu=new_current)
+                    
+                    print("curmenu ", new_current.get_title())
                     
                 elif event.key == pygame.key.key_code('a'):
                     menu.get_selected_widget().apply()
                 
+                # Handle wrap-around navigation
                 if menu._index > len(menu.get_widgets()) - 1:
                     menu._index = 0
                 elif menu._index < 0:
                     menu._index = len(menu.get_widgets()) - 1
                 
-                widg = menu.get_widgets()[menu._index]
-                widg.select(update_menu=True)
-                if(menu.get_selected_widget()):
-                    #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
-                    menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())    
-                    #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
-                    self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
-                    self.has_drawn = False
+                # Only update selection if the index actually changed
+                if old_index != menu._index:
+                    # Select the widget at the new index
+                    widget = menu.get_widgets()[menu._index]
+                    widget.select(update_menu=True)
+                    
+                    # Only scroll to the widget if it's actually selected
+                    if menu.get_selected_widget() == widget:
+                        # First check if widget is already visible before scrolling
+                        widget_rect = widget.get_rect()
+                        scroll_area = menu.get_scrollarea()
+                        
+                        # Get visible area and widget position in absolute coordinates
+                        visible_rect = scroll_area.get_view_rect()
+                        widget_pos = scroll_area.to_absolute_position(widget_rect)
+                        
+                        # Only scroll if the widget is not fully visible
+                        if (widget_pos.top < visible_rect.top or 
+                            widget_pos.bottom > visible_rect.bottom):
+                            menu.get_scrollarea().scroll_to_rect(widget_rect)
+                            
+                        # Force update of select rect position
+                        self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
+                        self.has_drawn = False
+                        
     def exit_handler(self, event_list):
         """
         Checks for one specific event and exits playback if that event is found.
@@ -325,6 +356,7 @@ class SelectRect(pygame.Rect):
         self.old_rect = self.copy()
     
     def change_target(self, new_target):
+        print("target changed ", new_target)
         self.target = new_target
         self.current_position = self.centery
         self.timer = 0
@@ -341,6 +373,23 @@ class SelectRect(pygame.Rect):
         
         # Return both the new (self) and old rectangle positions
         return self, old_rect
+
+    def reset_position(self, menu):
+        # Get the target position
+        target_y = menu.buttons[0].get_rect().centery
+        target_x = menu.get_widest_button().left
+        
+        # Set both current position and target to the same value (no animation)
+        self.x = target_x
+        self.y = target_y - self.height/2
+        self.target = target_y
+        self.current_position = target_y  # This is key - set current position equal to target
+        
+        # Reset timer to skip animation
+        self.timer = self.duration  # Set timer to equal or exceed duration
+        
+        # Update old_rect for rendering
+        self.old_rect = self.copy()
         
     def easing(self, time, start, end):
         first_quart = start + (end - start) * 0.25
@@ -348,13 +397,20 @@ class SelectRect(pygame.Rect):
         return start * (1-time)**3 + 3 * first_quart * time * (1 - time)**2 + 3 * third_quart * (1-time) * time**2 + end * time **3
         
 class MenuWrapper (pygame_menu.Menu):
-    def __init__(self, title, width, height, theme, overflow):
-        super().__init__(title, width, height, theme=theme, overflow=overflow)
+    def __init__(self, title, width, height, theme, **kwargs):
+        super().__init__(title, width, height, theme=theme, **kwargs)
         self.buttons = []
+        self.widest_button = None
         
-    def add_button(self, button):
-        self.buttons.append(button)
+    def add_button(self, title, action = None, **kwargs):
+        self.buttons.append(self.add.button(title, action, **kwargs))
         
     def add_select_rect_callbacks(self, select_rect):
+        self.widest_button = self.buttons[0]
         for b in self.buttons:
-            self.buttons.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            if b.get_rect().width > self.widest_button.get_rect().width:
+                self.widest_button = b
+            b.set_onselect(lambda b=b: select_rect.change_target(b.get_rect().centery))
+            
+    def get_widest_button(self):
+        return self.widest_button.get_rect()
