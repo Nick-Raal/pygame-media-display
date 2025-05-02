@@ -234,7 +234,7 @@ class MemoryModule:
                 elif event.key == (pygame.key.key_code('b')):
                     menu.close()
                     menu.enable()
-                    self.need_to_draw()
+                    self.need_to_draw(target_menu=menu)
                     
                 elif event.key == pygame.key.key_code('a'):
                     menu.get_selected_widget().apply()
