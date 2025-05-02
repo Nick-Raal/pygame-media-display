@@ -156,12 +156,12 @@ class MemoryModule:
         
         self.settings.set_onclose(pygame_menu.events.BACK)
 
-        self.mainmenu = pygame_menu.Menu('', 320, 240, 
+        self.mainmenu = MenuWrapper('', 320, 240, 
                                         theme=custom_theme, overflow=True)
         
-        open_button = self.mainmenu.add.button('Open', self.folder)
-        settings_button = self.mainmenu.add.button('Settings', self.settings)
-        quit_button = self.mainmenu.add.button('Quit', self.quit)
+        self.mainmenu.add_button(self.mainmenu.add.button('Open', self.folder))
+        self.mainmenu.add_button(self.mainmenu.add.button('Settings', self.settings))
+        self.mainmenu.add_button(self.mainmenu.add.button('Quit', self.quit))
         # start_size = quit_button.get_size()
         # print(start_size)
         # def button_select_handler(buttons):
@@ -171,9 +171,7 @@ class MemoryModule:
         #         else:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
                     
-        self.mainmenu_buttons = [open_button, settings_button, quit_button]
-        for b in self.mainmenu_buttons:
-            b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+        self.mainmenu.add_select_rect_callbacks(self.select_rect)
             
         for b in folder_buttons:
             b.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
@@ -186,7 +184,7 @@ class MemoryModule:
         self.folder.set_onbeforeopen(self.need_to_draw)
         self.settings.set_onbeforeopen(onbeforeopen=self.need_to_draw)
         
-        self.select_rect = SelectRect(self.mainmenu_buttons[1].get_rect().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
+        self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
 
     def drawing_handler(self):
         new_rect, old_rect = self.select_rect.update()
@@ -213,7 +211,8 @@ class MemoryModule:
             #return [pygame.Rect(0,0,320,240),]
             
     def need_to_draw(self, current_menu=None, target_menu=None):
-        print("menu open")
+        print("menu open ", current_menu)
+        self.select_rect.reset_position(current_menu)
         self.has_drawn = False
         
     def select(self, event_list, menu):
@@ -236,7 +235,7 @@ class MemoryModule:
                     menu._index += 1
                 elif event.key == (pygame.key.key_code('b')):
                     menu.close()
-                    self.has_drawn = False
+                    self.need_to_draw()
                     menu.enable()
                     
                 elif event.key == pygame.key.key_code('a'):
@@ -255,6 +254,7 @@ class MemoryModule:
                     #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
                     self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
                     self.has_drawn = False
+                    
     def exit_handler(self, event_list):
         """
         Checks for one specific event and exits playback if that event is found.
@@ -341,6 +341,10 @@ class SelectRect(pygame.Rect):
         
         # Return both the new (self) and old rectangle positions
         return self, old_rect
+
+    def reset_position(self, menu):
+        self.change_target(menu.buttons[0])
+        self.position = (menu.get_widest_button().left - 30, menu.buttons[0].get_rect().top)
         
     def easing(self, time, start, end):
         first_quart = start + (end - start) * 0.25
@@ -356,5 +360,11 @@ class MenuWrapper (pygame_menu.Menu):
         self.buttons.append(button)
         
     def add_select_rect_callbacks(self, select_rect):
+        self.widest_button = self.buttons[0].get_rect().width
         for b in self.buttons:
-            self.buttons.set_onselect(lambda but = b: self.select_rect.change_target(but.get_rect().centery))
+            if(b.get_rect().width > self.widest_button):
+                self.widest_button = b.get_rect().width
+            self.buttons.set_onselect(lambda but = b: select_rect.change_target(but.get_rect().centery))
+            
+    def get_widest_button(self):
+        return self.widest_button
