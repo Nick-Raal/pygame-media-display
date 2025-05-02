@@ -170,7 +170,7 @@ class MemoryModule:
         #         else:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
         
-        self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 30, self.mainmenu_buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
+        self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 30, self.buttons[0].get_rect().top, 20, 50, self.mainmenu_buttons[0].get_rect().centery)
         self.mainmenu.add_select_rect_callbacks(self.select_rect)
             
         for b in folder_buttons:
