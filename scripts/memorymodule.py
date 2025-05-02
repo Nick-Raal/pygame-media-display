@@ -366,6 +366,7 @@ class MenuWrapper (pygame_menu.Menu):
         self.widest_button = self.buttons[0].get_rect()
         for b in self.buttons:
             if b.get_rect().width > self.widest_button.width:
+                print("new wider b ", b.get_title())
                 self.widest_button = b.get_rect()
             b.set_onselect(lambda b=b: select_rect.change_target(b.get_rect().centery))
             
