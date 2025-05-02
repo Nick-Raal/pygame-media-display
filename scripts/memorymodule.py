@@ -356,7 +356,7 @@ class MenuWrapper (pygame_menu.Menu):
         self.widest_button = pygame.Rect(160, 120, 0, 0)
         
     def add_button(self, title, action = None, **kwargs):
-        self.buttons.append(super().add.button(title, action, **kwargs))
+        self.buttons.append(self.add.button(title, action, **kwargs))
         
     def add_select_rect_callbacks(self, select_rect):
         self.widest_button = self.buttons[0].get_rect()
