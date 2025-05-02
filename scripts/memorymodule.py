@@ -344,7 +344,7 @@ class SelectRect(pygame.Rect):
 
     def reset_position(self, menu):
         self.change_target(menu.buttons[0].get_rect().centery)
-        self.position = (menu.get_widest_button().left - self.width, menu.buttons[0].get_rect().top)
+        self.position = (menu.get_widest_button().left + self.width, menu.buttons[0].get_rect().centry -self.height/2)
         
     def easing(self, time, start, end):
         first_quart = start + (end - start) * 0.25
