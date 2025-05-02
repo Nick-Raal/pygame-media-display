@@ -353,7 +353,7 @@ class MenuWrapper (pygame_menu.Menu):
     def __init__(self, title, width, height, theme, overflow):
         super().__init__(title, width, height, theme=theme, overflow=overflow)
         self.buttons = []
-        self.widest_button = pygame.Rect(0, 0, 0, 0)
+        self.widest_button = pygame.Rect(160, 120, 0, 0)
         
     def add_button(self, button):
         self.buttons.append(button)
