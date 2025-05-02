@@ -7,8 +7,6 @@ This package contains the MemoryModule class, which controls a memory module
 import os
 import pygame
 
-import asyncio
-
 import subprocess
 
 import pygame_menu
@@ -23,7 +21,6 @@ import pygame_menu.menu
 from themes import custom_theme
 
 import socket
-
     
 class MemoryModule:
     """
@@ -144,6 +141,7 @@ class MemoryModule:
                 return f"Error: {e}"
             
         self.settings = MenuWrapper('Settings', width=320, height=240, enabled=False, theme=custom_theme)
+        
         ip_address = socket.gethostbyname(socket.gethostname() + ".local")
         ip_label = self.settings.add.label(ip_address)
         ip_label.set_font(pygame_menu.font.FONT_NEVIS, 22, (255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255), None, False)
@@ -159,14 +157,6 @@ class MemoryModule:
         self.mainmenu.add_button('Open', self.folder)
         self.mainmenu.add_button('Settings', self.settings)
         self.mainmenu.add_button('Quit', self.quit)
-        # start_size = quit_button.get_size()
-        # print(start_size)
-        # def button_select_handler(buttons):
-        #     for b in buttons:
-        #         if not b.is_selected():
-        #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.0, 0.2))
-        #         else:
-        #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
         
         self.select_rect = SelectRect(0, 0, 20, 50, self.mainmenu.buttons[0].get_rect().centery)
         
@@ -201,7 +191,6 @@ class MemoryModule:
             # Making them slightly larger to ensure no artifacts remain
             expanded_old = old_rect.inflate(20, 20)
             expanded_new = new_rect.inflate(20, 20)
-            #pygame.draw.rect(self.screen, (0, 255, 0), expanded_old)
             
             # Draw the rectangle at its new position
             self.screen.blit(self.selector_image, self.select_rect.topleft)
@@ -210,7 +199,6 @@ class MemoryModule:
             #return [pygame.Rect(0,0,320,240),]
             
     def need_to_draw(self, from_menu, to_menu):
-        print("bruhhhh")
         self.select_rect.reset_position(to_menu)
         self.has_drawn = False
         
@@ -383,7 +371,7 @@ class SelectRect(pygame.Rect):
         self.x = target_x
         self.y = target_y - self.height/2
         self.target = target_y
-        self.current_position = target_y  # This is key - set current position equal to target
+        self.current_position = target_y
         
         # Reset timer to skip animation
         self.timer = self.duration  # Set timer to equal or exceed duration
