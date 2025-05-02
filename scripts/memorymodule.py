@@ -263,7 +263,7 @@ class MemoryModule:
                     #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())    
                     #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
-                    #self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
+                    self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
                     self.has_drawn = False
                     
     def exit_handler(self, event_list):
@@ -355,8 +355,8 @@ class SelectRect(pygame.Rect):
 
     def reset_position(self, menu):
         # print("position reset ", menu.get_widest_button())
-        self.change_target(menu.buttons[0].get_rect().centery)
         self.position = (menu.get_widest_button().left, menu.buttons[0].get_rect().centery - self.height/2)
+        self.change_target(menu.buttons[0].get_rect().centery)
         
     def easing(self, time, start, end):
         first_quart = start + (end - start) * 0.25
