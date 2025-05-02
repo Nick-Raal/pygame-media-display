@@ -210,7 +210,7 @@ class MemoryModule:
             #return [pygame.Rect(0,0,320,240),]
             
     def need_to_draw(self, current_menu=None, target_menu=None):
-        # print("menu open: ", target_menu)
+        print("menu open: ", target_menu.title)
         # print("menu closed ", current_menu)
         self.select_rect.reset_position(target_menu)
         self.has_drawn = False
@@ -343,8 +343,9 @@ class SelectRect(pygame.Rect):
         return self, old_rect
 
     def reset_position(self, menu):
-        print("position reset")
+        print("position reset ", menu.get_widest_button())
         self.change_target(menu.buttons[0].get_rect().centery)
+        
         self.position = (menu.get_widest_button().left - self.width, menu.buttons[0].get_rect().centery -self.height/2)
         
     def easing(self, time, start, end):
