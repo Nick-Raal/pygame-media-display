@@ -168,7 +168,7 @@ class MemoryModule:
         #         else:
         #             asyncio.create_task(button_resize(b, b.get_size()[0]/start_size[0], 1.2 * b.get_size()[0]/start_size[0], 0.2))
         
-        self.select_rect = SelectRect(self.mainmenu.get_widest_button().left + 40, self.mainmenu.buttons[0].get_rect().top, 20, 50, self.mainmenu.buttons[0].get_rect().centery)
+        self.select_rect = SelectRect(self.mainmenu.get_widest_button().left - 40, self.mainmenu.buttons[0].get_rect().top, 20, 50, self.mainmenu.buttons[0].get_rect().centery)
         
         #TODO: Change this into a loop structure
         self.mainmenu.add_select_rect_callbacks(self.select_rect)
@@ -252,7 +252,7 @@ class MemoryModule:
                     #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
                     menu.get_scrollarea().scroll_to_rect(menu.get_selected_widget().get_rect())    
                     #print(menu.get_scrollarea().to_absolute_position(menu.get_selected_widget().get_rect()))
-                    #self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
+                    self.select_rect.change_target(menu.get_scrollarea().to_real_position(menu.get_selected_widget().get_rect()).centery)
                     self.has_drawn = False
                     
     def exit_handler(self, event_list):
