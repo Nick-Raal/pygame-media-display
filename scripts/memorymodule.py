@@ -376,7 +376,7 @@ class SelectRect(pygame.Rect):
 
     def reset_position(self, menu):
         # Get the target position
-        target_y = menu.buttons[0].get_rect().centery
+        target_y = menu.get_scrollarea().to_real_position(menu.buttons[0].get_rect()).centery
         target_x = menu.get_widest_button().left
         
         # Set both current position and target to the same value (no animation)
